@@ -1,0 +1,60 @@
+<% content_for :title, "Comunicados" %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 text-primary-custom fw-bold"><i class="bi bi-megaphone-fill me-2"></i>Comunicados</h1>
+  <%= link_to new_comunicado_path, class: "btn btn-primary-custom shadow-sm" do %>
+    <i class="bi bi-plus-lg me-2"></i>Novo Comunicado
+  <% end %>
+</div>
+
+<div class="card card-custom border-0 shadow-sm">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light text-secondary">
+          <tr>
+            <th class="ps-4 py-3">Título</th>
+            <th class="py-3">Data</th>
+            <th class="py-3">Responsável</th>
+            <th class="text-end pe-4 py-3">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @comunicados.each do |comunicado| %>
+            <tr>
+              <td class="ps-4 py-3 fw-bold text-dark"><%= comunicado.titulo %></td>
+              <td>
+                <div class="d-flex align-items-center text-muted">
+                  <i class="bi bi-calendar3 me-2"></i>
+                  <%= comunicado.data.strftime("%d/%m/%Y") if comunicado.data %>
+                </div>
+              </td>
+              <td>
+                <% if comunicado.lider %>
+                  <span class="badge bg-light text-dark border">
+                    <i class="bi bi-person me-1"></i> <%= comunicado.lider.nome %>
+                  </span>
+                <% else %>
+                  <span class="text-muted">-</span>
+                <% end %>
+              </td>
+              <td class="text-end pe-4">
+                <div class="btn-group">
+                  <%= link_to comunicado, class: "btn btn-sm btn-light text-secondary border", title: "Ver Detalhes" do %>
+                    <i class="bi bi-eye"></i>
+                  <% end %>
+                  <%= link_to edit_comunicado_path(comunicado), class: "btn btn-sm btn-light text-primary border", title: "Editar" do %>
+                    <i class="bi bi-pencil"></i>
+                  <% end %>
+                  <%= button_to comunicado, method: :delete, class: "btn btn-sm btn-light text-danger border", title: "Excluir", form: { style: "display:inline-block;" }, data: { turbo_confirm: "Tem certeza?" } do %>
+                    <i class="bi bi-trash"></i>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

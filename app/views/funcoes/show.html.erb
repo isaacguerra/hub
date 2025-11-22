@@ -1,0 +1,30 @@
+<% content_for :title, @funcao.nome %>
+
+<div class="row justify-content-center">
+  <div class="col-lg-6">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h3 text-primary-custom mb-0"><i class="bi bi-briefcase me-2"></i>Detalhes da Função</h1>
+      <div>
+        <%= link_to edit_funcao_path(@funcao), class: "btn btn-outline-primary btn-sm me-2" do %>
+          <i class="bi bi-pencil me-1"></i> Editar
+        <% end %>
+        <%= link_to funcoes_path, class: "btn btn-outline-secondary btn-sm" do %>
+          <i class="bi bi-arrow-left me-1"></i> Voltar
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card card-custom mb-4">
+      <div class="card-body text-center p-5">
+        <div class="mb-4">
+          <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto mb-3 border" style="width: 80px; height: 80px;">
+            <i class="bi bi-briefcase-fill text-secondary fs-1"></i>
+          </div>
+          <h2 class="h4 fw-bold mb-1"><%= @funcao.nome %></h2>
+          <span class="badge bg-success border px-3 py-2 rounded-pill mt-2">Função Ativa</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,90 @@
+<%= form_with(model: comunicado, class: "needs-validation") do |form| %>
+  <% if comunicado.errors.any? %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <h4 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Erros encontrados:</h4>
+      <ul class="mb-0">
+        <% comunicado.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <div class="card card-custom mb-4">
+    <div class="card-header bg-light">
+      <h5 class="mb-0 text-primary-custom"><i class="bi bi-pencil-fill me-2"></i>Dados do Comunicado</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-12">
+          <%= form.label :titulo, "Título", class: "form-label fw-bold" %>
+          <%= form.text_field :titulo, class: "form-control", placeholder: "Título do comunicado" %>
+        </div>
+
+        <div class="col-md-12">
+          <%= form.label :mensagem, "Mensagem", class: "form-label fw-bold" %>
+          <%= form.text_area :mensagem, class: "form-control", rows: 5, placeholder: "Escreva a mensagem aqui..." %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :data, "Data de Publicação", class: "form-label fw-bold" %>
+          <%= form.datetime_field :data, class: "form-control" %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :lider_id, "Líder Responsável", class: "form-label fw-bold" %>
+          <%= form.collection_select :lider_id, Apoiador.order(:nome), :id, :nome, { prompt: "Selecione o responsável" }, { class: "form-select" } %>
+        </div>
+        
+        <div class="col-md-12">
+          <%= form.label :imagem, "URL da Imagem (Opcional)", class: "form-label fw-bold" %>
+          <%= form.text_field :imagem, class: "form-control", placeholder: "https://..." %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-custom mb-4">
+    <div class="card-header bg-light">
+      <h5 class="mb-0 text-primary-custom"><i class="bi bi-link-45deg me-2"></i>Links Sociais</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <%= form.label :link_whatsapp, "Link WhatsApp", class: "form-label fw-bold" %>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-whatsapp"></i></span>
+            <%= form.text_field :link_whatsapp, class: "form-control", placeholder: "Link para grupo ou conversa" %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :link_instagram, "Link Instagram", class: "form-label fw-bold" %>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-instagram"></i></span>
+            <%= form.text_field :link_instagram, class: "form-control", placeholder: "Link do post ou perfil" %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :link_facebook, "Link Facebook", class: "form-label fw-bold" %>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-facebook"></i></span>
+            <%= form.text_field :link_facebook, class: "form-control", placeholder: "Link do post ou página" %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <%= form.label :link_tiktok, "Link TikTok", class: "form-label fw-bold" %>
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-tiktok"></i></span>
+            <%= form.text_field :link_tiktok, class: "form-control", placeholder: "Link do vídeo ou perfil" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2">
+    <%= link_to "Cancelar", comunicados_path, class: "btn btn-outline-secondary" %>
+    <%= form.submit "Salvar Comunicado", class: "btn btn-primary-custom" %>
+  </div>
+<% end %>

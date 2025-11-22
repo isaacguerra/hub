@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 class="fw-bold mb-0">Visitas</h5>
+  <% if Current.apoiador.pode_coordenar? || Current.apoiador.lider? %>
+    <%= link_to new_mobile_visita_path, class: "btn btn-sm btn-primary rounded-pill px-3" do %>
+      <i class="bi bi-plus-lg me-1"></i> Nova
+    <% end %>
+  <% end %>
+</div>
+
+<% @visitas.each do |visita| %>
+  <div class="mobile-card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <div>
+          <h6 class="fw-bold mb-0"><%= visita.apoiador.nome %></h6>
+          <small class="text-muted">Líder: <%= visita.lider.nome.split.first %></small>
+        </div>
+        <% 
+          status_class = case visita.status
+                         when 'concluida' then 'bg-success'
+                         when 'cancelada' then 'bg-danger'
+                         else 'bg-warning text-dark'
+                         end
+        %>
+        <span class="badge <%= status_class %> rounded-pill"><%= visita.status.capitalize %></span>
+      </div>
+
+      <p class="text-muted small mb-2 mt-2"><%= truncate(visita.relato, length: 80) %></p>
+      
+      <div class="d-flex justify-content-between align-items-center border-top pt-2 mt-2">
+        <small class="text-muted" style="font-size: 0.75rem;">
+          <i class="bi bi-calendar me-1"></i> <%= visita.created_at.strftime("%d/%m/%Y") %>
+        </small>
+        
+        <% can_manage = Current.apoiador.candidato? || Current.apoiador.coordenador_geral? || visita.lider_id == Current.apoiador.id %>
+        
+        <% if can_manage %>
+          <div class="dropdown">
+            <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+              <li><%= link_to edit_mobile_visita_path(visita), class: "dropdown-item" do %>
+                <i class="bi bi-pencil me-2"></i>Editar
+              <% end %></li>
+              <li><%= button_to mobile_visita_path(visita), method: :delete, class: "dropdown-item text-danger", form: { style: "display:inline" } do %>
+                <i class="bi bi-trash me-2"></i>Excluir
+              <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if @visitas.empty? %>
+  <div class="text-center py-5 text-muted">
+    <i class="bi bi-geo-alt fs-1 mb-3 d-block"></i>
+    <p>Nenhuma visita registrada.</p>
+  </div>
+<% end %>

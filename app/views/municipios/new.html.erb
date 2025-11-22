@@ -1,0 +1,16 @@
+<% content_for :title, "New municipio" %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="d-flex align-items-center mb-4">
+        <%= link_to municipios_path, class: "btn btn-link text-decoration-none p-0 me-3 text-secondary" do %>
+          <i class="bi bi-arrow-left fs-4"></i>
+        <% end %>
+        <h1 class="h2 mb-0 text-gray-800">Novo Município</h1>
+      </div>
+
+      <%= render "form", municipio: @municipio %>
+    </div>
+  </div>
+</div>

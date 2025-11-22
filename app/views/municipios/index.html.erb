@@ -1,0 +1,54 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="h2 mb-0 text-gray-800">Municípios</h1>
+    <%= link_to new_municipio_path, class: "btn btn-primary" do %>
+      <i class="bi bi-plus-lg"></i> Novo Município
+    <% end %>
+  </div>
+
+  <div class="card card-custom">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="bg-light">
+            <tr>
+              <th class="ps-4">Nome</th>
+              <th class="text-end pe-4">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @municipios.each do |municipio| %>
+              <tr>
+                <td class="ps-4 fw-medium"><%= municipio.nome %></td>
+                <td class="text-end pe-4">
+                  <div class="btn-group">
+                    <%= link_to municipio_regioes_path(municipio), class: "btn btn-sm btn-outline-info", title: "Ver Regiões" do %>
+                      <i class="bi bi-map"></i> Regiões
+                    <% end %>
+                    <%= link_to municipio, class: "btn btn-sm btn-outline-primary", title: "Ver Detalhes" do %>
+                      <i class="bi bi-eye"></i>
+                    <% end %>
+                    <%= link_to edit_municipio_path(municipio), class: "btn btn-sm btn-outline-secondary", title: "Editar" do %>
+                      <i class="bi bi-pencil"></i>
+                    <% end %>
+                    <%= button_to municipio, method: :delete, class: "btn btn-sm btn-outline-danger", form: { style: "display:inline-block;" }, title: "Excluir", data: { turbo_confirm: "Tem certeza?" } do %>
+                      <i class="bi bi-trash"></i>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+            <% if @municipios.empty? %>
+              <tr>
+                <td colspan="2" class="text-center py-5 text-muted">
+                  <i class="bi bi-geo-alt display-4 d-block mb-3"></i>
+                  Nenhum município cadastrado
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

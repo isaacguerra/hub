@@ -1,0 +1,40 @@
+# Fixtures para Apoiadores
+joao_candidato:
+  id: 1
+  name: "João Silva"
+  whatsapp: "96991234567"
+  municipio_id: 1
+  regiao_id: 1
+  bairro_id: 1
+  funcao_id: 1
+  lider_id: null
+
+maria_coord_geral:
+  id: 2
+  name: "Maria Santos"
+  whatsapp: "96992345678"
+  municipio_id: 1
+  regiao_id: 1
+  bairro_id: 1
+  funcao_id: 2
+  lider_id: 1
+
+pedro_lider:
+  id: 3
+  name: "Pedro Costa"
+  whatsapp: "96993456789"
+  municipio_id: 1
+  regiao_id: 1
+  bairro_id: 1
+  funcao_id: 6
+  lider_id: 2
+
+ana_apoiadora:
+  id: 4
+  name: "Ana Paula"
+  whatsapp: "96994567890"
+  municipio_id: 1
+  regiao_id: 1
+  bairro_id: 2
+  funcao_id: 7
+  lider_id: 3

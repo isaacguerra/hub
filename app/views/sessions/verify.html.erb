@@ -1,0 +1,33 @@
+<%= form_with url: sessions_verify_path, local: true, class: "d-grid gap-3" do |f| %>
+  <%= f.hidden_field :apoiador_id, value: session[:auth_apoiador_id] %>
+  
+  <div class="text-center mb-2">
+    <p class="text-muted small">Enviamos um código para o seu WhatsApp.</p>
+  </div>
+
+  <div>
+    <%= f.label :codigo, "Código de Verificação", class: "form-label fw-bold text-secondary" %>
+    <div class="input-group">
+      <span class="input-group-text bg-light"><i class="bi bi-key"></i></span>
+      <%= f.text_field :codigo, 
+          placeholder: "000000", 
+          class: "form-control text-center fs-4 tracking-widest",
+          required: true,
+          maxlength: 6,
+          pattern: "[0-9]*",
+          inputmode: "numeric",
+          autofocus: true,
+          style: "letter-spacing: 0.5em;" %>
+    </div>
+  </div>
+
+  <div>
+    <%= f.submit "Entrar", class: "btn btn-primary-custom w-100" %>
+  </div>
+  
+  <div class="text-center mt-3">
+    <%= link_to login_path, class: "text-decoration-none small text-secondary" do %>
+      <i class="bi bi-arrow-left me-1"></i> Voltar / Tentar outro número
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,8 @@
+# Fixtures para Municípios
+macapa:
+  id: 1
+  name: "Macapá"
+
+santana:
+  id: 2
+  name: "Santana"

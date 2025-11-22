@@ -1,0 +1,14 @@
+# Fixtures para Visitas
+visita_pendente:
+  id: 1
+  lider_id: 3
+  apoiador_id: 4
+  relato: "Visita agendada"
+  status: "pendente"
+
+visita_concluida:
+  id: 2
+  lider_id: 3
+  apoiador_id: 4
+  relato: "Visita realizada com sucesso"
+  status: "concluida"

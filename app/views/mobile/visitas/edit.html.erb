@@ -1,0 +1,41 @@
+<div class="d-flex align-items-center mb-4">
+  <%= link_to mobile_visitas_path, class: "btn btn-link text-dark p-0 me-3" do %>
+    <i class="bi bi-arrow-left fs-4"></i>
+  <% end %>
+  <h5 class="fw-bold mb-0">Editar Visita</h5>
+</div>
+
+<div class="mobile-card">
+  <div class="card-body">
+    <%= form_with(model: [:mobile, @visita], local: true) do |f| %>
+      <% if @visita.errors.any? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            <% @visita.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= f.label :apoiador_id, "Apoiador Visitado", class: "form-label fw-bold" %>
+        <%= f.collection_select :apoiador_id, @apoiadores, :id, :nome, { prompt: "Selecione um apoiador" }, { class: "form-select mobile-input" } %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :status, "Status da Visita", class: "form-label fw-bold" %>
+        <%= f.select :status, [['Pendente', 'pendente'], ['Concluída', 'concluida'], ['Cancelada', 'cancelada']], {}, { class: "form-select mobile-input" } %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :relato, "Relato da Visita", class: "form-label fw-bold" %>
+        <%= f.text_area :relato, rows: 5, class: "form-control mobile-input", placeholder: "Descreva como foi a visita..." %>
+      </div>
+
+      <div class="d-grid">
+        <%= f.submit "Atualizar Visita", class: "btn btn-primary rounded-pill py-2 fw-bold" %>
+      </div>
+    <% end %>
+  </div>
+</div>

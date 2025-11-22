@@ -1,0 +1,87 @@
+<%= form_with(model: apoiador, class: "needs-validation", data: { controller: "location-select" }) do |form| %>
+  <% if apoiador.errors.any? %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <h4 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Erros encontrados:</h4>
+      <ul class="mb-0">
+        <% apoiador.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <div class="card card-custom mb-4">
+    <div class="card-header bg-light">
+      <h5 class="mb-0 text-primary-custom"><i class="bi bi-person-lines-fill me-2"></i>Dados Pessoais</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <%= form.label :nome, class: "form-label fw-bold" %>
+          <%= form.text_field :nome, class: "form-control", placeholder: "Nome completo" %>
+        </div>
+
+        <div class="col-md-3">
+          <%= form.label :whatsapp, class: "form-label fw-bold" %>
+          <%= form.text_field :whatsapp, class: "form-control", placeholder: "(96) 99999-9999" %>
+          <div class="form-text">Somente números com DDD.</div>
+        </div>
+
+        <div class="col-md-3">
+          <%= form.label :email, class: "form-label fw-bold" %>
+          <%= form.email_field :email, class: "form-control", placeholder: "email@exemplo.com" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-custom mb-4">
+    <div class="card-header bg-light">
+      <h5 class="mb-0 text-primary-custom"><i class="bi bi-geo-alt-fill me-2"></i>Localização</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <%= form.label :municipio_id, "Município", class: "form-label fw-bold" %>
+          <%= form.collection_select :municipio_id, Municipio.order(:nome), :id, :nome, { prompt: "Selecione o Município" }, { class: "form-select", data: { location_select_target: "municipio", action: "change->location-select#changeMunicipio" } } %>
+        </div>
+
+        <div class="col-md-4">
+          <%= form.label :regiao_id, "Região", class: "form-label fw-bold" %>
+          <%= form.collection_select :regiao_id, apoiador.municipio ? apoiador.municipio.regioes.order(:nome) : [], :id, :nome, { prompt: "Selecione a Região" }, { class: "form-select", disabled: !apoiador.municipio, data: { location_select_target: "regiao", action: "change->location-select#changeRegiao" } } %>
+        </div>
+
+        <div class="col-md-4">
+          <%= form.label :bairro_id, "Bairro", class: "form-label fw-bold" %>
+          <%= form.collection_select :bairro_id, apoiador.regiao ? apoiador.regiao.bairros.order(:nome) : [], :id, :nome, { prompt: "Selecione o Bairro" }, { class: "form-select", disabled: !apoiador.regiao, data: { location_select_target: "bairro" } } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-custom mb-4">
+    <div class="card-header bg-light">
+      <h5 class="mb-0 text-primary-custom"><i class="bi bi-briefcase-fill me-2"></i>Função e Liderança</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <%= form.label :funcao_id, "Função na Campanha", class: "form-label fw-bold" %>
+          <%= form.collection_select :funcao_id, Funcao.order(:nome), :id, :nome, { prompt: "Selecione a Função" }, { class: "form-select" } %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :lider_id, "Líder Responsável", class: "form-label fw-bold" %>
+          <%= form.collection_select :lider_id, Apoiador.where.not(id: apoiador.id).order(:nome), :id, :nome, { include_blank: "Sem líder (Topo da hierarquia)" }, { class: "form-select" } %>
+          <div class="form-text">Selecione quem indicou ou coordena este apoiador.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2">
+    <%= link_to "Cancelar", apoiadores_path, class: "btn btn-outline-secondary" %>
+    <%= form.submit "Salvar Apoiador", class: "btn btn-primary-custom" %>
+  </div>
+<% end %>

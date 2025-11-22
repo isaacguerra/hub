@@ -1,0 +1,140 @@
+:root {
+  /* Cores da Campanha */
+  --primary-color: #0056b3; /* Azul Forte - Confiança */
+  --secondary-color: #ffc107; /* Amarelo Ouro - Energia */
+  --accent-color: #17a2b8; /* Ciano - Modernidade */
+  --background-color: #f4f6f9; /* Cinza Claro - Fundo */
+  --text-color: #333333;
+  --sidebar-width: 280px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+/* Navbar Customizada */
+.navbar-custom {
+  background: linear-gradient(135deg, var(--primary-color), #004494);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  padding: 0.8rem 1rem;
+}
+
+.navbar-brand {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: white !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-brand img {
+  height: 45px;
+  width: auto;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.navbar-subtitle {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.8);
+  display: block;
+  line-height: 1;
+  font-weight: 400;
+}
+
+/* Avatar do Usuário na Navbar */
+.user-avatar-nav {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--secondary-color);
+}
+
+/* Drawer / Sidebar (Offcanvas) */
+.offcanvas-start {
+  width: var(--sidebar-width);
+  background-color: #ffffff;
+}
+
+.sidebar-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1.5rem;
+}
+
+.sidebar-menu .nav-link {
+  color: #555;
+  padding: 0.8rem 1.5rem;
+  font-weight: 500;
+  border-left: 4px solid transparent;
+  transition: all 0.3s;
+}
+
+.sidebar-menu .nav-link:hover, .sidebar-menu .nav-link.active {
+  background-color: #f0f7ff;
+  color: var(--primary-color);
+  border-left-color: var(--primary-color);
+}
+
+.sidebar-menu i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+/* Cards */
+.card-custom {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s;
+}
+
+.card-custom:hover {
+  transform: translateY(-2px);
+}
+
+/* Footer */
+.footer-custom {
+  background-color: white;
+  border-top: 1px solid #e9ecef;
+  padding: 1.5rem 0;
+  margin-top: auto;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+/* Botões */
+.btn-primary-custom {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 500;
+}
+
+.btn-primary-custom:hover {
+  background-color: #004494;
+  color: white;
+}
+
+.btn-secondary-custom {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: #333;
+  border-radius: 8px;
+  font-weight: 600;
+}

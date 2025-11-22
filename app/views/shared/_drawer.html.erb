@@ -1,0 +1,51 @@
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+  <div class="sidebar-header d-flex align-items-center justify-content-between">
+    <h5 class="offcanvas-title" id="sidebarMenuLabel">Menu Principal</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  
+  <div class="offcanvas-body p-0">
+    <nav class="sidebar-menu mt-3">
+      <div class="nav flex-column">
+        <a href="<%= root_path %>" class="nav-link <%= 'active' if current_page?(root_path) %>">
+          <i class="bi bi-speedometer2"></i> Dashboard
+        </a>
+
+        <div class="text-uppercase text-muted small fw-bold px-4 mt-4 mb-2">Gestão</div>
+        
+        <a href="<%= apoiadores_path %>" class="nav-link <%= 'active' if controller_name == 'apoiadores' %>">
+          <i class="bi bi-people"></i> Apoiadores
+        </a>
+        <a href="<%= funcoes_path %>" class="nav-link <%= 'active' if controller_name == 'funcoes' %>">
+          <i class="bi bi-briefcase"></i> Funções
+        </a>
+
+        <div class="text-uppercase text-muted small fw-bold px-4 mt-4 mb-2">Campanha</div>
+
+        <a href="<%= eventos_path %>" class="nav-link <%= 'active' if controller_name == 'eventos' %>">
+          <i class="bi bi-calendar-event"></i> Eventos
+        </a>
+        <a href="<%= convites_path %>" class="nav-link <%= 'active' if controller_name == 'convites' %>">
+          <i class="bi bi-envelope-paper"></i> Convites
+        </a>
+        <a href="<%= comunicados_path %>" class="nav-link <%= 'active' if controller_name == 'comunicados' %>">
+          <i class="bi bi-megaphone"></i> Comunicados
+        </a>
+
+        <div class="text-uppercase text-muted small fw-bold px-4 mt-4 mb-2">Configurações</div>
+
+        <a href="<%= municipios_path %>" class="nav-link <%= 'active' if controller_name.in?(['municipios', 'regioes', 'bairros']) %>">
+          <i class="bi bi-map"></i> Localidades
+        </a>
+      </div>
+    </nav>
+  </div>
+  
+  <div class="p-3 border-top bg-light">
+    <div class="d-grid">
+      <a href="#" class="btn btn-outline-primary btn-sm">
+        <i class="bi bi-question-circle me-1"></i> Ajuda e Suporte
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,88 @@
+<%= form_with(model: evento, class: "needs-validation") do |form| %>
+  <% if evento.errors.any? %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <h4 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Erros encontrados:</h4>
+      <ul class="mb-0">
+        <% evento.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% end %>
+
+  <div class="card card-custom mb-4">
+    <div class="card-header bg-light">
+      <h5 class="mb-0 text-primary-custom"><i class="bi bi-info-circle-fill me-2"></i>Informações do Evento</h5>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-12">
+          <%= form.label :titulo, "Título do Evento", class: "form-label fw-bold" %>
+          <%= form.text_field :titulo, class: "form-control", placeholder: "Ex: Reunião Geral" %>
+        </div>
+
+        <div class="col-md-12">
+          <%= form.label :descricao, "Descrição", class: "form-label fw-bold" %>
+          <%= form.text_area :descricao, class: "form-control", rows: 4, placeholder: "Detalhes sobre o evento..." %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :data, "Data e Hora", class: "form-label fw-bold" %>
+          <%= form.datetime_field :data, class: "form-control" %>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :local, "Local", class: "form-label fw-bold" %>
+          <%= form.text_field :local, class: "form-control", placeholder: "Endereço ou nome do local" %>
+        </div>
+
+        <div class="col-md-12">
+          <h6 class="text-primary-custom mt-3 mb-3"><i class="bi bi-share-fill me-2"></i>Redes Sociais</h6>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :link_whatsapp, "Link do WhatsApp", class: "form-label fw-bold" %>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="bi bi-whatsapp text-success"></i></span>
+            <%= form.text_field :link_whatsapp, class: "form-control", placeholder: "https://wa.me/..." %>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :link_instagram, "Link do Instagram", class: "form-label fw-bold" %>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="bi bi-instagram text-danger"></i></span>
+            <%= form.text_field :link_instagram, class: "form-control", placeholder: "https://instagram.com/..." %>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :link_facebook, "Link do Facebook", class: "form-label fw-bold" %>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="bi bi-facebook text-primary"></i></span>
+            <%= form.text_field :link_facebook, class: "form-control", placeholder: "https://facebook.com/..." %>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <%= form.label :link_tiktok, "Link do TikTok", class: "form-label fw-bold" %>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="bi bi-tiktok text-dark"></i></span>
+            <%= form.text_field :link_tiktok, class: "form-control", placeholder: "https://tiktok.com/..." %>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <%= form.label :coordenador_id, "Coordenador Responsável", class: "form-label fw-bold" %>
+          <%= form.collection_select :coordenador_id, Apoiador.order(:nome), :id, :nome, { prompt: "Selecione um coordenador" }, { class: "form-select" } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2">
+    <%= link_to "Cancelar", eventos_path, class: "btn btn-outline-secondary" %>
+    <%= form.submit "Salvar Evento", class: "btn btn-primary-custom" %>
+  </div>
+<% end %>

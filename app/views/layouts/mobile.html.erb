@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Appivone Mobile</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <%= stylesheet_link_tag "mobile_design_system" %>
+  </head>
+  <body>
+    <div class="mobile-header d-flex justify-content-between align-items-center">
+      <% if Current.apoiador %>
+        <div class="d-flex align-items-center gap-3">
+          <div class="avatar-circle bg-white bg-opacity-25 border-0 overflow-hidden">
+            <% if Current.apoiador.foto_perfil_url.present? %>
+              <img src="<%= Current.apoiador.foto_perfil_url %>" alt="<%= Current.apoiador.nome %>" class="w-100 h-100" style="object-fit: cover;">
+            <% else %>
+              <%= Current.apoiador.nome.first.upcase %>
+            <% end %>
+          </div>
+          <div class="lh-1">
+            <h6 class="mb-1 text-white fw-bold text-truncate" style="max-width: 200px;"><%= Current.apoiador.nome %></h6>
+            <span class="badge bg-white bg-opacity-25 text-white fw-normal px-2 py-1" style="font-size: 0.7rem;">
+              <%= Current.apoiador.funcao.nome %>
+            </span>
+          </div>
+        </div>
+        
+        <%= button_to mobile_logout_path, method: :delete, class: "btn btn-link text-white p-0 opacity-75 hover-opacity-100", form: { class: "d-inline" } do %>
+          <i class="bi bi-power fs-3"></i>
+        <% end %>
+      <% else %>
+        <div>
+          <h5 class="fw-bold">Appivone</h5>
+          <small class="opacity-75">Painel do Apoiador</small>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="container px-3">
+      <% if notice %>
+        <div class="alert alert-success alert-dismissible fade show rounded-4 border-0 shadow-sm" role="alert">
+          <%= notice %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+      <% if alert %>
+        <div class="alert alert-danger alert-dismissible fade show rounded-4 border-0 shadow-sm" role="alert">
+          <%= alert %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

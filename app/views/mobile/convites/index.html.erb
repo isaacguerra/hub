@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 class="fw-bold mb-0">Convites</h5>
+  <% if Current.apoiador.pode_coordenar? %>
+    <%= link_to new_mobile_convite_path, class: "btn btn-sm btn-primary rounded-pill px-3" do %>
+      <i class="bi bi-plus-lg me-1"></i> Novo
+    <% end %>
+  <% end %>
+</div>
+
+<% @convites.each do |convite| %>
+  <div class="mobile-card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <div>
+          <h6 class="fw-bold mb-0"><%= convite.nome %></h6>
+          <small class="text-muted"><%= convite.whatsapp %></small>
+        </div>
+        <% 
+          status_class = case convite.status
+                         when 'aceito' then 'bg-success'
+                         when 'recusado' then 'bg-danger'
+                         else 'bg-warning text-dark'
+                         end
+        %>
+        <span class="badge <%= status_class %> rounded-pill"><%= convite.status.capitalize %></span>
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <small class="text-muted">
+          <i class="bi bi-person me-1"></i> Por: <%= convite.enviado_por&.nome&.split&.first %>
+        </small>
+        
+        <% if Current.apoiador.candidato? || Current.apoiador.coordenador_geral? %>
+          <div class="dropdown">
+            <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+              <li><%= link_to edit_mobile_convite_path(convite), class: "dropdown-item" do %>
+                <i class="bi bi-pencil me-2"></i>Editar
+              <% end %></li>
+              <li><%= button_to mobile_convite_path(convite), method: :delete, class: "dropdown-item text-danger", form: { style: "display:inline" } do %>
+                <i class="bi bi-trash me-2"></i>Excluir
+              <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if @convites.empty? %>
+  <div class="text-center py-5 text-muted">
+    <i class="bi bi-envelope-paper fs-1 mb-3 d-block"></i>
+    <p>Nenhum convite encontrado.</p>
+  </div>
+<% end %>

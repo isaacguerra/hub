@@ -1,0 +1,58 @@
+<% content_for :title, @comunicado.titulo %>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="h3 text-primary-custom mb-0"><i class="bi bi-megaphone me-2"></i>Detalhes do Comunicado</h1>
+      <div>
+        <%= link_to edit_comunicado_path(@comunicado), class: "btn btn-outline-primary btn-sm me-2" do %>
+          <i class="bi bi-pencil me-1"></i> Editar
+        <% end %>
+        <%= link_to comunicados_path, class: "btn btn-outline-secondary btn-sm" do %>
+          <i class="bi bi-arrow-left me-1"></i> Voltar
+        <% end %>
+      </div>
+    </div>
+
+    <div class="card card-custom mb-4">
+      <% if @comunicado.imagem.present? %>
+        <img src="<%= @comunicado.imagem %>" class="card-img-top" alt="Imagem do comunicado" style="max-height: 300px; object-fit: cover;">
+      <% end %>
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <h2 class="h4 fw-bold mb-0"><%= @comunicado.titulo %></h2>
+          <span class="badge bg-light text-dark border">
+            <i class="bi bi-calendar3 me-1"></i> <%= @comunicado.data.strftime("%d/%m/%Y") if @comunicado.data %>
+          </span>
+        </div>
+        
+        <div class="mb-4">
+          <% if @comunicado.lider %>
+            <span class="badge bg-light text-dark border"><i class="bi bi-person me-1"></i> <%= @comunicado.lider.nome %></span>
+          <% end %>
+        </div>
+
+        <h5 class="text-primary-custom border-bottom pb-2 mb-3">Mensagem</h5>
+        <div class="text-secondary mb-4" style="white-space: pre-wrap;"><%= @comunicado.mensagem %></div>
+
+        <% if @comunicado.link_whatsapp.present? || @comunicado.link_instagram.present? || @comunicado.link_facebook.present? || @comunicado.link_tiktok.present? %>
+          <h5 class="text-primary-custom border-bottom pb-2 mb-3">Links Relacionados</h5>
+          <div class="d-flex gap-2">
+            <% if @comunicado.link_whatsapp.present? %>
+              <a href="<%= @comunicado.link_whatsapp %>" target="_blank" class="btn btn-outline-success"><i class="bi bi-whatsapp me-2"></i>WhatsApp</a>
+            <% end %>
+            <% if @comunicado.link_instagram.present? %>
+              <a href="<%= @comunicado.link_instagram %>" target="_blank" class="btn btn-outline-danger"><i class="bi bi-instagram me-2"></i>Instagram</a>
+            <% end %>
+            <% if @comunicado.link_facebook.present? %>
+              <a href="<%= @comunicado.link_facebook %>" target="_blank" class="btn btn-outline-primary"><i class="bi bi-facebook me-2"></i>Facebook</a>
+            <% end %>
+            <% if @comunicado.link_tiktok.present? %>
+              <a href="<%= @comunicado.link_tiktok %>" target="_blank" class="btn btn-outline-dark"><i class="bi bi-tiktok me-2"></i>TikTok</a>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

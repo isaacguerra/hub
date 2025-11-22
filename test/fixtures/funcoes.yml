@@ -1,0 +1,27 @@
+# Fixtures para Funções
+candidato:
+  id: 1
+  name: "Candidato"
+
+coordenador_geral:
+  id: 2
+  name: "Coordenador Geral"
+
+coordenador_regional:
+  id: 3
+  name: "Coordenador de Região"
+
+coordenador_municipal:
+  id: 4
+  name: "Coordenador de Município"
+coordenador_bairro:
+  id: 5
+  name: "Coordenador de Bairro"
+
+lider:
+  id: 6
+  name: "Líder"
+
+apoiador:
+  id: 7
+  name: "Apoiador"

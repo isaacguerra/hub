@@ -1,0 +1,10 @@
+# Fixtures para Regiões
+centro:
+  id: 1
+  name: "Centro"
+  municipio_id: 1
+
+norte:
+  id: 2
+  name: "Norte"
+  municipio_id: 1

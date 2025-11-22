@@ -1,0 +1,19 @@
+<% content_for :title, "New bairro" %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="d-flex align-items-center mb-4">
+        <%= link_to municipio_regiao_bairros_path(@municipio, @regiao), class: "btn btn-link text-decoration-none p-0 me-3 text-secondary" do %>
+          <i class="bi bi-arrow-left fs-4"></i>
+        <% end %>
+        <div>
+          <small class="text-muted d-block"><%= @municipio.nome %> > <%= @regiao.nome %></small>
+          <h1 class="h2 mb-0 text-gray-800">Novo Bairro</h1>
+        </div>
+      </div>
+
+      <%= render "form", bairro: @bairro %>
+    </div>
+  </div>
+</div>

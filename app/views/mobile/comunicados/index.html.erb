@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h5 class="fw-bold mb-0">Comunicados</h5>
+  <% if Current.apoiador.pode_coordenar? || Current.apoiador.lider? %>
+    <%= link_to new_mobile_comunicado_path, class: "btn btn-sm btn-primary rounded-pill px-3" do %>
+      <i class="bi bi-plus-lg me-1"></i> Novo
+    <% end %>
+  <% end %>
+</div>
+
+<% @comunicados.each do |comunicado| %>
+  <div class="mobile-card">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-start mb-2">
+        <h6 class="fw-bold mb-0 text-primary"><%= comunicado.titulo %></h6>
+        <small class="text-muted"><%= comunicado.data.strftime("%d/%m") %></small>
+      </div>
+      
+      <p class="text-muted small mb-3"><%= truncate(comunicado.mensagem, length: 100) %></p>
+
+      <div class="d-flex justify-content-between align-items-center border-top pt-2 mt-2">
+        <small class="text-muted" style="font-size: 0.75rem;">
+          <i class="bi bi-person-fill me-1"></i> <%= comunicado.lider&.nome&.split&.first %>
+        </small>
+        
+        <% can_manage = Current.apoiador.candidato? || Current.apoiador.coordenador_geral? || comunicado.lider_id == Current.apoiador.id %>
+        
+        <% if can_manage %>
+          <div class="dropdown">
+            <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+              <li><%= link_to edit_mobile_comunicado_path(comunicado), class: "dropdown-item" do %>
+                <i class="bi bi-pencil me-2"></i>Editar
+              <% end %></li>
+              <li><%= button_to mobile_comunicado_path(comunicado), method: :delete, class: "dropdown-item text-danger", form: { style: "display:inline" } do %>
+                <i class="bi bi-trash me-2"></i>Excluir
+              <% end %></li>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if @comunicados.empty? %>
+  <div class="text-center py-5 text-muted">
+    <i class="bi bi-megaphone fs-1 mb-3 d-block"></i>
+    <p>Nenhum comunicado encontrado.</p>
+  </div>
+<% end %>

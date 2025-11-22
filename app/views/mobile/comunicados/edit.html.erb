@@ -1,0 +1,41 @@
+<div class="d-flex align-items-center mb-4">
+  <%= link_to mobile_comunicados_path, class: "btn btn-link text-dark p-0 me-3" do %>
+    <i class="bi bi-arrow-left fs-4"></i>
+  <% end %>
+  <h5 class="fw-bold mb-0">Editar Comunicado</h5>
+</div>
+
+<div class="mobile-card">
+  <div class="card-body">
+    <%= form_with(model: [:mobile, @comunicado], local: true) do |f| %>
+      <% if @comunicado.errors.any? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            <% @comunicado.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= f.label :titulo, "Título", class: "form-label fw-bold" %>
+        <%= f.text_field :titulo, class: "form-control mobile-input", placeholder: "Ex: Reunião Geral" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :data, "Data", class: "form-label fw-bold" %>
+        <%= f.date_field :data, class: "form-control mobile-input" %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :mensagem, "Mensagem", class: "form-label fw-bold" %>
+        <%= f.text_area :mensagem, rows: 5, class: "form-control mobile-input", placeholder: "Digite o conteúdo do comunicado..." %>
+      </div>
+
+      <div class="d-grid">
+        <%= f.submit "Atualizar Comunicado", class: "btn btn-primary rounded-pill py-2 fw-bold" %>
+      </div>
+    <% end %>
+  </div>
+</div>

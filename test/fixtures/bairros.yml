@@ -1,0 +1,10 @@
+# Fixtures para Bairros
+centro_bairro:
+  id: 1
+  name: "Centro"
+  regiao_id: 1
+
+perpetuo_socorro:
+  id: 2
+  name: "Perpétuo Socorro"
+  regiao_id: 1

@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "rdbg",
+      "name": "Debug Rails App",
+      "request": "launch",
+      "script": "${workspaceFolder}/bin/rails",
+      "args": [
+        "server"
+      ],
+      "askParameters": false
+    },
+    {
+      "type": "rdbg",
+      "name": "Attach with rdbg",
+      "request": "attach"
+    }
+  ]
+}

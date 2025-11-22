@@ -1,0 +1,37 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h2 mb-0 text-gray-800">Detalhes do Município</h1>
+        <%= link_to municipios_path, class: "btn btn-outline-secondary" do %>
+          <i class="bi bi-arrow-left"></i> Voltar
+        <% end %>
+      </div>
+
+      <div class="card card-custom mb-4">
+        <div class="card-body text-center py-5">
+          <div class="mb-4">
+            <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle" style="width: 80px; height: 80px;">
+              <i class="bi bi-geo-alt display-4"></i>
+            </div>
+          </div>
+          
+          <h2 class="card-title mb-1"><%= @municipio.nome %></h2>
+          <p class="text-muted">Município</p>
+
+          <div class="d-flex justify-content-center gap-2 mt-4">
+            <%= link_to municipio_regioes_path(@municipio), class: "btn btn-info text-white" do %>
+              <i class="bi bi-map me-2"></i>Gerenciar Regiões
+            <% end %>
+            <%= link_to edit_municipio_path(@municipio), class: "btn btn-primary" do %>
+              <i class="bi bi-pencil me-2"></i>Editar
+            <% end %>
+            <%= button_to @municipio, method: :delete, class: "btn btn-danger", form: { class: "d-inline" }, data: { turbo_confirm: "Tem certeza que deseja excluir este município?" } do %>
+              <i class="bi bi-trash me-2"></i>Excluir
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

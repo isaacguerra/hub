@@ -1,0 +1,60 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-1">
+          <li class="breadcrumb-item"><%= link_to "Municípios", municipios_path %></li>
+          <li class="breadcrumb-item"><%= link_to @municipio.nome, municipio_regioes_path(@municipio) %></li>
+          <li class="breadcrumb-item active" aria-current="page"><%= @regiao.nome %></li>
+        </ol>
+      </nav>
+      <h1 class="h2 mb-0 text-gray-800">Bairros</h1>
+    </div>
+    <%= link_to new_municipio_regiao_bairro_path(@municipio, @regiao), class: "btn btn-primary" do %>
+      <i class="bi bi-plus-lg"></i> Novo Bairro
+    <% end %>
+  </div>
+
+  <div class="card card-custom">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="bg-light">
+            <tr>
+              <th class="ps-4">Nome</th>
+              <th class="text-end pe-4">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @bairros.each do |bairro| %>
+              <tr>
+                <td class="ps-4 fw-medium"><%= bairro.nome %></td>
+                <td class="text-end pe-4">
+                  <div class="btn-group">
+                    <%= link_to municipio_regiao_bairro_path(@municipio, @regiao, bairro), class: "btn btn-sm btn-outline-primary", title: "Ver Detalhes" do %>
+                      <i class="bi bi-eye"></i>
+                    <% end %>
+                    <%= link_to edit_municipio_regiao_bairro_path(@municipio, @regiao, bairro), class: "btn btn-sm btn-outline-secondary", title: "Editar" do %>
+                      <i class="bi bi-pencil"></i>
+                    <% end %>
+                    <%= button_to municipio_regiao_bairro_path(@municipio, @regiao, bairro), method: :delete, class: "btn btn-sm btn-outline-danger", form: { style: "display:inline-block;" }, title: "Excluir", data: { turbo_confirm: "Tem certeza?" } do %>
+                      <i class="bi bi-trash"></i>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+            <% if @bairros.empty? %>
+              <tr>
+                <td colspan="2" class="text-center py-5 text-muted">
+                  <i class="bi bi-houses display-4 d-block mb-3"></i>
+                  Nenhum bairro cadastrado nesta região
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

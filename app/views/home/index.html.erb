@@ -1,0 +1,34 @@
+<div class="container-fluid py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 fw-bold text-primary-custom mb-0">Dashboard</h1>
+      <p class="text-muted mb-0">Visão geral da campanha e apoiadores</p>
+    </div>
+    <div>
+      <%= link_to new_apoiador_path, class: "btn btn-primary-custom shadow-sm" do %>
+        <i class="bi bi-plus-lg me-2"></i>Novo Apoiador
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <%= render "filtros" %>
+
+  <!-- Grid de Apoiadores -->
+  <% if @apoiadores.any? %>
+    <div class="row">
+      <% @apoiadores.each do |apoiador| %>
+        <%= render "apoiador_card", apoiador: apoiador %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-5">
+      <div class="mb-3">
+        <i class="bi bi-search display-1 text-muted opacity-25"></i>
+      </div>
+      <h4 class="text-muted">Nenhum apoiador encontrado</h4>
+      <p class="text-muted mb-4">Tente ajustar os filtros ou cadastre um novo apoiador.</p>
+      <%= link_to "Limpar Filtros", root_path, class: "btn btn-outline-secondary" %>
+    </div>
+  <% end %>
+</div>

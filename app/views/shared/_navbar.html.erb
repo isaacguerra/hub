@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+  <div class="container-fluid">
+    <!-- Botão do Drawer -->
+    <button class="btn text-white me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+      <i class="bi bi-list fs-4"></i>
+    </button>
+
+    <!-- Logo e Título -->
+    <a class="navbar-brand" href="<%= root_path %>">
+      <img src="/logo.png" alt="Logo Ivone Chagas">
+      <div class="d-flex flex-column">
+        <span>Amigos da Ivone Chagas</span>
+        <span class="navbar-subtitle">Vamos melhorar o Amapá Juntos!</span>
+      </div>
+    </a>
+
+    <!-- Menu do Usuário (Direita) -->
+    <div class="ms-auto dropdown">
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+        <% if Current.avatar %>
+          <img src="<%= Current.avatar %>" alt="Avatar" class="user-avatar-nav me-2">
+        <% else %>
+          <div class="user-avatar-nav me-2 d-flex align-items-center justify-content-center bg-light text-primary">
+            <i class="bi bi-person-fill"></i>
+          </div>
+        <% end %>
+        <span class="d-none d-md-inline"><%= Current.apoiador&.nome || "Visitante" %></span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+        <% if Current.apoiador %>
+          <li><h6 class="dropdown-header">Minha Conta</h6></li>
+          <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i>Meu Perfil</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <%= button_to logout_path, method: :delete, class: "dropdown-item text-danger d-flex align-items-center" do %>
+              <i class="bi bi-box-arrow-right me-2"></i> Sair
+            <% end %>
+          </li>
+        <% else %>
+          <li><%= link_to "Entrar", login_path, class: "dropdown-item" %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

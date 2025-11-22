@@ -1,0 +1,187 @@
+/*
+ * This is a manifest file that'll be compiled into application.css.
+ *
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
+ *
+ * Consider organizing styles into separate files for maintainability.
+ */
+
+/* Custom Styles for AppIvone */
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #34495e;
+  --accent-color: #3498db;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --danger-color: #c0392b;
+  --light-bg: #f8f9fa;
+  --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --card-radius: 12px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f4f6f9;
+  color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+.text-primary-custom {
+  color: var(--primary-color);
+}
+
+.bg-primary-custom {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary-custom {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-primary-custom:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  transform: translateY(-1px);
+}
+
+.card-custom {
+  border: none;
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.2s ease;
+  overflow: hidden;
+}
+
+.card-custom:hover {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  background-color: white;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  padding: 1rem 1.5rem;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+}
+
+.form-label {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.alert {
+  border-radius: var(--card-radius);
+  border: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Navbar Styles */
+.navbar-custom {
+  background-color: var(--primary-color);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 0.75rem 1rem;
+}
+
+.navbar-custom .navbar-brand {
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+.navbar-custom .navbar-brand:hover {
+  color: white;
+}
+
+.navbar-custom .navbar-brand img {
+  height: 45px;
+  width: auto;
+}
+
+.navbar-custom .navbar-subtitle {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  font-weight: 400;
+  display: block;
+}
+
+.user-avatar-nav {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.2);
+}
+
+/* Drawer/Sidebar Styles */
+.sidebar-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1.25rem 1.5rem;
+}
+
+.sidebar-menu .nav-link {
+  color: var(--secondary-color);
+  padding: 0.8rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+  font-weight: 500;
+}
+
+.sidebar-menu .nav-link:hover {
+  background-color: rgba(0,0,0,0.03);
+  color: var(--primary-color);
+  padding-left: 1.75rem;
+}
+
+.sidebar-menu .nav-link.active {
+  background-color: rgba(44, 62, 80, 0.08);
+  color: var(--primary-color);
+  border-left-color: var(--primary-color);
+  font-weight: 600;
+}
+
+.sidebar-menu .nav-link i {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.sidebar-menu .nav-link.active i {
+  opacity: 1;
+}
+
+/* Footer Styles */
+.footer-custom {
+  background-color: white;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  padding: 2rem 0;
+  margin-top: auto;
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+}
+
+.footer-custom a:hover {
+  color: var(--primary-color) !important;
+}

@@ -1,0 +1,61 @@
+<div class="d-flex align-items-center mb-4">
+  <%= link_to mobile_apoiadores_path, class: "btn btn-link text-dark p-0 me-3" do %>
+    <i class="bi bi-arrow-left fs-4"></i>
+  <% end %>
+  <h5 class="fw-bold mb-0">Novo Apoiador</h5>
+</div>
+
+<div class="mobile-card">
+  <div class="card-body">
+    <%= form_with(model: [:mobile, @apoiador], local: true) do |f| %>
+      <% if @apoiador.errors.any? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            <% @apoiador.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= f.label :nome, "Nome Completo", class: "form-label fw-bold" %>
+        <%= f.text_field :nome, class: "form-control mobile-input", placeholder: "Nome do apoiador" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :whatsapp, "WhatsApp", class: "form-label fw-bold" %>
+        <%= f.telephone_field :whatsapp, class: "form-control mobile-input", placeholder: "(11) 99999-9999" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :email, "E-mail", class: "form-label fw-bold" %>
+        <%= f.email_field :email, class: "form-control mobile-input", placeholder: "email@exemplo.com" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :nascimento, "Data de Nascimento", class: "form-label fw-bold" %>
+        <%= f.date_field :nascimento, class: "form-control mobile-input" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :municipio_id, "Município", class: "form-label fw-bold" %>
+        <%= f.collection_select :municipio_id, @municipios, :id, :nome, { prompt: "Selecione" }, { class: "form-select mobile-input" } %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :bairro_id, "Bairro", class: "form-label fw-bold" %>
+        <%= f.collection_select :bairro_id, @bairros, :id, :nome, { prompt: "Selecione" }, { class: "form-select mobile-input" } %>
+      </div>
+
+      <div class="mb-4">
+        <%= f.label :endereco, "Endereço", class: "form-label fw-bold" %>
+        <%= f.text_field :endereco, class: "form-control mobile-input", placeholder: "Rua, Número..." %>
+      </div>
+
+      <div class="d-grid">
+        <%= f.submit "Cadastrar Apoiador", class: "btn btn-primary rounded-pill py-2 fw-bold" %>
+      </div>
+    <% end %>
+  </div>
+</div>
