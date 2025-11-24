@@ -32,9 +32,15 @@
           </div>
         </div>
         
-        <%= button_to mobile_logout_path, method: :delete, class: "btn btn-link text-white p-0 opacity-75 hover-opacity-100", form: { class: "d-inline" } do %>
-          <i class="bi bi-power fs-3"></i>
-        <% end %>
+        <div class="d-flex align-items-center gap-3">
+          <%= link_to mobile_dashboard_path, class: "text-white opacity-75 hover-opacity-100", title: "Início" do %>
+            <i class="bi bi-house-door-fill fs-3"></i>
+          <% end %>
+
+          <%= button_to mobile_logout_path, method: :delete, class: "btn btn-link text-white p-0 opacity-75 hover-opacity-100", form: { class: "d-inline" } do %>
+            <i class="bi bi-power fs-3"></i>
+          <% end %>
+        </div>
       <% else %>
         <div>
           <h5 class="fw-bold">Appivone</h5>

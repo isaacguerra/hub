@@ -85,23 +85,6 @@
 
       <h6 class="fw-bold mb-3 mt-4 text-primary">Redes Sociais (Opcional)</h6>
 
-      <div class="mb-3">
-        <%= f.label :municipio_id, "Município", class: "form-label fw-bold" %>
-        <%= f.collection_select :municipio_id, @municipios, :id, :name, { prompt: "Selecione" }, { class: "form-select" } %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :regiao_id, "Região", class: "form-label fw-bold" %>
-        <%= f.collection_select :regiao_id, @regioes, :id, :name, { prompt: "Selecione" }, { class: "form-select" } %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :bairro_id, "Bairro", class: "form-label fw-bold" %>
-        <%= f.collection_select :bairro_id, @bairros, :id, :name, { prompt: "Selecione" }, { class: "form-select" } %>
-      </div>
-
-      <h6 class="fw-bold mb-3 mt-4 text-primary">Redes Sociais (Opcional)</h6>
-
       <div class="row g-2">
         <div class="col-4">
           <%= f.text_field :instagram, class: "form-control", placeholder: "Instagram" %>

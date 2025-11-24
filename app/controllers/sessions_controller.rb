@@ -45,7 +45,11 @@ class SessionsController < ApplicationController
       session[:apoiador_id] = @apoiador.id
       session.delete(:auth_apoiador_id)
 
-      redirect_to root_path, notice: "Bem-vindo, #{@apoiador.name}!"
+      if mobile_device?
+        redirect_to mobile_root_path, notice: "Bem-vindo, #{@apoiador.name}!"
+      else
+        redirect_to root_path, notice: "Bem-vindo, #{@apoiador.name}!"
+      end
     else
       flash.now[:alert] = "Código inválido ou expirado."
       render :verify, status: :unprocessable_entity

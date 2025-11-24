@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   before_action :set_current_apoiador
   before_action :authenticate_apoiador!
 
+  helper_method :mobile_device?
+
   private
 
   def set_current_apoiador
@@ -20,5 +22,9 @@ class ApplicationController < ActionController::Base
     unless Current.apoiador
       redirect_to login_path, alert: "Você precisa estar logado para acessar essa página."
     end
+  end
+
+  def mobile_device?
+    request.user_agent =~ /Mobile|webOS|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
   end
 end

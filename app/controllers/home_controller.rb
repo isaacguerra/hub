@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_action :redirect_mobile_users
+
   def index
     if Current.apoiador
       @apoiadores = Apoiador.includes(:funcao, :municipio, :regiao, :bairro, :lider, :subordinados, :convites_enviados)
@@ -11,6 +13,14 @@ class HomeController < ApplicationController
       @apoiadores = @apoiadores.where(bairro_id: params[:bairro_id]) if params[:bairro_id].present?
 
       @apoiadores = @apoiadores.order("apoiadores.created_at DESC")
+    end
+  end
+
+  private
+
+  def redirect_mobile_users
+    if mobile_device?
+      redirect_to mobile_root_path
     end
   end
 end
