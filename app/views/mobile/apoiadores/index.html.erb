@@ -10,45 +10,63 @@
   <% end %>
 </div>
 
+<!-- Filtro de Busca -->
+<div class="mb-3">
+  <%= form_with url: mobile_apoiadores_path, method: :get, class: "d-flex gap-2" do |f| %>
+    <div class="input-group">
+      <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+      <%= f.text_field :nome, value: params[:nome], class: "form-control border-start-0 ps-0", placeholder: "Buscar por nome..." %>
+    </div>
+    <%= f.submit "Filtrar", class: "btn btn-outline-primary" %>
+  <% end %>
+</div>
+
 <% @apoiadores.each do |apoiador| %>
-  <div class="mobile-card">
-    <div class="card-body">
-      <div class="d-flex align-items-center mb-3 justify-content-between">
-        <div class="d-flex align-items-center">
-          <div class="avatar-circle bg-primary text-white me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
-            <% if apoiador.foto_perfil_url.present? %>
-              <img src="<%= apoiador.foto_perfil_url %>" alt="<%= apoiador.nome %>" class="w-100 h-100 rounded-circle" style="object-fit: cover;">
-            <% else %>
-              <%= apoiador.nome.first.upcase %>
-            <% end %>
+  <%= link_to mobile_apoiador_path(apoiador), class: "text-decoration-none text-dark" do %>
+    <div class="mobile-card mb-3">
+      <div class="card-body">
+        <div class="d-flex align-items-center mb-3 justify-content-between">
+          <div class="d-flex align-items-center">
+            <div class="avatar-circle bg-primary text-white me-3" style="width: 50px; height: 50px; font-size: 1.2rem;">
+              <% if apoiador.foto_perfil_url.present? %>
+                <img src="<%= apoiador.foto_perfil_url %>" alt="<%= apoiador.nome %>" class="w-100 h-100 rounded-circle" style="object-fit: cover;">
+              <% else %>
+                <%= apoiador.nome.first.upcase %>
+              <% end %>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0"><%= apoiador.nome %></h6>
+              <span class="badge bg-light text-dark border"><%= apoiador.funcao.nome %></span>
+            </div>
           </div>
-          <div>
-            <h6 class="fw-bold mb-0"><%= apoiador.nome %></h6>
-            <span class="badge bg-light text-dark border"><%= apoiador.funcao.nome %></span>
+          
+          <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">
+            <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
+              <li><%= link_to edit_mobile_apoiador_path(apoiador), class: "dropdown-item" do %>
+                <i class="bi bi-pencil me-2"></i>Editar
+              <% end %></li>
+              <li><%= button_to mobile_apoiador_path(apoiador), method: :delete, class: "dropdown-item text-danger", form: { style: "display:inline" } do %>
+                <i class="bi bi-trash me-2"></i>Excluir
+              <% end %></li>
+            </ul>
           </div>
         </div>
-        
-        <div class="dropdown">
-          <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
-            <i class="bi bi-three-dots-vertical"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
-            <li><%= link_to edit_mobile_apoiador_path(apoiador), class: "dropdown-item" do %>
-              <i class="bi bi-pencil me-2"></i>Editar
-            <% end %></li>
-            <li><%= button_to mobile_apoiador_path(apoiador), method: :delete, class: "dropdown-item text-danger", form: { style: "display:inline" } do %>
-              <i class="bi bi-trash me-2"></i>Excluir
-            <% end %></li>
-          </ul>
+
+        <div class="row g-2 small text-muted">
+          <div class="col-6">
+            <i class="bi bi-geo-alt me-1"></i> <%= apoiador.municipio.nome %>
+          </div>
+          <div class="col-6">
+            <i class="bi bi-people me-1"></i> <%= apoiador.subordinados.count %> liderados
+          </div>
         </div>
       </div>
-
-      <div class="row g-2 small text-muted">
-        <div class="col-6">
-          <i class="bi bi-geo-alt me-1"></i> <%= apoiador.municipio.nome %>
-        </div>
-        <div class="col-6">
-          <i class="bi bi-map me-1"></i> <%= apoiador.regiao.nome %>
+    </div>
+  <% end %>
+<% end %>          <i class="bi bi-map me-1"></i> <%= apoiador.regiao.nome %>
         </div>
         <div class="col-6">
           <i class="bi bi-house me-1"></i> <%= apoiador.bairro.nome %>

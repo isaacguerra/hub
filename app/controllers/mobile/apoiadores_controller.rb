@@ -1,12 +1,16 @@
 module Mobile
   class ApoiadoresController < BaseController
-    before_action :set_apoiador, only: %i[edit update destroy]
+    before_action :set_apoiador, only: %i[show edit update destroy]
     before_action :authorize_create, only: %i[new create]
     before_action :authorize_manage, only: %i[edit update destroy]
     before_action :load_auxiliary_data, only: %i[new create edit update]
 
     def index
       @apoiadores = scope_apoiadores.includes(:funcao, :municipio, :regiao, :bairro, :lider).order(:nome)
+      @apoiadores = @apoiadores.where("name ILIKE ?", "%#{params[:nome]}%") if params[:nome].present?
+    end
+
+    def show
     end
 
     def new
