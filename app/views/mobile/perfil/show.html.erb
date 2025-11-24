@@ -1,0 +1,143 @@
+<div class="d-flex align-items-center mb-4">
+  <%= link_to mobile_dashboard_path, class: "btn btn-link text-dark p-0 me-3" do %>
+    <i class="bi bi-arrow-left fs-4"></i>
+  <% end %>
+  <h5 class="fw-bold mb-0">Meu Perfil</h5>
+</div>
+
+<!-- Header Profile -->
+<div class="mobile-card mb-3 text-center py-4">
+  <div class="avatar-circle bg-primary text-white mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem;">
+    <% if @apoiador.foto_perfil_url.present? %>
+      <img src="<%= @apoiador.foto_perfil_url %>" alt="<%= @apoiador.nome %>" class="w-100 h-100 rounded-circle" style="object-fit: cover;">
+    <% else %>
+      <%= @apoiador.nome.first.upcase %>
+    <% end %>
+  </div>
+  <h5 class="fw-bold mb-1"><%= @apoiador.nome %></h5>
+  <span class="badge bg-light text-dark border mb-2"><%= @apoiador.funcao.nome %></span>
+  <p class="text-muted small mb-0">
+    <i class="bi bi-geo-alt me-1"></i> <%= @apoiador.municipio.nome %> - <%= @apoiador.bairro.nome %>
+  </p>
+</div>
+
+<!-- Dados Pessoais -->
+<div class="mobile-card mb-3">
+  <div class="card-body">
+    <h6 class="fw-bold mb-3 border-bottom pb-2">Dados Pessoais</h6>
+    
+    <div class="mb-2">
+      <small class="text-muted d-block">WhatsApp</small>
+      <span class="fw-medium"><%= @apoiador.whatsapp %></span>
+    </div>
+    
+    <div class="mb-2">
+      <small class="text-muted d-block">E-mail</small>
+      <span class="fw-medium"><%= @apoiador.email.presence || "Não informado" %></span>
+    </div>
+
+    <div class="mb-2">
+      <small class="text-muted d-block">Função</small>
+      <span class="fw-medium"><%= @apoiador.funcao.nome %></span>
+    </div>
+
+    <div>
+      <small class="text-muted d-block">Localização</small>
+      <span class="fw-medium">
+        <%= @apoiador.municipio.nome %> / <%= @apoiador.regiao.nome %> / <%= @apoiador.bairro.nome %>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- Liderança e Rede -->
+<div class="mobile-card mb-3">
+  <div class="card-body">
+    <h6 class="fw-bold mb-3 border-bottom pb-2">Rede de Apoio</h6>
+    
+    <% if @apoiador.lider %>
+      <div class="d-flex align-items-center mb-3 p-2 bg-light rounded">
+        <div class="me-3">
+          <i class="bi bi-person-badge fs-3 text-primary"></i>
+        </div>
+        <div>
+          <small class="text-muted d-block">Meu Líder</small>
+          <span class="fw-bold"><%= @apoiador.lider.nome %></span>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="row g-2 text-center">
+      <div class="col-6">
+        <div class="border rounded p-2">
+          <span class="d-block h4 fw-bold text-primary mb-0"><%= @apoiador.total_subordinados_diretos %></span>
+          <small class="text-muted">Diretos</small>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="border rounded p-2">
+          <span class="d-block h4 fw-bold text-primary mb-0"><%= @apoiador.todos_subordinados.count %></span>
+          <small class="text-muted">Total Rede</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Convites Enviados -->
+<div class="mobile-card mb-3">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+      <h6 class="fw-bold mb-0">Convites Enviados</h6>
+      <%= link_to "Ver todos", mobile_convites_path, class: "small text-decoration-none" %>
+    </div>
+
+    <% if @apoiador.convites_enviados.any? %>
+      <% @apoiador.convites_enviados.limit(3).each do |convite| %>
+        <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-light last-no-border">
+          <div>
+            <span class="d-block fw-medium"><%= convite.nome_convidado %></span>
+            <small class="text-muted"><%= convite.created_at.strftime("%d/%m") %></small>
+          </div>
+          <% 
+            status_class = case convite.status
+                           when 'aceito' then 'bg-success'
+                           when 'recusado' then 'bg-danger'
+                           else 'bg-warning text-dark'
+                           end
+          %>
+          <span class="badge <%= status_class %> rounded-pill"><%= convite.status.capitalize %></span>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-muted small text-center mb-0">Nenhum convite enviado.</p>
+    <% end %>
+  </div>
+</div>
+
+<!-- Visitas Recebidas -->
+<div class="mobile-card mb-3">
+  <div class="card-body">
+    <h6 class="fw-bold mb-3 border-bottom pb-2">Visitas Recebidas</h6>
+    
+    <% if @apoiador.visitas_recebidas.any? %>
+      <% @apoiador.visitas_recebidas.order(created_at: :desc).limit(3).each do |visita| %>
+        <div class="mb-3 pb-2 border-bottom border-light last-no-border">
+          <div class="d-flex justify-content-between mb-1">
+            <span class="fw-medium"><%= visita.lider.nome.split.first %> (Líder)</span>
+            <small class="text-muted"><%= visita.created_at.strftime("%d/%m/%Y") %></small>
+          </div>
+          <p class="text-muted small mb-0 fst-italic">"<%= truncate(visita.relato, length: 60) %>"</p>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-muted small text-center mb-0">Nenhuma visita registrada.</p>
+    <% end %>
+  </div>
+</div>
+
+<div class="text-center py-3">
+  <%= button_to logout_path, method: :delete, class: "btn btn-outline-danger rounded-pill px-4" do %>
+    <i class="bi bi-box-arrow-right me-2"></i> Sair do App
+  <% end %>
+</div>

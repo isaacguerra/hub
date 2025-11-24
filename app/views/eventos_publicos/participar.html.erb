@@ -1,0 +1,32 @@
+<div class="text-center py-5">
+  <div class="mb-4 text-success">
+    <i class="bi bi-calendar-check" style="font-size: 4rem;"></i>
+  </div>
+  
+  <h2 class="fw-bold mb-3">Presença Confirmada!</h2>
+  <p class="lead text-muted mb-4">Sua participação no evento foi registrada com sucesso.</p>
+  
+  <% if @evento %>
+    <div class="card border-0 bg-light p-4 mb-4 mx-auto text-start" style="max-width: 500px;">
+      <h5 class="fw-bold mb-2"><%= @evento.titulo %></h5>
+      
+      <div class="d-flex align-items-center mb-2 text-primary">
+        <i class="bi bi-calendar-event me-2"></i>
+        <span class="fw-bold"><%= @evento.data.strftime("%d/%m/%Y") %></span>
+        <span class="mx-2">•</span>
+        <i class="bi bi-clock me-2"></i>
+        <span class="fw-bold"><%= @evento.data.strftime("%H:%M") %></span>
+      </div>
+
+      <div class="mb-3 text-muted">
+        <i class="bi bi-geo-alt me-2"></i> <%= @evento.local || @evento.coordenador&.municipio&.name %>
+      </div>
+
+      <% if @evento.descricao.present? %>
+        <p class="mb-0 text-muted small border-top pt-3"><%= @evento.descricao %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <%= link_to "Acessar Sistema", login_path, class: "btn btn-primary rounded-pill px-5 py-2 fw-bold" %>
+</div>

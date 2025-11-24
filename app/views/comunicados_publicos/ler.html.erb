@@ -1,0 +1,22 @@
+<div class="text-center py-5">
+  <div class="mb-4 text-primary">
+    <i class="bi bi-check2-all" style="font-size: 4rem;"></i>
+  </div>
+  
+  <h2 class="fw-bold mb-3">Leitura Confirmada!</h2>
+  <p class="lead text-muted mb-4">Obrigado por confirmar o recebimento do comunicado.</p>
+  
+  <% if @comunicado %>
+    <div class="card border-0 bg-light p-4 mb-4 mx-auto text-start" style="max-width: 500px;">
+      <h5 class="fw-bold mb-2"><%= @comunicado.titulo %></h5>
+      <p class="mb-0 text-muted"><%= @comunicado.mensagem %></p>
+      <div class="mt-3 pt-3 border-top">
+        <small class="text-muted">
+          <i class="bi bi-calendar me-1"></i> <%= @comunicado.data.strftime("%d/%m/%Y") %>
+        </small>
+      </div>
+    </div>
+  <% end %>
+
+  <%= link_to "Acessar Sistema", login_path, class: "btn btn-primary rounded-pill px-5 py-2 fw-bold" %>
+</div>

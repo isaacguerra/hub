@@ -34,6 +34,17 @@ Rails.application.routes.draw do
   post "sessions/verify", to: "sessions#verify"
   delete "logout", to: "sessions#destroy"
 
+  # Public Invite Routes
+  get "convite/aceitar/:id", to: "convites_publicos#show", as: :aceitar_convite
+  post "convite/aceitar/:id", to: "convites_publicos#accept"
+  get "convite/sucesso", to: "convites_publicos#success", as: :sucesso_convite
+
+  # Public Comunicado Routes
+  get "comunicado/:comunicado_id/ler/:apoiador_id", to: "comunicados_publicos#ler", as: :ler_comunicado
+
+  # Public Evento Routes
+  get "evento/:evento_id/participar/:apoiador_id", to: "eventos_publicos#participar", as: :participar_evento
+
   resources :funcoes
   resources :eventos
   resources :comunicados

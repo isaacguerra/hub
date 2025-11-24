@@ -1,0 +1,87 @@
+<div class="text-center mb-4">
+  <h4 class="fw-bold">Aceitar Convite</h4>
+  <p class="text-muted">Complete seu cadastro para se juntar ao time!</p>
+</div>
+
+<div class="card shadow-sm border-0 rounded-4">
+  <div class="card-body p-4">
+    <div class="alert alert-info d-flex align-items-center mb-4">
+      <i class="bi bi-person-check-fill fs-4 me-3"></i>
+      <div>
+        <small class="d-block">Você foi convidado por:</small>
+        <strong><%= @convite.enviado_por.nome %></strong>
+      </div>
+    </div>
+
+    <%= form_with(model: @apoiador, url: aceitar_convite_path(@convite), local: true) do |f| %>
+      <% if @apoiador.errors.any? %>
+        <div class="alert alert-danger">
+          <ul class="mb-0 small">
+            <% @apoiador.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <h6 class="fw-bold mb-3 text-primary">Seus Dados</h6>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">Nome</label>
+        <input type="text" class="form-control bg-light" value="<%= @convite.nome %>" disabled>
+        <small class="text-muted">O nome foi definido no convite.</small>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-bold">WhatsApp</label>
+        <input type="text" class="form-control bg-light" value="<%= @convite.whatsapp %>" disabled>
+        <small class="text-muted">O número foi definido no convite.</small>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :email, "E-mail", class: "form-label fw-bold" %>
+        <%= f.email_field :email, class: "form-control", placeholder: "seu@email.com" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :nascimento, "Data de Nascimento", class: "form-label fw-bold" %>
+        <%= f.date_field :nascimento, class: "form-control" %>
+      </div>
+
+      <h6 class="fw-bold mb-3 mt-4 text-primary">Localização</h6>
+
+      <div class="mb-3">
+        <%= f.label :municipio_id, "Município", class: "form-label fw-bold" %>
+        <%= f.collection_select :municipio_id, @municipios, :id, :name, { prompt: "Selecione" }, { class: "form-select" } %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :regiao_id, "Região", class: "form-label fw-bold" %>
+        <%= f.collection_select :regiao_id, @regioes, :id, :name, { prompt: "Selecione" }, { class: "form-select" } %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :bairro_id, "Bairro", class: "form-label fw-bold" %>
+        <%= f.collection_select :bairro_id, @bairros, :id, :name, { prompt: "Selecione" }, { class: "form-select" } %>
+      </div>
+
+      <h6 class="fw-bold mb-3 mt-4 text-primary">Redes Sociais (Opcional)</h6>
+
+      <div class="row g-2">
+        <div class="col-4">
+          <%= f.text_field :instagram, class: "form-control", placeholder: "Instagram" %>
+        </div>
+        <div class="col-4">
+          <%= f.text_field :facebook, class: "form-control", placeholder: "Facebook" %>
+        </div>
+        <div class="col-4">
+          <%= f.text_field :tiktok, class: "form-control", placeholder: "TikTok" %>
+        </div>
+      </div>
+
+      <div class="d-grid mt-4">
+        <%= f.submit "Confirmar Cadastro", class: "btn btn-primary rounded-pill py-2 fw-bold" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -41,7 +41,7 @@ module Mensageria
         end
 
         def enviar_para_apoiador(comunicado, apoiador)
-          texto = Mensagens::Comunicados.novo_comunicado(comunicado)
+          texto = Mensagens::Comunicados.novo_comunicado(comunicado, apoiador)
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
           Logger.log_mensagem_apoiador(
@@ -49,6 +49,47 @@ module Mensageria
             image_url: imagem_whatsapp,
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
             mensagem: texto
+          )
+        end
+
+        def notificar_engajamento(comunicado_apoiador)
+          comunicado = comunicado_apoiador.comunicado
+          apoiador = comunicado_apoiador.apoiador
+          criador = comunicado.lider
+
+          # 1. Confirmar para o apoiador
+          texto_apoiador = Mensagens::Comunicados.confirmacao_leitura_apoiador(comunicado, apoiador)
+          imagem_apoiador = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
+          
+          Logger.log_mensagem_apoiador(
+            fila: "mensageria",
+            image_url: imagem_apoiador,
+            whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
+            mensagem: texto_apoiador
+          )
+
+          # 2. Notificar criador do comunicado
+          if criador
+             texto_criador = Mensagens::Comunicados.notificacao_engajamento_criador(comunicado, apoiador)
+             imagem_criador = Utils::BuscaImagemWhatsapp.buscar(criador.whatsapp)
+
+             Logger.log_mensagem_apoiador(
+               fila: "mensageria",
+               image_url: imagem_criador,
+               whatsapp: Helpers.format_phone_number(criador.whatsapp),
+               mensagem: texto_criador
+             )
+          end
+
+          # 3. Notificar liderança superior
+          texto_lideranca = Mensagens::Comunicados.notificacao_engajamento_lideranca(comunicado, apoiador)
+          Lideranca.notificar(
+            apoiador: apoiador,
+            mensagem: texto_lideranca
+          )
+        rescue StandardError => e
+          Rails.logger.error "Erro ao notificar engajamento: #{e.message}"
+        end            mensagem: texto
           )
         rescue StandardError => e
           Rails.logger.error "Erro ao enviar comunicado #{comunicado.id} para apoiador #{apoiador.id}: #{e.message}"

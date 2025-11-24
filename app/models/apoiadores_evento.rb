@@ -14,7 +14,7 @@ class ApoiadoresEvento < ApplicationRecord
   private
 
   def notificar_participacao
-    Mensageria::Notificacoes::Eventos.notificar_participante(evento, apoiador)
+    Mensageria::Notificacoes::Eventos.notificar_participacao_confirmada(self)
   rescue StandardError => e
     Rails.logger.error "Erro ao notificar apoiador #{apoiador_id} do evento #{evento_id}: #{e.message}"
   end
