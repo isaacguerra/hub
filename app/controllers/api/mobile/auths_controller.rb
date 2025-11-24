@@ -2,9 +2,10 @@ module Api
   module Mobile
     class AuthsController < ApplicationController
       skip_before_action :verify_authenticity_token
+      skip_before_action :authenticate_apoiador!, only: [ :login ]
 
       def login
-        whatsapp = params[:whatsapp]
+        whatsapp = params[:whatsapp] || params[:whatsappNumber]
 
         unless whatsapp.present?
           render json: { error: "WhatsApp é obrigatório" }, status: :bad_request
