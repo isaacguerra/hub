@@ -57,8 +57,7 @@ class ConvitesPublicosController < ApplicationController
 
   def apoiador_params
     params.require(:apoiador).permit(
-      :email, :nascimento, :municipio_id, :regiao_id, :bairro_id,
-      :endereco, :numero, :complemento, :cep,
+      :email, :municipio_id, :regiao_id, :bairro_id,
       :facebook, :instagram, :tiktok, :titulo_eleitoral, :zona_eleitoral, :secao_eleitoral
     )
   end

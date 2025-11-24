@@ -4,57 +4,57 @@ export default class extends Controller {
   static targets = ["municipio", "regiao", "bairro"]
 
   connect() {
-    console.log("Location select controller connected")
+    // Store original options to restore them later
+    // We skip the first option assuming it is the placeholder "Selecione..."
+    this.allRegiaoOptions = Array.from(this.regiaoTarget.querySelectorAll("option")).slice(1)
+    this.allBairroOptions = Array.from(this.bairroTarget.querySelectorAll("option")).slice(1)
+    
+    // Initial filter based on current values (if any)
+    this.filterRegioes()
   }
 
-  async changeMunicipio() {
+  filterRegioes() {
     const municipioId = this.municipioTarget.value
-    this.regiaoTarget.innerHTML = '<option value="">Selecione a Região</option>'
-    this.bairroTarget.innerHTML = '<option value="">Selecione o Bairro</option>'
-    this.regiaoTarget.disabled = true
-    this.bairroTarget.disabled = true
+    const regiaoSelect = this.regiaoTarget
+    const currentRegiaoValue = regiaoSelect.value
 
-    if (!municipioId) return
+    // Clear existing options (keep placeholder)
+    regiaoSelect.length = 1
 
-    try {
-      const response = await fetch(`/municipios/${municipioId}/regioes.json`)
-      if (!response.ok) throw new Error('Network response was not ok')
-      const regioes = await response.json()
+    // Add filtered options
+    this.allRegiaoOptions.forEach(option => {
+      if (municipioId && option.dataset.municipioId == municipioId) {
+        regiaoSelect.add(option.cloneNode(true))
+      }
+    })
 
-      regioes.forEach(regiao => {
-        const option = document.createElement("option")
-        option.value = regiao.id
-        option.text = regiao.nome
-        this.regiaoTarget.appendChild(option)
-      })
-      this.regiaoTarget.disabled = false
-    } catch (error) {
-      console.error("Error fetching regioes:", error)
+    // Try to restore selection
+    regiaoSelect.value = currentRegiaoValue
+    // If the previously selected value is no longer valid, reset to placeholder
+    if (regiaoSelect.value !== currentRegiaoValue) {
+      regiaoSelect.selectedIndex = 0
     }
+
+    // Trigger bairro filter because regiao might have changed
+    this.filterBairros()
   }
 
-  async changeRegiao() {
-    const municipioId = this.municipioTarget.value
+  filterBairros() {
     const regiaoId = this.regiaoTarget.value
-    this.bairroTarget.innerHTML = '<option value="">Selecione o Bairro</option>'
-    this.bairroTarget.disabled = true
+    const bairroSelect = this.bairroTarget
+    const currentBairroValue = bairroSelect.value
 
-    if (!municipioId || !regiaoId) return
+    bairroSelect.length = 1
 
-    try {
-      const response = await fetch(`/municipios/${municipioId}/regioes/${regiaoId}/bairros.json`)
-      if (!response.ok) throw new Error('Network response was not ok')
-      const bairros = await response.json()
+    this.allBairroOptions.forEach(option => {
+      if (regiaoId && option.dataset.regiaoId == regiaoId) {
+        bairroSelect.add(option.cloneNode(true))
+      }
+    })
 
-      bairros.forEach(bairro => {
-        const option = document.createElement("option")
-        option.value = bairro.id
-        option.text = bairro.nome
-        this.bairroTarget.appendChild(option)
-      })
-      this.bairroTarget.disabled = false
-    } catch (error) {
-      console.error("Error fetching bairros:", error)
+    bairroSelect.value = currentBairroValue
+    if (bairroSelect.value !== currentBairroValue) {
+      bairroSelect.selectedIndex = 0
     }
   }
 }

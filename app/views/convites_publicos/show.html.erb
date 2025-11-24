@@ -43,12 +43,47 @@
         <%= f.email_field :email, class: "form-control", placeholder: "seu@email.com" %>
       </div>
 
-      <div class="mb-3">
-        <%= f.label :nascimento, "Data de Nascimento", class: "form-label fw-bold" %>
-        <%= f.date_field :nascimento, class: "form-control" %>
+      <h6 class="fw-bold mb-3 mt-4 text-primary">Localização</h6>
+
+      <div data-controller="location-select">
+        <div class="mb-3">
+          <%= f.label :municipio_id, "Município", class: "form-label fw-bold" %>
+          <%= f.select :municipio_id, 
+              @municipios.map { |m| [m.name, m.id] }, 
+              { prompt: "Selecione o Município" }, 
+              { class: "form-select", 
+                data: { 
+                  location_select_target: "municipio", 
+                  action: "change->location-select#filterRegioes" 
+                } 
+              } %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :regiao_id, "Região", class: "form-label fw-bold" %>
+          <%= f.select :regiao_id, 
+              @regioes.map { |r| [r.name, r.id, { 'data-municipio-id': r.municipio_id }] }, 
+              { prompt: "Selecione a Região" }, 
+              { class: "form-select", 
+                data: { 
+                  location_select_target: "regiao", 
+                  action: "change->location-select#filterBairros" 
+                } 
+              } %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :bairro_id, "Bairro", class: "form-label fw-bold" %>
+          <%= f.select :bairro_id, 
+              @bairros.map { |b| [b.name, b.id, { 'data-regiao-id': b.regiao_id }] }, 
+              { prompt: "Selecione o Bairro" }, 
+              { class: "form-select", 
+                data: { location_select_target: "bairro" } 
+              } %>
+        </div>
       </div>
 
-      <h6 class="fw-bold mb-3 mt-4 text-primary">Localização</h6>
+      <h6 class="fw-bold mb-3 mt-4 text-primary">Redes Sociais (Opcional)</h6>
 
       <div class="mb-3">
         <%= f.label :municipio_id, "Município", class: "form-label fw-bold" %>

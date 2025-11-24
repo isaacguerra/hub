@@ -50,6 +50,8 @@ module Mensageria
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
             mensagem: texto
           )
+        rescue StandardError => e
+          Rails.logger.error "Erro ao enviar comunicado #{comunicado.id} para apoiador #{apoiador.id}: #{e.message}"
         end
 
         def notificar_engajamento(comunicado_apoiador)
@@ -60,7 +62,7 @@ module Mensageria
           # 1. Confirmar para o apoiador
           texto_apoiador = Mensagens::Comunicados.confirmacao_leitura_apoiador(comunicado, apoiador)
           imagem_apoiador = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
-          
+
           Logger.log_mensagem_apoiador(
             fila: "mensageria",
             image_url: imagem_apoiador,
@@ -89,10 +91,6 @@ module Mensageria
           )
         rescue StandardError => e
           Rails.logger.error "Erro ao notificar engajamento: #{e.message}"
-        end            mensagem: texto
-          )
-        rescue StandardError => e
-          Rails.logger.error "Erro ao enviar comunicado #{comunicado.id} para apoiador #{apoiador.id}: #{e.message}"
         end
       end
     end
