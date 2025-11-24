@@ -5,7 +5,7 @@ module Mobile
     before_action :authorize_manage, only: [ :edit, :update, :destroy ]
 
     def index
-      @convites = Convite.all.order(created_at: :desc)
+      @convites = scope_convites.order(created_at: :desc)
     end
 
     def new
@@ -42,8 +42,27 @@ module Mobile
 
     private
 
+    def scope_convites
+      if Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+        Convite.all
+      elsif Current.apoiador.coordenador_municipal?
+        Convite.joins(:enviado_por).where(apoiadores: { municipio_id: Current.apoiador.municipio_id })
+      elsif Current.apoiador.coordenador_regional?
+        Convite.joins(:enviado_por).where(apoiadores: { regiao_id: Current.apoiador.regiao_id })
+      elsif Current.apoiador.coordenador_bairro?
+        Convite.joins(:enviado_por).where(apoiadores: { bairro_id: Current.apoiador.bairro_id })
+      elsif Current.apoiador.lider?
+        subordinados_ids = Current.apoiador.todos_subordinados(incluir_indiretos: true).map(&:id)
+        Convite.where(enviado_por_id: subordinados_ids + [ Current.apoiador.id ])
+      else
+        Convite.where(enviado_por_id: Current.apoiador.id)
+      end
+    end
+
     def set_convite
-      @convite = Convite.find(params[:id])
+      @convite = scope_convites.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to mobile_convites_path, alert: "Convite não encontrado ou sem permissão."
     end
 
     def convite_params

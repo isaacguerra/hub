@@ -1,4 +1,4 @@
-  <div class="col-12">
+<div class="col-12">
     <h6 class="fw-bold mt-3 mb-3 px-2">Menu Principal</h6>
     <div class="mobile-card p-0">
       <div class="list-group list-group-flush">
@@ -92,6 +92,21 @@
           </div>
           <i class="bi bi-chevron-right ms-auto text-muted"></i>
         </a>
+
+        <% if Current.apoiador.candidato? || Current.apoiador.coordenador_geral? %>
+          <div class="border-top mx-3 opacity-25"></div>
+          <!-- Localização -->
+          <a href="<%= mobile_municipios_path %>" class="list-group-item list-group-item-action d-flex align-items-center p-3 border-0">
+            <div class="icon-box primary mb-0 me-3" style="width: 40px; height: 40px; font-size: 1.2rem;">
+              <i class="bi bi-map-fill"></i>
+            </div>
+            <div>
+              <div class="fw-bold text-dark">Localização</div>
+              <div class="small text-muted">Municípios, Regiões e Bairros</div>
+            </div>
+            <i class="bi bi-chevron-right ms-auto text-muted"></i>
+          </a>
+        <% end %>
 
       </div>
     </div>

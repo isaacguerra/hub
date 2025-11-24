@@ -50,6 +50,111 @@
   </div>
 </div>
 
+<!-- Líderes -->
+<div class="mobile-card mb-3">
+  <div class="card-body">
+    <h6 class="fw-bold mb-3 border-bottom pb-2">Rede de Liderança</h6>
+    <% if @apoiador.lideres.any? %>
+      <% @apoiador.lideres.each do |lider| %>
+        <%= link_to mobile_apoiador_path(lider), class: "text-decoration-none text-dark" do %>
+          <div class="d-flex align-items-center mb-3 last-no-margin">
+            <div class="avatar-circle bg-secondary text-white me-3" style="width: 40px; height: 40px; font-size: 1rem;">
+              <% if lider.foto_perfil_url.present? %>
+                <img src="<%= lider.foto_perfil_url %>" alt="<%= lider.nome %>" class="w-100 h-100 rounded-circle" style="object-fit: cover;">
+              <% else %>
+                <%= lider.nome.first.upcase %>
+              <% end %>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0 small"><%= lider.nome %></h6>
+              <span class="badge bg-light text-dark border" style="font-size: 0.7rem;"><%= lider.funcao.nome %></span>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% else %>
+      <p class="text-muted small mb-0">Sem líderes definidos.</p>
+    <% end %>
+  </div>
+</div>
+
+<!-- Liderados -->
+<div class="mobile-card mb-3">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+      <h6 class="fw-bold mb-0">Liderados Diretos</h6>
+      <span class="badge bg-primary rounded-pill"><%= @apoiador.subordinados.count %></span>
+    </div>
+    
+    <% if @apoiador.subordinados.any? %>
+      <% @apoiador.subordinados.limit(5).each do |subordinado| %>
+        <%= link_to mobile_apoiador_path(subordinado), class: "text-decoration-none text-dark" do %>
+          <div class="d-flex align-items-center mb-3 last-no-margin">
+            <div class="avatar-circle bg-info text-white me-3" style="width: 40px; height: 40px; font-size: 1rem;">
+              <% if subordinado.foto_perfil_url.present? %>
+                <img src="<%= subordinado.foto_perfil_url %>" alt="<%= subordinado.nome %>" class="w-100 h-100 rounded-circle" style="object-fit: cover;">
+              <% else %>
+                <%= subordinado.nome.first.upcase %>
+              <% end %>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0 small"><%= subordinado.nome %></h6>
+              <small class="text-muted d-block" style="font-size: 0.75rem;"><%= subordinado.municipio.nome %></small>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+      
+      <% if @apoiador.subordinados.count > 5 %>
+        <div class="text-center mt-3 pt-2 border-top">
+          <%= link_to mobile_apoiadores_path(lider_id: @apoiador.id), class: "small text-decoration-none fw-bold" do %>
+            Ver todos os <%= @apoiador.subordinados.count %> liderados
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-muted small mb-0">Nenhum liderado direto.</p>
+    <% end %>
+  </div>
+</div>
+
+<!-- Convites Enviados -->
+<div class="mobile-card mb-3">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
+      <h6 class="fw-bold mb-0">Convites Enviados</h6>
+      <span class="badge bg-primary rounded-pill"><%= @apoiador.convites_enviados.count %></span>
+    </div>
+
+    <% if @apoiador.convites_enviados.any? %>
+      <% @apoiador.convites_enviados.order(created_at: :desc).limit(5).each do |convite| %>
+        <div class="d-flex justify-content-between align-items-center mb-3 last-no-margin">
+          <div>
+            <h6 class="fw-bold mb-0 small"><%= convite.nome %></h6>
+            <small class="text-muted"><%= convite.created_at.strftime("%d/%m/%Y") %></small>
+          </div>
+          <% 
+            status_class = case convite.status
+                           when 'aceito' then 'bg-success'
+                           when 'recusado' then 'bg-danger'
+                           else 'bg-warning text-dark'
+                           end
+          %>
+          <span class="badge <%= status_class %> rounded-pill" style="font-size: 0.7rem;"><%= convite.status.capitalize %></span>
+        </div>
+      <% end %>
+      
+      <% if @apoiador.convites_enviados.count > 5 %>
+        <div class="text-center mt-3 pt-2 border-top">
+           <small class="text-muted">Exibindo os 5 últimos</small>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-muted small mb-0">Nenhum convite enviado.</p>
+    <% end %>
+  </div>
+</div>
+
 <!-- Ações -->
 <div class="d-grid gap-2">
   <%= link_to edit_mobile_apoiador_path(@apoiador), class: "btn btn-outline-primary" do %>

@@ -1,11 +1,18 @@
 module Mobile
   class ComunicadosController < BaseController
-    before_action :set_comunicado, only: %i[edit update destroy]
+    before_action :set_comunicado, only: %i[show edit update destroy]
     before_action :authorize_create, only: %i[new create]
     before_action :authorize_manage, only: %i[edit update destroy]
 
     def index
       @comunicados = Comunicado.all.order(created_at: :desc)
+    end
+
+    def show
+      @engajados = @comunicado.apoiadores
+                              .includes(:municipio, :bairro)
+                              .where(comunicado_apoiadores: { engajado: true })
+                              .order(:nome)
     end
 
     def new

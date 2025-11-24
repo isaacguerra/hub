@@ -1,11 +1,15 @@
 module Mobile
   class EventosController < BaseController
-    before_action :set_evento, only: %i[edit update destroy]
+    before_action :set_evento, only: %i[show edit update destroy]
     before_action :authorize_create, only: %i[new create]
     before_action :authorize_manage, only: %i[edit update destroy]
 
     def index
       @eventos = Evento.all.order(data: :desc)
+    end
+
+    def show
+      @participantes = @evento.apoiadores.includes(:municipio, :bairro).order(:nome)
     end
 
     def new
