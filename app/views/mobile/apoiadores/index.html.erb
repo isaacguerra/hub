@@ -3,11 +3,6 @@
     <h5 class="fw-bold mb-0 me-2">Apoiadores</h5>
     <span class="badge bg-primary rounded-pill"><%= @apoiadores.count %></span>
   </div>
-  <% if Current.apoiador.pode_coordenar? || Current.apoiador.lider? %>
-    <%= link_to new_mobile_apoiador_path, class: "btn btn-sm btn-primary rounded-pill px-3" do %>
-      <i class="bi bi-plus-lg me-1"></i> Novo
-    <% end %>
-  <% end %>
 </div>
 
 <!-- Filtro de Busca -->
