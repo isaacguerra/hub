@@ -1,0 +1,14 @@
+<% content_for :title, "Nova Visita" %>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="d-flex align-items-center mb-4">
+      <%= link_to visitas_path, class: "btn btn-outline-secondary me-3" do %>
+        <i class="bi bi-arrow-left"></i>
+      <% end %>
+      <h1 class="h3 text-primary-custom fw-bold mb-0">Registrar Nova Visita</h1>
+    </div>
+
+    <%= render "form", visita: @visita %>
+  </div>
+</div>

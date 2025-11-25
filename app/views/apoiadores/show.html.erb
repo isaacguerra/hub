@@ -23,6 +23,12 @@
           <%= link_to edit_apoiador_path(@apoiador), class: "btn btn-outline-primary" do %>
             <i class="bi bi-pencil me-2"></i>Editar Perfil
           <% end %>
+          
+          <% if Current.apoiador.candidato? || Current.apoiador.coordenador_geral? %>
+            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#changeRoleModal">
+              <i class="bi bi-person-badge me-2"></i>Alterar Função
+            </button>
+          <% end %>
         </div>
       </div>
       <ul class="list-group list-group-flush">
@@ -131,9 +137,9 @@
                   <li class="list-group-item">
                     <div class="d-flex w-100 justify-content-between">
                       <h6 class="mb-1">Visita de <%= visita.lider&.nome %></h6>
-                      <small><%= visita.data_hora.strftime("%d/%m/%Y") %></small>
+                      <small><%= visita.created_at.strftime("%d/%m/%Y") %></small>
                     </div>
-                    <small class="text-muted"><%= visita.observacoes %></small>
+                    <small class="text-muted"><%= visita.relato %></small>
                   </li>
                 <% end %>
               </ul>
@@ -186,4 +192,29 @@
     </div>
   </div>
 </div>
+
+<% if Current.apoiador.candidato? || Current.apoiador.coordenador_geral? %>
+  <!-- Modal Alterar Função -->
+  <div class="modal fade" id="changeRoleModal" tabindex="-1" aria-labelledby="changeRoleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="changeRoleModalLabel">Alterar Função</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <%= form_with(model: @apoiador, local: true) do |f| %>
+            <div class="mb-3">
+              <%= f.label :funcao_id, "Nova Função", class: "form-label fw-bold" %>
+              <%= f.collection_select :funcao_id, Funcao.order(:name), :id, :name, {}, { class: "form-select" } %>
+            </div>
+            <div class="d-grid">
+              <%= f.submit "Salvar Alteração", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 

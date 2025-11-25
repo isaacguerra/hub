@@ -1,0 +1,77 @@
+<% content_for :title, "Detalhes da Visita" %>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div class="d-flex align-items-center">
+        <%= link_to visitas_path, class: "btn btn-outline-secondary me-3" do %>
+          <i class="bi bi-arrow-left"></i>
+        <% end %>
+        <h1 class="h3 text-primary-custom fw-bold mb-0">Detalhes da Visita</h1>
+      </div>
+      
+      <% if Current.apoiador.candidato? || Current.apoiador.coordenador_geral? || @visita.lider_id == Current.apoiador.id %>
+        <div class="btn-group">
+          <%= link_to edit_visita_path(@visita), class: "btn btn-outline-primary" do %>
+            <i class="bi bi-pencil me-2"></i>Editar
+          <% end %>
+          <%= button_to visita_path(@visita), method: :delete, class: "btn btn-outline-danger", form: { style: "display:inline-block;" }, data: { turbo_confirm: "Tem certeza que deseja excluir esta visita?" } do %>
+            <i class="bi bi-trash me-2"></i>Excluir
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="card card-custom border-0 shadow-sm mb-4">
+      <div class="card-body p-4">
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <h6 class="text-muted text-uppercase small fw-bold mb-2">Apoiador Visitado</h6>
+            <div class="d-flex align-items-center">
+              <div class="rounded-circle bg-light d-flex align-items-center justify-content-center me-3 border" style="width: 48px; height: 48px;">
+                <i class="bi bi-person-fill text-secondary fs-4"></i>
+              </div>
+              <div>
+                <div class="fw-bold fs-5"><%= @visita.apoiador.nome %></div>
+                <div class="text-muted"><%= @visita.apoiador.municipio&.nome %></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mt-3 mt-md-0">
+            <h6 class="text-muted text-uppercase small fw-bold mb-2">Líder Responsável</h6>
+            <div class="d-flex align-items-center">
+              <div class="rounded-circle bg-light d-flex align-items-center justify-content-center me-3 border" style="width: 48px; height: 48px;">
+                <i class="bi bi-person-badge-fill text-secondary fs-4"></i>
+              </div>
+              <div>
+                <div class="fw-bold fs-5"><%= @visita.lider.nome %></div>
+                <div class="text-muted">Registrado em <%= @visita.created_at.strftime("%d/%m/%Y às %H:%M") %></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div class="mb-4">
+          <h6 class="text-muted text-uppercase small fw-bold mb-2">Status</h6>
+          <% status_class = case @visita.status
+             when 'concluida' then 'bg-success-subtle text-success'
+             when 'cancelada' then 'bg-danger-subtle text-danger'
+             else 'bg-warning-subtle text-warning'
+             end %>
+          <span class="badge rounded-pill <%= status_class %> border fs-6 px-3 py-2">
+            <%= @visita.status.humanize %>
+          </span>
+        </div>
+
+        <div>
+          <h6 class="text-muted text-uppercase small fw-bold mb-2">Relato da Visita</h6>
+          <div class="bg-light p-3 rounded border">
+            <%= simple_format(@visita.relato) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

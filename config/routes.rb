@@ -53,6 +53,7 @@ Rails.application.routes.draw do
 
   resources :funcoes
   resources :eventos
+  resources :visitas
   resources :comunicados
   resources :convites
   resources :apoiadores, except: [ :new, :create ]

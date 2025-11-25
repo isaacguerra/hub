@@ -1,0 +1,88 @@
+<% content_for :title, "Visitas" %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3 text-primary-custom fw-bold"><i class="bi bi-calendar-check-fill me-2"></i>Visitas</h1>
+  <% if Current.apoiador.pode_coordenar? || Current.apoiador.lider? %>
+    <%= link_to new_visita_path, class: "btn btn-primary-custom text-white shadow-sm" do %>
+      <i class="bi bi-plus-lg me-2"></i>Nova Visita
+    <% end %>
+  <% end %>
+</div>
+
+<div class="card card-custom border-0 shadow-sm">
+  <div class="card-body p-0">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="bg-light text-secondary">
+          <tr>
+            <th class="ps-4 py-3">Apoiador Visitado</th>
+            <th class="py-3">Líder Responsável</th>
+            <th class="py-3">Data</th>
+            <th class="py-3">Status</th>
+            <th class="text-end pe-4 py-3">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @visitas.each do |visita| %>
+            <tr>
+              <td class="ps-4 py-3">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle bg-light d-flex align-items-center justify-content-center me-3 border" style="width: 40px; height: 40px;">
+                    <i class="bi bi-person-fill text-secondary fs-5"></i>
+                  </div>
+                  <div>
+                    <div class="fw-bold text-dark"><%= visita.apoiador.nome %></div>
+                    <small class="text-muted"><%= visita.apoiador.municipio&.nome %></small>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div class="fw-bold text-dark"><%= visita.lider.nome %></div>
+                </div>
+              </td>
+              <td>
+                <span class="text-muted"><%= visita.created_at.strftime("%d/%m/%Y %H:%M") %></span>
+              </td>
+              <td>
+                <% status_class = case visita.status
+                   when 'concluida' then 'bg-success-subtle text-success'
+                   when 'cancelada' then 'bg-danger-subtle text-danger'
+                   else 'bg-warning-subtle text-warning'
+                   end %>
+                <span class="badge rounded-pill <%= status_class %> border">
+                  <%= visita.status.humanize %>
+                </span>
+              </td>
+              <td class="text-end pe-4">
+                <div class="btn-group">
+                  <%= link_to visita_path(visita), class: "btn btn-sm btn-outline-secondary", title: "Visualizar" do %>
+                    <i class="bi bi-eye"></i>
+                  <% end %>
+                  
+                  <% if Current.apoiador.candidato? || Current.apoiador.coordenador_geral? || visita.lider_id == Current.apoiador.id %>
+                    <%= link_to edit_visita_path(visita), class: "btn btn-sm btn-outline-primary", title: "Editar" do %>
+                      <i class="bi bi-pencil"></i>
+                    <% end %>
+                    
+                    <%= button_to visita_path(visita), method: :delete, class: "btn btn-sm btn-outline-danger", title: "Excluir", form: { style: "display:inline-block;" }, data: { turbo_confirm: "Tem certeza que deseja excluir esta visita?" } do %>
+                      <i class="bi bi-trash"></i>
+                    <% end %>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+          <% if @visitas.empty? %>
+            <tr>
+              <td colspan="5" class="text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+                Nenhuma visita registrada.
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
