@@ -1,4 +1,5 @@
 class MunicipiosController < ApplicationController
+  before_action :authorize_admin!
   before_action :set_municipio, only: %i[ show edit update destroy ]
 
   # GET /municipios or /municipios.json
@@ -65,6 +66,12 @@ class MunicipiosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def municipio_params
-      params.expect(municipio: [ :nome ])
+      params.expect(municipio: [ :name ])
+    end
+
+    def authorize_admin!
+      unless Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+        redirect_to root_path, alert: "Acesso não autorizado."
+      end
     end
 end

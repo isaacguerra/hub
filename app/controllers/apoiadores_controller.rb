@@ -3,35 +3,15 @@ class ApoiadoresController < ApplicationController
 
   # GET /apoiadores or /apoiadores.json
   def index
-    @apoiadores = Apoiador.all
+    @apoiadores = scope_apoiadores
   end
 
   # GET /apoiadores/1 or /apoiadores/1.json
   def show
   end
 
-  # GET /apoiadores/new
-  def new
-    @apoiador = Apoiador.new
-  end
-
   # GET /apoiadores/1/edit
   def edit
-  end
-
-  # POST /apoiadores or /apoiadores.json
-  def create
-    @apoiador = Apoiador.new(apoiador_params)
-
-    respond_to do |format|
-      if @apoiador.save
-        format.html { redirect_to @apoiador, notice: "Apoiador was successfully created." }
-        format.json { render :show, status: :created, location: @apoiador }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @apoiador.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # PATCH/PUT /apoiadores/1 or /apoiadores/1.json
@@ -58,13 +38,31 @@ class ApoiadoresController < ApplicationController
   end
 
   private
+    def scope_apoiadores
+      if Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+        Apoiador.all
+      elsif Current.apoiador.coordenador_municipal?
+        Apoiador.where(municipio_id: Current.apoiador.municipio_id)
+      elsif Current.apoiador.coordenador_regional?
+        Apoiador.where(regiao_id: Current.apoiador.regiao_id)
+      elsif Current.apoiador.coordenador_bairro?
+        Apoiador.where(bairro_id: Current.apoiador.bairro_id)
+      elsif Current.apoiador.lider?
+        Current.apoiador.subordinados
+      else
+        Apoiador.where(id: Current.apoiador.id)
+      end
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_apoiador
-      @apoiador = Apoiador.find(params.expect(:id))
+      @apoiador = scope_apoiadores.find(params.expect(:id))
     end
 
     # Only allow a list of trusted parameters through.
     def apoiador_params
-      params.expect(apoiador: [ :nome, :whatsapp, :email, :endereco, :bairro_id, :municipio_id, :regiao_id, :funcao_id, :lider_id ])
+      permitted = [ :nome, :whatsapp, :email, :endereco, :bairro_id, :municipio_id, :regiao_id, :lider_id ]
+      permitted << :funcao_id if Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+      params.expect(apoiador: permitted)
     end
 end

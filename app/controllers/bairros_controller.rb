@@ -1,4 +1,5 @@
 class BairrosController < ApplicationController
+  before_action :authorize_admin!
   before_action :set_context
   before_action :set_bairro, only: %i[ show edit update destroy ]
 
@@ -68,7 +69,14 @@ class BairrosController < ApplicationController
       @bairro = @regiao.bairros.find(params[:id])
     end
 
+    # Only allow a list of trusted parameters through.
     def bairro_params
-      params.require(:bairro).permit(:nome)
+      params.expect(bairro: [ :name, :regiao_id ])
+    end
+
+    def authorize_admin!
+      unless Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+        redirect_to root_path, alert: "Acesso não autorizado."
+      end
     end
 end

@@ -1,7 +1,7 @@
 module Mobile
   class ConvitesController < BaseController
     before_action :set_convite, only: [ :edit, :update, :destroy ]
-    before_action :authorize_create, only: [ :new, :create ]
+    # before_action :authorize_create, only: [ :new, :create ]
     before_action :authorize_manage, only: [ :edit, :update, :destroy ]
 
     def index
@@ -69,11 +69,11 @@ module Mobile
       params.require(:convite).permit(:nome, :whatsapp)
     end
 
-    def authorize_create
-      unless Current.apoiador.pode_coordenar?
-        redirect_to mobile_convites_path, alert: "Sem permissão para criar convites."
-      end
-    end
+    # def authorize_create
+    #   unless Current.apoiador.pode_coordenar?
+    #     redirect_to mobile_convites_path, alert: "Sem permissão para criar convites."
+    #   end
+    # end
 
     def authorize_manage
       unless Current.apoiador.candidato? || Current.apoiador.coordenador_geral?

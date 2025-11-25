@@ -1,13 +1,16 @@
 class EventosController < ApplicationController
   before_action :set_evento, only: %i[ show edit update destroy ]
+  before_action :authorize_create, only: %i[ new create ]
+  before_action :authorize_manage, only: %i[ edit update destroy ]
 
   # GET /eventos or /eventos.json
   def index
-    @eventos = Evento.all
+    @eventos = Evento.all.order(data: :desc)
   end
 
   # GET /eventos/1 or /eventos/1.json
   def show
+    @participantes = @evento.apoiadores.includes(:municipio, :bairro).order(:nome)
   end
 
   # GET /eventos/new
@@ -22,6 +25,7 @@ class EventosController < ApplicationController
   # POST /eventos or /eventos.json
   def create
     @evento = Evento.new(evento_params)
+    @evento.coordenador = Current.apoiador
 
     respond_to do |format|
       if @evento.save
@@ -65,6 +69,22 @@ class EventosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def evento_params
-      params.expect(evento: [ :titulo, :descricao, :data, :local, :imagem, :link_facebook, :link_instagram, :link_tiktok, :link_whatsapp, :coordenador_id ])
+      params.expect(evento: [ :titulo, :data, :local, :descricao ])
+    end
+
+    def authorize_create
+      unless Current.apoiador.pode_coordenar? || Current.apoiador.lider?
+        redirect_to eventos_path, alert: "Você não tem permissão para criar eventos."
+      end
+    end
+
+    def authorize_manage
+      can_manage = Current.apoiador.candidato? ||
+                   Current.apoiador.coordenador_geral? ||
+                   @evento.coordenador_id == Current.apoiador.id
+
+      unless can_manage
+        redirect_to eventos_path, alert: "Você não tem permissão para gerenciar este evento."
+      end
     end
 end

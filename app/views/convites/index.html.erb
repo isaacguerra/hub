@@ -53,11 +53,13 @@
                   <%= link_to convite, class: "btn btn-sm btn-light text-secondary border", title: "Ver Detalhes" do %>
                     <i class="bi bi-eye"></i>
                   <% end %>
-                  <%= link_to edit_convite_path(convite), class: "btn btn-sm btn-light text-primary border", title: "Editar" do %>
-                    <i class="bi bi-pencil"></i>
-                  <% end %>
-                  <%= button_to convite, method: :delete, class: "btn btn-sm btn-light text-danger border", title: "Excluir", form: { style: "display:inline-block;" }, data: { turbo_confirm: "Tem certeza?" } do %>
-                    <i class="bi bi-trash"></i>
+                  <% if Current.apoiador.candidato? || Current.apoiador.coordenador_geral? %>
+                    <%= link_to edit_convite_path(convite), class: "btn btn-sm btn-light text-primary border", title: "Editar" do %>
+                      <i class="bi bi-pencil"></i>
+                    <% end %>
+                    <%= button_to convite, method: :delete, class: "btn btn-sm btn-light text-danger border", title: "Excluir", form: { style: "display:inline-block;" }, data: { turbo_confirm: "Tem certeza?" } do %>
+                      <i class="bi bi-trash"></i>
+                    <% end %>
                   <% end %>
                 </div>
               </td>

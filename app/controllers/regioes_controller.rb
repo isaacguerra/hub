@@ -1,4 +1,5 @@
 class RegioesController < ApplicationController
+  before_action :authorize_admin!
   before_action :set_municipio
   before_action :set_regiao, only: %i[ show edit update destroy ]
 
@@ -67,7 +68,14 @@ class RegioesController < ApplicationController
       @regiao = @municipio.regioes.find(params[:id])
     end
 
+    # Only allow a list of trusted parameters through.
     def regiao_params
-      params.require(:regiao).permit(:nome)
+      params.expect(regiao: [ :name, :municipio_id, :coordenador_id ])
+    end
+
+    def authorize_admin!
+      unless Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+        redirect_to root_path, alert: "Acesso não autorizado."
+      end
     end
 end

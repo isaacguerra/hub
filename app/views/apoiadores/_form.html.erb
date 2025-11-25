@@ -44,17 +44,25 @@
       <div class="row g-3">
         <div class="col-md-4">
           <%= form.label :municipio_id, "Município", class: "form-label fw-bold" %>
-          <%= form.collection_select :municipio_id, Municipio.order(:nome), :id, :nome, { prompt: "Selecione o Município" }, { class: "form-select", data: { location_select_target: "municipio", action: "change->location-select#changeMunicipio" } } %>
+          <%= form.collection_select :municipio_id, Municipio.order(:nome), :id, :nome, { prompt: "Selecione o Município" }, { class: "form-select", data: { location_select_target: "municipio", action: "change->location-select#filterRegioes" } } %>
         </div>
 
         <div class="col-md-4">
           <%= form.label :regiao_id, "Região", class: "form-label fw-bold" %>
-          <%= form.collection_select :regiao_id, apoiador.municipio ? apoiador.municipio.regioes.order(:nome) : [], :id, :nome, { prompt: "Selecione a Região" }, { class: "form-select", disabled: !apoiador.municipio, data: { location_select_target: "regiao", action: "change->location-select#changeRegiao" } } %>
+          <%= form.select :regiao_id, 
+              options_for_select(Regiao.order(:nome).map { |r| [r.nome, r.id, { 'data-municipio-id' => r.municipio_id }] }, apoiador.regiao_id),
+              { prompt: "Selecione a Região" },
+              { class: "form-select", data: { location_select_target: "regiao", action: "change->location-select#filterBairros" } } 
+          %>
         </div>
 
         <div class="col-md-4">
           <%= form.label :bairro_id, "Bairro", class: "form-label fw-bold" %>
-          <%= form.collection_select :bairro_id, apoiador.regiao ? apoiador.regiao.bairros.order(:nome) : [], :id, :nome, { prompt: "Selecione o Bairro" }, { class: "form-select", disabled: !apoiador.regiao, data: { location_select_target: "bairro" } } %>
+          <%= form.select :bairro_id,
+              options_for_select(Bairro.order(:nome).map { |b| [b.nome, b.id, { 'data-regiao-id' => b.regiao_id }] }, apoiador.bairro_id),
+              { prompt: "Selecione o Bairro" },
+              { class: "form-select", data: { location_select_target: "bairro" } }
+          %>
         </div>
       </div>
     </div>

@@ -1,13 +1,19 @@
 class ComunicadosController < ApplicationController
   before_action :set_comunicado, only: %i[ show edit update destroy ]
+  before_action :authorize_create, only: %i[ new create ]
+  before_action :authorize_manage, only: %i[ edit update destroy ]
 
   # GET /comunicados or /comunicados.json
   def index
-    @comunicados = Comunicado.all
+    @comunicados = Comunicado.all.order(created_at: :desc)
   end
 
   # GET /comunicados/1 or /comunicados/1.json
   def show
+    @engajados = @comunicado.apoiadores
+                            .includes(:municipio, :bairro)
+                            .where(comunicado_apoiadores: { engajado: true })
+                            .order(:nome)
   end
 
   # GET /comunicados/new
@@ -22,6 +28,7 @@ class ComunicadosController < ApplicationController
   # POST /comunicados or /comunicados.json
   def create
     @comunicado = Comunicado.new(comunicado_params)
+    @comunicado.lider = Current.apoiador
 
     respond_to do |format|
       if @comunicado.save
@@ -65,6 +72,22 @@ class ComunicadosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comunicado_params
-      params.expect(comunicado: [ :titulo, :mensagem, :data, :lider_id, :imagem, :link_whatsapp, :link_instagram, :link_facebook, :link_tiktok ])
+      params.expect(comunicado: [ :titulo, :mensagem, :data ])
+    end
+
+    def authorize_create
+      unless Current.apoiador.pode_coordenar? || Current.apoiador.lider?
+        redirect_to comunicados_path, alert: "Você não tem permissão para criar comunicados."
+      end
+    end
+
+    def authorize_manage
+      can_manage = Current.apoiador.candidato? ||
+                   Current.apoiador.coordenador_geral? ||
+                   @comunicado.lider_id == Current.apoiador.id
+
+      unless can_manage
+        redirect_to comunicados_path, alert: "Você não tem permissão para gerenciar este comunicado."
+      end
     end
 end
