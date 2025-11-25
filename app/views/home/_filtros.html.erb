@@ -1,6 +1,6 @@
 <div class="card card-custom mb-4">
   <div class="card-body">
-    <%= form_with url: root_path, method: :get, class: "row g-3 align-items-end", data: { turbo_action: "advance" } do |f| %>
+    <%= form_with url: root_path, method: :get, class: "row g-3 align-items-end", data: { controller: "location-select", turbo_action: "advance" } do |f| %>
       <div class="col-md-3">
         <%= f.label :nome, "Nome", class: "form-label small fw-bold text-muted" %>
         <%= f.text_field :nome, value: params[:nome], class: "form-control", placeholder: "Buscar por nome..." %>
@@ -13,17 +13,25 @@
       
       <div class="col-md-2">
         <%= f.label :municipio_id, "Município", class: "form-label small fw-bold text-muted" %>
-        <%= f.collection_select :municipio_id, Municipio.all, :id, :nome, { include_blank: "Todos" }, { class: "form-select", selected: params[:municipio_id] } %>
+        <%= f.collection_select :municipio_id, Municipio.all, :id, :nome, { include_blank: "Todos" }, { class: "form-select", selected: params[:municipio_id], data: { location_select_target: "municipio", action: "change->location-select#filterRegioes" } } %>
       </div>
 
       <div class="col-md-2">
         <%= f.label :regiao_id, "Região", class: "form-label small fw-bold text-muted" %>
-        <%= f.collection_select :regiao_id, Regiao.all, :id, :nome, { include_blank: "Todas" }, { class: "form-select", selected: params[:regiao_id] } %>
+        <%= f.select :regiao_id, 
+            options_for_select(Regiao.order(:nome).map { |r| [r.nome, r.id, { 'data-municipio-id' => r.municipio_id }] }, params[:regiao_id]),
+            { include_blank: "Todas" }, 
+            { class: "form-select", data: { location_select_target: "regiao", action: "change->location-select#filterBairros" } } 
+        %>
       </div>
 
       <div class="col-md-2">
         <%= f.label :bairro_id, "Bairro", class: "form-label small fw-bold text-muted" %>
-        <%= f.collection_select :bairro_id, Bairro.all, :id, :nome, { include_blank: "Todos" }, { class: "form-select", selected: params[:bairro_id] } %>
+        <%= f.select :bairro_id, 
+            options_for_select(Bairro.order(:nome).map { |b| [b.nome, b.id, { 'data-regiao-id' => b.regiao_id }] }, params[:bairro_id]),
+            { include_blank: "Todos" }, 
+            { class: "form-select", data: { location_select_target: "bairro" } } 
+        %>
       </div>
 
       <div class="col-md-1 d-grid">
