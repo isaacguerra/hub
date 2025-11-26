@@ -2,7 +2,9 @@ require "test_helper"
 
 class ComunicadosControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @comunicado = comunicados(:one)
+    @comunicado = comunicados(:aviso_importante)
+    @admin = apoiadores(:joao_candidato)
+    sign_in_as(@admin)
   end
 
   test "should get index" do
@@ -17,7 +19,7 @@ class ComunicadosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create comunicado" do
     assert_difference("Comunicado.count") do
-      post comunicados_url, params: { comunicado: { conteudo: @comunicado.conteudo, data_envio: @comunicado.data_envio, tipo: @comunicado.tipo, titulo: @comunicado.titulo } }
+      post comunicados_url, params: { comunicado: { mensagem: "Nova Mensagem", data: Time.current, titulo: "Novo Comunicado" } }
     end
 
     assert_redirected_to comunicado_url(Comunicado.last)
@@ -34,13 +36,15 @@ class ComunicadosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update comunicado" do
-    patch comunicado_url(@comunicado), params: { comunicado: { conteudo: @comunicado.conteudo, data_envio: @comunicado.data_envio, tipo: @comunicado.tipo, titulo: @comunicado.titulo } }
+    patch comunicado_url(@comunicado), params: { comunicado: { titulo: "Título Atualizado" } }
     assert_redirected_to comunicado_url(@comunicado)
   end
 
   test "should destroy comunicado" do
+    comunicado_to_destroy = Comunicado.create!(titulo: "To Destroy", mensagem: "Msg", data: Time.current, lider: @admin)
+
     assert_difference("Comunicado.count", -1) do
-      delete comunicado_url(@comunicado)
+      delete comunicado_url(comunicado_to_destroy)
     end
 
     assert_redirected_to comunicados_url

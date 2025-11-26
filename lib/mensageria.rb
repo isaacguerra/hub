@@ -20,5 +20,8 @@ module Mensageria
     autoload :Convites, "mensageria/notificacoes/convites"
     autoload :Visitas, "mensageria/notificacoes/visitas"
     autoload :Comunicados, "mensageria/notificacoes/comunicados"
+    autoload :Autenticacao, "mensageria/notificacoes/autenticacao"
+    autoload :Apoiadores, "mensageria/notificacoes/apoiadores"
+    autoload :Eventos, "mensageria/notificacoes/eventos"
   end
 end

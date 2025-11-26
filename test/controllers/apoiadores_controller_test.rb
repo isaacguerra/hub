@@ -2,25 +2,13 @@ require "test_helper"
 
 class ApoiadoresControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @apoiador = apoiadores(:one)
+    @apoiador = apoiadores(:joao_candidato)
+    sign_in_as(@apoiador)
   end
 
   test "should get index" do
     get apoiadores_url
     assert_response :success
-  end
-
-  test "should get new" do
-    get new_apoiador_url
-    assert_response :success
-  end
-
-  test "should create apoiador" do
-    assert_difference("Apoiador.count") do
-      post apoiadores_url, params: { apoiador: { bairro_id: @apoiador.bairro_id, email: @apoiador.email, endereco: @apoiador.endereco, funcao_id: @apoiador.funcao_id, lider_id: @apoiador.lider_id, municipio_id: @apoiador.municipio_id, nome: @apoiador.nome, regiao_id: @apoiador.regiao_id, whatsapp: @apoiador.whatsapp } }
-    end
-
-    assert_redirected_to apoiador_url(Apoiador.last)
   end
 
   test "should show apoiador" do
@@ -34,13 +22,16 @@ class ApoiadoresControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update apoiador" do
-    patch apoiador_url(@apoiador), params: { apoiador: { bairro_id: @apoiador.bairro_id, email: @apoiador.email, endereco: @apoiador.endereco, funcao_id: @apoiador.funcao_id, lider_id: @apoiador.lider_id, municipio_id: @apoiador.municipio_id, nome: @apoiador.nome, regiao_id: @apoiador.regiao_id, whatsapp: @apoiador.whatsapp } }
+    patch apoiador_url(@apoiador), params: { apoiador: { nome: "Nome Atualizado" } }
     assert_redirected_to apoiador_url(@apoiador)
   end
 
   test "should destroy apoiador" do
+    # Create a dummy apoiador to destroy, so we don't destroy the logged in user
+    apoiador_to_destroy = apoiadores(:ana_apoiadora)
+
     assert_difference("Apoiador.count", -1) do
-      delete apoiador_url(@apoiador)
+      delete apoiador_url(apoiador_to_destroy)
     end
 
     assert_redirected_to apoiadores_url

@@ -2,7 +2,9 @@ require "test_helper"
 
 class EventosControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @evento = eventos(:one)
+    @evento = eventos(:reuniao_geral)
+    @admin = apoiadores(:joao_candidato)
+    sign_in_as(@admin)
   end
 
   test "should get index" do
@@ -17,7 +19,7 @@ class EventosControllerTest < ActionDispatch::IntegrationTest
 
   test "should create evento" do
     assert_difference("Evento.count") do
-      post eventos_url, params: { evento: { coordenador_id: @evento.coordenador_id, data_hora: @evento.data_hora, descricao: @evento.descricao, local: @evento.local, titulo: @evento.titulo } }
+      post eventos_url, params: { evento: { coordenador_id: @admin.id, data: 3.days.from_now, descricao: "Novo Evento", local: "Local", titulo: "Novo Evento" } }
     end
 
     assert_redirected_to evento_url(Evento.last)
@@ -34,13 +36,15 @@ class EventosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update evento" do
-    patch evento_url(@evento), params: { evento: { coordenador_id: @evento.coordenador_id, data_hora: @evento.data_hora, descricao: @evento.descricao, local: @evento.local, titulo: @evento.titulo } }
+    patch evento_url(@evento), params: { evento: { titulo: "Título Atualizado" } }
     assert_redirected_to evento_url(@evento)
   end
 
   test "should destroy evento" do
+    evento_to_destroy = Evento.create!(titulo: "To Destroy", data: 1.day.from_now, coordenador: @admin)
+
     assert_difference("Evento.count", -1) do
-      delete evento_url(@evento)
+      delete evento_url(evento_to_destroy)
     end
 
     assert_redirected_to eventos_url

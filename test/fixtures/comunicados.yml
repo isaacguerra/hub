@@ -1,0 +1,14 @@
+# Fixtures para Comunicados
+aviso_importante:
+  id: 1
+  titulo: "Aviso Importante"
+  mensagem: "Não esqueçam da reunião amanhã."
+  data: <%= Time.current %>
+  lider_id: 1 # Joao Candidato
+
+noticia_campanha:
+  id: 2
+  titulo: "Notícia da Campanha"
+  mensagem: "Crescemos nas pesquisas!"
+  data: <%= Time.current %>
+  lider_id: 2 # Maria Coord Geral

@@ -123,7 +123,7 @@ class Apoiador < ApplicationRecord
   # Gera um código de 6 dígitos, salva e envia via WhatsApp
   def gerar_codigo_acesso!
     codigo = SecureRandom.random_number(100_000..999_999).to_s
-    update!(
+    update_columns(
       verification_code: codigo,
       verification_code_expires_at: 5.minutes.from_now
     )

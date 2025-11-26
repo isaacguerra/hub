@@ -1,0 +1,16 @@
+# Fixtures para Eventos
+reuniao_geral:
+  id: 1
+  titulo: "Reunião Geral"
+  data: <%= 1.day.from_now %>
+  local: "Sede do Partido"
+  descricao: "Reunião com todos os coordenadores"
+  coordenador_id: 1 # Joao Candidato
+
+caminhada:
+  id: 2
+  titulo: "Caminhada no Centro"
+  data: <%= 2.days.from_now %>
+  local: "Praça Central"
+  descricao: "Caminhada com apoiadores"
+  coordenador_id: 2 # Maria Coord Geral

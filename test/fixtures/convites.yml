@@ -4,11 +4,11 @@ convite_pendente:
   nome: "Carlos Teste"
   whatsapp: "96995678901"
   status: "pendente"
-  enviado_por_id: 3
+  enviado_por_id: 4
 
 convite_aceito:
   id: 2
   nome: "Lucia Teste"
   whatsapp: "96996789012"
   status: "aceito"
-  enviado_por_id: 3
+  enviado_por_id: 4

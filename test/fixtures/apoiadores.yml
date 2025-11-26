@@ -2,7 +2,7 @@
 joao_candidato:
   id: 1
   name: "João Silva"
-  whatsapp: "96991234567"
+  whatsapp: "5596991234567"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1
@@ -12,29 +12,39 @@ joao_candidato:
 maria_coord_geral:
   id: 2
   name: "Maria Santos"
-  whatsapp: "96992345678"
+  whatsapp: "5596992345678"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1
   funcao_id: 2
   lider_id: 1
 
-pedro_lider:
+carlos_coord_regional:
   id: 3
+  name: "Carlos Oliveira"
+  whatsapp: "5596993456789"
+  municipio_id: 1
+  regiao_id: 1
+  bairro_id: 1
+  funcao_id: 3
+  lider_id: 2
+
+pedro_lider:
+  id: 4
   name: "Pedro Costa"
-  whatsapp: "96993456789"
+  whatsapp: "5596994567890"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1
   funcao_id: 6
-  lider_id: 2
+  lider_id: 3
 
 ana_apoiadora:
-  id: 4
+  id: 5
   name: "Ana Paula"
-  whatsapp: "96994567890"
+  whatsapp: "5596995678901"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 2
   funcao_id: 7
-  lider_id: 3
+  lider_id: 4

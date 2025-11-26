@@ -2,7 +2,9 @@ require "test_helper"
 
 class ConvitesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @convite = convites(:one)
+    @convite = convites(:convite_pendente)
+    @admin = apoiadores(:joao_candidato)
+    sign_in_as(@admin)
   end
 
   test "should get index" do
@@ -17,7 +19,7 @@ class ConvitesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create convite" do
     assert_difference("Convite.count") do
-      post convites_url, params: { convite: { enviado_por_id: @convite.enviado_por_id, nome: @convite.nome, status: @convite.status, whatsapp: @convite.whatsapp } }
+      post convites_url, params: { convite: { enviado_por_id: @admin.id, nome: "Novo Convidado", status: "pendente", whatsapp: "96999999999" } }
     end
 
     assert_redirected_to convite_url(Convite.last)
@@ -34,13 +36,15 @@ class ConvitesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update convite" do
-    patch convite_url(@convite), params: { convite: { enviado_por_id: @convite.enviado_por_id, nome: @convite.nome, status: @convite.status, whatsapp: @convite.whatsapp } }
+    patch convite_url(@convite), params: { convite: { nome: "Nome Atualizado" } }
     assert_redirected_to convite_url(@convite)
   end
 
   test "should destroy convite" do
+    convite_to_destroy = Convite.create!(nome: "To Destroy", whatsapp: "96988888888", status: "pendente", enviado_por: @admin)
+
     assert_difference("Convite.count", -1) do
-      delete convite_url(@convite)
+      delete convite_url(convite_to_destroy)
     end
 
     assert_redirected_to convites_url

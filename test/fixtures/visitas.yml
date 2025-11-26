@@ -1,14 +1,18 @@
 # Fixtures para Visitas
 visita_pendente:
   id: 1
-  lider_id: 3
-  apoiador_id: 4
+  lider_id: 4
+  apoiador_id: 5
   relato: "Visita agendada"
   status: "pendente"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
 
 visita_concluida:
   id: 2
-  lider_id: 3
-  apoiador_id: 4
+  lider_id: 4
+  apoiador_id: 5
   relato: "Visita realizada com sucesso"
   status: "concluida"
+  created_at: <%= Time.current %>
+  updated_at: <%= Time.current %>
