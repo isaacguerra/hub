@@ -80,8 +80,10 @@ production:
   primary: &primary_production
     <<: *default
     database: appivone_production
-    username: appivone
+    username: postgres
     password: <%= ENV["APPIVONE_DATABASE_PASSWORD"] %>
+    host: 212.85.0.223
+    port: 5432
   cache:
     <<: *primary_production
     database: appivone_production_cache
