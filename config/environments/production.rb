@@ -87,4 +87,9 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Allow requests from specific hosts (e.g. ngrok, docker)
+  if ENV["RAILS_PRODUCTION_HOSTS"].present?
+    config.hosts.concat ENV["RAILS_PRODUCTION_HOSTS"].split(",")
+  end
 end

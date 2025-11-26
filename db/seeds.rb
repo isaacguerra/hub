@@ -76,6 +76,26 @@ regiao_centro = Regiao.find_by(name: 'Centro', municipio: municipio_macapa)
 bairro_central = Bairro.find_by(name: 'Central', regiao: regiao_centro)
 
 if funcao_candidato && municipio_macapa && regiao_centro && bairro_central
+  apoiador = Apoiador.find_or_create_by!(whatsapp: '5596984102020') do |a|
+    a.name = 'Ivone Chagas'
+    a.funcao = funcao_candidato
+    a.municipio = municipio_macapa
+    a.regiao = regiao_centro
+    a.bairro = bairro_central
+    a.email = 'ivone@ivonechagas.com.br'
+  end
+  puts "Apoiador padrão criado: #{apoiador.name} (#{apoiador.email})"
+else
+  puts "Erro: Não foi possível encontrar os dados necessários para criar o apoiador padrão."
+end
+
+# 3. Criar Apoiador Padrão (Isaac Guerra)
+funcao_candidato = Funcao.find_by(name: 'Coordenador Geral')
+municipio_macapa = Municipio.find_by(name: 'Macapá')
+regiao_centro = Regiao.find_by(name: 'Norte', municipio: municipio_macapa)
+bairro_central = Bairro.find_by(name: 'Jesus de Nazaré', regiao: regiao_centro)
+
+if funcao_candidato && municipio_macapa && regiao_centro && bairro_central
   apoiador = Apoiador.find_or_create_by!(whatsapp: '5596984094117') do |a|
     a.name = 'Isaac Guerra'
     a.funcao = funcao_candidato
@@ -84,7 +104,7 @@ if funcao_candidato && municipio_macapa && regiao_centro && bairro_central
     a.bairro = bairro_central
     a.email = 'isaac@appivone.com'
   end
-  puts "Apoiador padrão criado: #{apoiador.name} (#{apoiador.email})"
+  puts "Apoiador Coordenador Geral criado: #{apoiador.name} (#{apoiador.email})"
 else
   puts "Erro: Não foi possível encontrar os dados necessários para criar o apoiador padrão."
 end
