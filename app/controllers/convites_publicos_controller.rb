@@ -25,6 +25,10 @@ class ConvitesPublicosController < ApplicationController
 
     if @apoiador.save
       @convite.update(status: "aceito")
+      
+      # Dispara notificações de boas-vindas e avisos à liderança
+      Mensageria::Notificacoes::Convites.notificar_convite_aceito(@apoiador)
+
       redirect_to sucesso_convite_path
     else
       load_auxiliary_data
