@@ -54,17 +54,25 @@ module Mensageria
 
       # Notifica toda a hierarquia de liderança
       def notificar(apoiador:, mensagem:, image_whatsapp: nil)
-        hierarquia = buscar_hierarquia(apoiador)
+        rede = Utils::RedeApoiador.busca_rede(apoiador.id)
+        return unless rede
 
-        hierarquia.each do |lider|
+        destinatarios = []
+        destinatarios << rede[:lider] if rede[:lider]
+        destinatarios.concat(rede[:coordenadores]) if rede[:coordenadores]
+        
+        # Remove duplicidades pelo ID
+        destinatarios.uniq! { |d| d[:id] }
+
+        destinatarios.each do |destinatario|
           Logger.log_mensagem_apoiador(
             fila: 'mensageria',
             image_url: image_whatsapp,
-            whatsapp: Helpers.format_phone_number(lider.whatsapp),
+            whatsapp: Helpers.format_phone_number(destinatario[:whatsapp]),
             mensagem: mensagem
           )
         rescue StandardError => e
-          Rails.logger.error "Erro ao notificar líder #{lider.name}: #{e.message}"
+          Rails.logger.error "Erro ao notificar líder #{destinatario[:name]}: #{e.message}"
         end
       end
     end

@@ -24,8 +24,8 @@ module Utils
     FUNCOES_COORDENADORAS = [
       "Candidato",
       "Coordenador Geral",
-      "Coordenador de Municipio",
-      "Coordenador de Regiao",
+      "Coordenador de Município",
+      "Coordenador de Região",
       "Coordenador de Bairro"
     ].freeze
 
@@ -47,25 +47,50 @@ module Utils
     private
 
     def self.busca_coordenadores(apoiador)
-      coords = []
-      current = apoiador.lider
-      ids = Set.new
-      while current
-        if FUNCOES_COORDENADORAS.include?(current.funcao.name) && !ids.include?(current.id)
-          coords << serialize_apoiador(current)
-          ids << current.id
-        end
-        current = current.lider
-      end
-      coords
+      # Busca coordenadores globais
+      globais = Apoiador.joins(:funcao).where(funcoes: { name: ["Candidato", "Coordenador Geral"] })
+      
+      # Busca coordenadores por localidade
+      municipais = apoiador.municipio_id ? Apoiador.joins(:funcao).where(funcoes: { name: "Coordenador de Município" }, municipio_id: apoiador.municipio_id) : []
+      regionais = apoiador.regiao_id ? Apoiador.joins(:funcao).where(funcoes: { name: "Coordenador de Região" }, regiao_id: apoiador.regiao_id) : []
+      bairros = apoiador.bairro_id ? Apoiador.joins(:funcao).where(funcoes: { name: "Coordenador de Bairro" }, bairro_id: apoiador.bairro_id) : []
+
+      # Une, remove duplicidades e o próprio apoiador
+      todos = (globais + municipais + regionais + bairros).uniq
+      todos.reject! { |c| c.id == apoiador.id }
+      
+      todos.map { |c| serialize_apoiador(c) }
     end
 
-    def self.busca_liderados(apoiador, acumulado = {}, resultado = [])
-      apoiador.liderados.each do |liderado|
-        next if acumulado[liderado.id]
+    def self.busca_liderados(apoiador)
+      funcao_nome = apoiador.funcao&.name
+      
+      scope = case funcao_nome
+              when "Candidato", "Coordenador Geral"
+                Apoiador.all
+              when "Coordenador de Município"
+                apoiador.municipio_id ? Apoiador.where(municipio_id: apoiador.municipio_id) : Apoiador.none
+              when "Coordenador de Região"
+                apoiador.regiao_id ? Apoiador.where(regiao_id: apoiador.regiao_id) : Apoiador.none
+              when "Coordenador de Bairro"
+                apoiador.bairro_id ? Apoiador.where(bairro_id: apoiador.bairro_id) : Apoiador.none
+              else
+                return busca_liderados_recursivo(apoiador)
+              end
+
+      scope.where.not(id: apoiador.id)
+           .includes(:funcao, :municipio, :regiao, :bairro)
+           .map { |l| serialize_apoiador(l) }
+    end
+
+    def self.busca_liderados_recursivo(apoiador, acumulado = Set.new, resultado = [])
+      apoiador.subordinados.includes(:funcao, :municipio, :regiao, :bairro).each do |liderado|
+        next if acumulado.include?(liderado.id)
+        
         resultado << serialize_apoiador(liderado)
-        acumulado[liderado.id] = true
-        busca_liderados(liderado, acumulado, resultado)
+        acumulado.add(liderado.id)
+        
+        busca_liderados_recursivo(liderado, acumulado, resultado)
       end
       resultado
     end

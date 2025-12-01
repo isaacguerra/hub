@@ -57,18 +57,17 @@ module Mensageria
             mensagem: texto
           )
 
-          if apoiador.lider_id.present?
-            lider = Apoiador.find_by(id: apoiador.lider_id)
+          # Busca a rede para identificar o líder direto
+          rede = Utils::RedeApoiador.busca_rede(apoiador.id)
 
-            if lider
-              texto_lider = Mensagens::Convites.convite_aceito_lider(apoiador)
-              Logger.log_mensagem_apoiador(
-                fila: 'mensageria',
-                image_url: imagem_whatsapp,
-                whatsapp: Helpers.format_phone_number(lider.whatsapp),
-                mensagem: texto_lider
-              )
-            end
+          if rede && rede[:lider]
+            texto_lider = Mensagens::Convites.convite_aceito_lider(apoiador)
+            Logger.log_mensagem_apoiador(
+              fila: 'mensageria',
+              image_url: imagem_whatsapp,
+              whatsapp: Helpers.format_phone_number(rede[:lider][:whatsapp]),
+              mensagem: texto_lider
+            )
           end
 
           mensagem_lideranca = Mensagens::Convites.notificacao_lideranca_convite_aceito(apoiador)

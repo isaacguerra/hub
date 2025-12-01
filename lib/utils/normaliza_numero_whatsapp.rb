@@ -104,7 +104,7 @@ module Utils
         case numero.length
         when 8
           # Só número, sem nono dígito, DDD, DDI
-          numero = "559699#{numero}"
+          numero = "55969#{numero}"
         when 9
           # Sem DDI/DDD, mas já tem nono dígito
           numero = "5596#{numero}"
