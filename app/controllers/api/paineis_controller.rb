@@ -12,7 +12,7 @@ module Api
       end
 
       # Formata numero (apenas numeros)
-      whatsapp_formatted = whatsapp_param.gsub(/\D/, "")
+      whatsapp_formatted = Utils::NormalizaNumeroWhatsapp.format_chatbot_number(whatsapp_param)
 
       # Tenta encontrar o apoiador
       apoiador = Apoiador.find_by(whatsapp: whatsapp_formatted)
