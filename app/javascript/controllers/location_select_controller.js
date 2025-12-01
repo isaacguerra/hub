@@ -4,57 +4,70 @@ export default class extends Controller {
   static targets = ["municipio", "regiao", "bairro"]
 
   connect() {
-    // Store original options to restore them later
-    // We skip the first option assuming it is the placeholder "Selecione..."
-    this.allRegiaoOptions = Array.from(this.regiaoTarget.querySelectorAll("option")).slice(1)
-    this.allBairroOptions = Array.from(this.bairroTarget.querySelectorAll("option")).slice(1)
+    // Salva as opções originais na memória ao conectar
+    this.regiaoOptions = Array.from(this.regiaoTarget.options)
+    this.bairroOptions = Array.from(this.bairroTarget.options)
     
-    // Initial filter based on current values (if any)
+    // Aplica o filtro inicial
     this.filterRegioes()
   }
 
   filterRegioes() {
     const municipioId = this.municipioTarget.value
-    const regiaoSelect = this.regiaoTarget
-    const currentRegiaoValue = regiaoSelect.value
+    const selectedRegiaoId = this.regiaoTarget.value
+    
+    // Limpa o select de regiões (mantendo apenas a primeira opção "Todas")
+    this.regiaoTarget.innerHTML = ""
+    this.regiaoTarget.appendChild(this.regiaoOptions[0])
 
-    // Clear existing options (keep placeholder)
-    regiaoSelect.length = 1
-
-    // Add filtered options
-    this.allRegiaoOptions.forEach(option => {
-      if (municipioId && option.dataset.municipioId == municipioId) {
-        regiaoSelect.add(option.cloneNode(true))
+    // Adiciona apenas as regiões que pertencem ao município selecionado
+    // Se nenhum município estiver selecionado, mostra todas as regiões (comportamento opcional)
+    // OU podemos decidir mostrar nenhuma. Aqui vou manter a lógica de mostrar apenas se coincidir,
+    // mas se municipioId for vazio, mostraremos todas para permitir filtro livre se desejado,
+    // ou podemos restringir.
+    // Para corrigir o bug relatado: "ao selecionar municipio... esta listando todas",
+    // vamos focar no filtro.
+    
+    this.regiaoOptions.slice(1).forEach(option => {
+      const optionMunicipioId = option.dataset.municipioId
+      
+      // Se tem município selecionado, filtra. Se não tem, mostra tudo.
+      if (!municipioId || optionMunicipioId == municipioId) {
+        this.regiaoTarget.appendChild(option)
       }
     })
-
-    // Try to restore selection
-    regiaoSelect.value = currentRegiaoValue
-    // If the previously selected value is no longer valid, reset to placeholder
-    if (regiaoSelect.value !== currentRegiaoValue) {
-      regiaoSelect.selectedIndex = 0
+    
+    // Tenta restaurar a seleção anterior se ainda for válida
+    this.regiaoTarget.value = selectedRegiaoId
+    
+    // Se a seleção não for mais válida (foi removida), reseta para o valor vazio
+    if (this.regiaoTarget.value !== selectedRegiaoId) {
+      this.regiaoTarget.value = ""
     }
 
-    // Trigger bairro filter because regiao might have changed
+    // Atualiza os bairros baseados na nova região (ou falta dela)
     this.filterBairros()
   }
 
   filterBairros() {
     const regiaoId = this.regiaoTarget.value
-    const bairroSelect = this.bairroTarget
-    const currentBairroValue = bairroSelect.value
+    const selectedBairroId = this.bairroTarget.value
+    
+    this.bairroTarget.innerHTML = ""
+    this.bairroTarget.appendChild(this.bairroOptions[0])
 
-    bairroSelect.length = 1
-
-    this.allBairroOptions.forEach(option => {
-      if (regiaoId && option.dataset.regiaoId == regiaoId) {
-        bairroSelect.add(option.cloneNode(true))
+    this.bairroOptions.slice(1).forEach(option => {
+      const optionRegiaoId = option.dataset.regiaoId
+      
+      if (!regiaoId || optionRegiaoId == regiaoId) {
+        this.bairroTarget.appendChild(option)
       }
     })
 
-    bairroSelect.value = currentBairroValue
-    if (bairroSelect.value !== currentBairroValue) {
-      bairroSelect.selectedIndex = 0
+    this.bairroTarget.value = selectedBairroId
+    
+    if (this.bairroTarget.value !== selectedBairroId) {
+      this.bairroTarget.value = ""
     }
   }
 }
