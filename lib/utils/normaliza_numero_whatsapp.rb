@@ -98,6 +98,7 @@ module Utils
         return nil if whatsapp.blank?
 
         # Remove domínio e caracteres não numéricos
+        # O split("@") remove sufixos como @c.us ou @s.whatsapp.net
         numero = whatsapp.to_s.split("@")[0].gsub(/\D/, "")
 
         # Casos de entrada:
@@ -115,8 +116,19 @@ module Utils
           # DDD + número com nono dígito
           numero = "55#{numero}"
         when 12
-          # DDI + número sem DDD (raro, mas cobre)
-          numero = "5596#{numero[2..]}"
+          # DDI + DDD + número sem nono dígito (Ex: 55 96 8409 4117)
+          # Ou DDI + número sem DDD (Ex: 55 99112 0579) - menos provável se vier do WhatsApp
+          
+          if numero.start_with?("55")
+             # Assume que é DDI 55 + DDD + 8 dígitos
+             # Ex: 559684094117 -> 5596984094117
+             ddd = numero[2..3]
+             resto = numero[4..]
+             numero = "55#{ddd}9#{resto}"
+          else
+             # Se não começa com 55, assume DDI + número sem DDD (raro)
+             numero = "5596#{numero[2..]}"
+          end
         when 13
           # Já está no formato correto ou tem DDI/DDDs diferentes
           # Se não começar com 5596, força para 5596
