@@ -74,18 +74,60 @@ module Utils
         "5596#{cleaned}"
       end
 
+      # temos que garantir que o numero whatsapp cadastrado do Apoiador seja no formato aceito pelo whatsapp business api
+      # na funcao format acima quando cadastramos o apoiador via sistema web
+      # porem quando o numero vem do ChatBot pode ser que ele venha em um formato diferente
+      # por exemplo o ChatBot pode enviar o numero sem o nono digito
+      # ou sem o DDI OU DDD
+      # entao essa funcao tenta corrigir esses casos especificos do ChatBot
+      # para garantir que o numero fique no formato correto
+      # 5596991120579 ou seja DDI 55 + DDD 96 + nono digito 9 + numero 91120579
+      # exemplo de entrada do ChatBot: 9691120579 (sem o nono digito)
+      # ou 991120579 (sem DDI e DDD)
+      # ou 91120579 (sem DDI, DDD e nono digito)
+      # essa funcao deve ser usada apenas para numeros vindos do ChatBot
+      # e deve normalizar o numero para o formato correto
+      # exemplo de uso:
+      # numero_formatado = Utils::NormalizaNumeroWhatsapp.format_chatbot_number(whatsapp)
+      # onde whatsapp é o numero vindo do ChatBot
+      # e retorna o numero no formato correto
+      # exemplo de retorno: 5596991120579
+      # garanta que essa funcao normalize o numero corretamente
+      # apos a normalizacao use a funcao format para garantir o formato final
       def format_chatbot_number(whatsapp)
         return nil if whatsapp.blank?
 
-        full = whatsapp.to_s
-        numero = full.split("@")[0] # remove o domínio
+        # Remove domínio e caracteres não numéricos
+        numero = whatsapp.to_s.split("@")[0].gsub(/\D/, "")
 
-        # Lógica específica para números vindos do ChatBot que faltam o nono dígito
-        ddd = numero[0..3]      # Pega os 4 primeiros caracteres (ex: "5596")
-        nono_digito = "9"
-        restante = numero[4..]  # Pega do 5º caractere em diante
+        # Casos de entrada:
+        case numero.length
+        when 8
+          # Só número, sem nono dígito, DDD, DDI
+          numero = "559699#{numero}"
+        when 9
+          # Sem DDI/DDD, mas já tem nono dígito
+          numero = "5596#{numero}"
+        when 10
+          # DDD + número sem nono dígito
+          numero = "55#{numero[0..1]}9#{numero[2..]}"
+        when 11
+          # DDD + número com nono dígito
+          numero = "55#{numero}"
+        when 12
+          # DDI + número sem DDD (raro, mas cobre)
+          numero = "5596#{numero[2..]}"
+        when 13
+          # Já está no formato correto ou tem DDI/DDDs diferentes
+          # Se não começar com 5596, força para 5596
+          numero = numero.start_with?("5596") ? numero : "5596#{numero[-9..]}"
+        else
+          # Se vier em formato inesperado, tenta forçar para 5596 + últimos 9 dígitos
+          numero = "5596#{numero[-9..]}"
+        end
 
-        "#{ddd}#{nono_digito}#{restante}"
+        # Garante formato final
+        format(numero)
       end
     end
   end

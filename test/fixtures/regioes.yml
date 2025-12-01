@@ -8,3 +8,13 @@ norte:
   id: 2
   name: "Norte"
   municipio_id: 1
+
+regiao_4:
+  id: 4
+  name: "Região 4"
+  municipio_id: 2
+
+regiao_7:
+  id: 7
+  name: "Região 7"
+  municipio_id: 3

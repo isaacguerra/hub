@@ -6,3 +6,7 @@ macapa:
 santana:
   id: 2
   name: "Santana"
+
+municipio_3:
+  id: 3
+  name: "Município 3"

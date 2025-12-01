@@ -8,3 +8,13 @@ perpetuo_socorro:
   id: 2
   name: "Perpétuo Socorro"
   regiao_id: 1
+
+bairro_7:
+  id: 7
+  name: "Bairro 7"
+  regiao_id: 4
+
+bairro_13:
+  id: 13
+  name: "Bairro 13"
+  regiao_id: 7

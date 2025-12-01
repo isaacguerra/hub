@@ -148,6 +148,11 @@ class Apoiador < ApplicationRecord
     )
   end
 
+    # Compatibilidade para utilitário e testes
+    def liderados
+      todos_subordinados(incluir_indiretos: true)
+    end
+
   private
 
   def criado_por_convite?
