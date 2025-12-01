@@ -98,7 +98,7 @@
         <%= f.collection_select :filtro_municipio_id, Municipio.order(:name), :id, :name, { prompt: "Todos os Municípios" }, { class: "form-select mobile-input", data: { location_select_target: "municipio", action: "change->location-select#filterRegioes" } } %>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-3" data-location-select-target="regiaoContainer">
         <%= f.label :filtro_regiao_id, "Região", class: "form-label fw-bold small" %>
         <%= f.select :filtro_regiao_id, 
             options_for_select([["Todas as Regiões", ""]] + Regiao.order(:name).map { |r| [r.name, r.id, { "data-municipio-id" => r.municipio_id }] }, evento.filtro_regiao_id),
@@ -106,7 +106,7 @@
             { class: "form-select mobile-input", data: { location_select_target: "regiao", action: "change->location-select#filterBairros" } } %>
       </div>
 
-      <div class="mb-3">
+      <div class="mb-3" data-location-select-target="bairroContainer">
         <%= f.label :filtro_bairro_id, "Bairro", class: "form-label fw-bold small" %>
         <%= f.select :filtro_bairro_id, 
             options_for_select([["Todos os Bairros", ""]] + Bairro.order(:name).map { |b| [b.name, b.id, { "data-regiao-id" => b.regiao_id }] }, evento.filtro_bairro_id),

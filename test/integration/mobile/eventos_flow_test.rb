@@ -17,8 +17,15 @@ class Mobile::EventosFlowTest < ActionDispatch::IntegrationTest
     
     # Verifica se os selects têm os targets e data attributes corretos
     assert_select "select#evento_filtro_municipio_id[data-location-select-target='municipio']"
-    assert_select "select#evento_filtro_regiao_id[data-location-select-target='regiao']"
-    assert_select "select#evento_filtro_bairro_id[data-location-select-target='bairro']"
+    
+    # Verifica containers e selects
+    assert_select "div[data-location-select-target='regiaoContainer']" do
+      assert_select "select#evento_filtro_regiao_id[data-location-select-target='regiao']"
+    end
+    
+    assert_select "div[data-location-select-target='bairroContainer']" do
+      assert_select "select#evento_filtro_bairro_id[data-location-select-target='bairro']"
+    end
     
     # Verifica se as opções têm os data attributes de filtro
     # Macapá (id: 1)

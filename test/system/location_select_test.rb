@@ -18,13 +18,23 @@ class LocationSelectTest < ApplicationSystemTestCase
     # Navegar para Novo Evento
     visit new_evento_url
 
-    # Verificar estado inicial (sem município selecionado, deve mostrar todas as regiões ou nenhuma dependendo da lógica)
-    # Pela lógica atual: !municipioId -> mostra tudo.
-    assert_selector "select#evento_filtro_regiao_id option", text: "Centro"
-    assert_selector "select#evento_filtro_regiao_id option", text: "Região 4"
+    # Verificar estado inicial:
+    # Município visível
+    assert_selector "select#evento_filtro_municipio_id"
+    
+    # Região e Bairro devem estar ocultos (seus containers)
+    # Nota: Capybara por padrão não encontra elementos invisíveis, então assert_no_selector deve funcionar se estiver display: none
+    # Ou podemos verificar o style diretamente se necessário, mas assert_no_selector é mais idiomático para "não visível para o usuário"
+    assert_no_selector "select#evento_filtro_regiao_id"
+    assert_no_selector "select#evento_filtro_bairro_id"
 
     # Selecionar Macapá
     select "Macapá", from: "evento_filtro_municipio_id"
+    
+    # Agora Região deve estar visível
+    assert_selector "select#evento_filtro_regiao_id"
+    # Bairro ainda oculto
+    assert_no_selector "select#evento_filtro_bairro_id"
     
     # Verificar se filtrou Regiões (Deve ter Centro, não deve ter Região 4)
     assert_selector "select#evento_filtro_regiao_id option", text: "Centro"
@@ -32,6 +42,9 @@ class LocationSelectTest < ApplicationSystemTestCase
 
     # Selecionar Região Centro
     select "Centro", from: "evento_filtro_regiao_id"
+
+    # Agora Bairro deve estar visível
+    assert_selector "select#evento_filtro_bairro_id"
 
     # Verificar se filtrou Bairros (Deve ter Centro, Perpétuo Socorro. Não deve ter Bairro 7)
     assert_selector "select#evento_filtro_bairro_id option", text: "Centro"
@@ -45,10 +58,7 @@ class LocationSelectTest < ApplicationSystemTestCase
     assert_selector "select#evento_filtro_regiao_id option", text: "Região 4"
     assert_no_selector "select#evento_filtro_regiao_id option", text: "Centro"
     
-    # Verificar se Bairro resetou (pois a região selecionada "Centro" sumiu)
-    # A lógica diz: se a região selecionada não for válida, reseta.
-    # E se a região reseta, os bairros devem resetar/filtrar de acordo com região vazia (mostrar todos ou nenhum).
-    # Se região vazia -> mostra todos os bairros (pela lógica !regiaoId).
-    assert_selector "select#evento_filtro_bairro_id option", text: "Bairro 7"
+    # Bairro deve ter sumido pois a região foi resetada
+    assert_no_selector "select#evento_filtro_bairro_id"
   end
 end

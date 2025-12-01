@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["municipio", "regiao", "bairro"]
+  static targets = ["municipio", "regiao", "bairro", "regiaoContainer", "bairroContainer"]
 
   connect() {
     // Clona as opções originais para preservar a lista completa
@@ -18,12 +18,23 @@ export default class extends Controller {
   disconnect() {
     this.restoreOptions(this.regiaoTarget, this.originalRegiaoOptions)
     this.restoreOptions(this.bairroTarget, this.originalBairroOptions)
+    // Restaura visibilidade
+    if (this.hasRegiaoContainerTarget) this.regiaoContainerTarget.style.display = ""
+    if (this.hasBairroContainerTarget) this.bairroContainerTarget.style.display = ""
   }
 
   filterRegioes() {
     const municipioId = this.municipioTarget.value
     const currentRegiaoValue = this.regiaoTarget.value
     
+    // Controle de visibilidade
+    if (municipioId) {
+      this.regiaoContainerTarget.style.display = "block"
+    } else {
+      this.regiaoContainerTarget.style.display = "none"
+      this.regiaoTarget.value = "" // Limpa seleção se ocultar
+    }
+
     // Limpa e reconstrói o select de regiões
     this.regiaoTarget.innerHTML = ""
     
@@ -40,10 +51,14 @@ export default class extends Controller {
       }
     })
 
-    // Tenta manter a seleção
-    this.regiaoTarget.value = currentRegiaoValue
-    if (this.regiaoTarget.value !== currentRegiaoValue) {
-      this.regiaoTarget.selectedIndex = 0
+    // Tenta manter a seleção se ainda for válida
+    if (municipioId) {
+        this.regiaoTarget.value = currentRegiaoValue
+        if (this.regiaoTarget.value !== currentRegiaoValue) {
+          this.regiaoTarget.selectedIndex = 0
+        }
+    } else {
+        this.regiaoTarget.selectedIndex = 0
     }
 
     // Cascata para bairros
@@ -54,6 +69,14 @@ export default class extends Controller {
     const regiaoId = this.regiaoTarget.value
     const currentBairroValue = this.bairroTarget.value
     
+    // Controle de visibilidade
+    if (regiaoId) {
+      this.bairroContainerTarget.style.display = "block"
+    } else {
+      this.bairroContainerTarget.style.display = "none"
+      this.bairroTarget.value = "" // Limpa seleção se ocultar
+    }
+
     this.bairroTarget.innerHTML = ""
     this.bairroTarget.appendChild(this.originalBairroOptions[0].cloneNode(true))
 
@@ -65,9 +88,13 @@ export default class extends Controller {
       }
     })
 
-    this.bairroTarget.value = currentBairroValue
-    if (this.bairroTarget.value !== currentBairroValue) {
-      this.bairroTarget.selectedIndex = 0
+    if (regiaoId) {
+        this.bairroTarget.value = currentBairroValue
+        if (this.bairroTarget.value !== currentBairroValue) {
+          this.bairroTarget.selectedIndex = 0
+        }
+    } else {
+        this.bairroTarget.selectedIndex = 0
     }
   }
 
