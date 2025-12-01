@@ -5,42 +5,4 @@
   <h5 class="fw-bold mb-0">Novo Evento</h5>
 </div>
 
-<div class="mobile-card">
-  <div class="card-body">
-    <%= form_with(model: [:mobile, @evento], local: true) do |f| %>
-      <% if @evento.errors.any? %>
-        <div class="alert alert-danger">
-          <ul class="mb-0">
-            <% @evento.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <div class="mb-3">
-        <%= f.label :titulo, "Título", class: "form-label fw-bold" %>
-        <%= f.text_field :titulo, class: "form-control mobile-input", placeholder: "Ex: Caminhada no Bairro" %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :data, "Data e Hora", class: "form-label fw-bold" %>
-        <%= f.datetime_field :data, class: "form-control mobile-input" %>
-      </div>
-
-      <div class="mb-3">
-        <%= f.label :local, "Local", class: "form-label fw-bold" %>
-        <%= f.text_field :local, class: "form-control mobile-input", placeholder: "Ex: Praça Central" %>
-      </div>
-
-      <div class="mb-4">
-        <%= f.label :descricao, "Descrição", class: "form-label fw-bold" %>
-        <%= f.text_area :descricao, rows: 3, class: "form-control mobile-input", placeholder: "Detalhes do evento..." %>
-      </div>
-
-      <div class="d-grid">
-        <%= f.submit "Criar Evento", class: "btn btn-primary rounded-pill py-2 fw-bold" %>
-      </div>
-    <% end %>
-  </div>
-</div>
+<%= render "form", evento: @evento %>

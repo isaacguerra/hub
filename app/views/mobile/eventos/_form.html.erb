@@ -1,0 +1,122 @@
+<%= form_with(model: [:mobile, evento], local: true, data: { controller: "location-select" }) do |f| %>
+  <% if evento.errors.any? %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% evento.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- Informações Básicas -->
+  <div class="mobile-card mb-3">
+    <div class="card-body">
+      <h6 class="fw-bold text-primary mb-3">Informações Básicas</h6>
+      
+      <div class="mb-3">
+        <%= f.label :titulo, "Título", class: "form-label fw-bold small" %>
+        <%= f.text_field :titulo, class: "form-control mobile-input", placeholder: "Ex: Caminhada no Bairro" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :data, "Data e Hora", class: "form-label fw-bold small" %>
+        <%= f.datetime_field :data, class: "form-control mobile-input" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :local, "Local", class: "form-label fw-bold small" %>
+        <%= f.text_field :local, class: "form-control mobile-input", placeholder: "Ex: Praça Central" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :descricao, "Descrição", class: "form-label fw-bold small" %>
+        <%= f.text_area :descricao, rows: 3, class: "form-control mobile-input", placeholder: "Detalhes do evento..." %>
+      </div>
+      
+      <div class="mb-1">
+        <label class="form-label fw-bold small">Organizador</label>
+        <div class="form-control mobile-input bg-light text-muted">
+          <%= evento.coordenador&.nome || Current.apoiador.nome %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Redes Sociais -->
+  <div class="mobile-card mb-3">
+    <div class="card-body">
+      <h6 class="fw-bold text-primary mb-3">Redes Sociais (Opcional)</h6>
+      
+      <div class="mb-3">
+        <%= f.label :link_whatsapp, "WhatsApp", class: "form-label fw-bold small" %>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0"><i class="bi bi-whatsapp text-success"></i></span>
+          <%= f.text_field :link_whatsapp, class: "form-control mobile-input border-start-0", placeholder: "Link do grupo/contato" %>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :link_instagram, "Instagram", class: "form-label fw-bold small" %>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0"><i class="bi bi-instagram text-danger"></i></span>
+          <%= f.text_field :link_instagram, class: "form-control mobile-input border-start-0", placeholder: "Link do post/perfil" %>
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <%= f.label :link_facebook, "Facebook", class: "form-label fw-bold small" %>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0"><i class="bi bi-facebook text-primary"></i></span>
+          <%= f.text_field :link_facebook, class: "form-control mobile-input border-start-0", placeholder: "Link do evento" %>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :link_tiktok, "TikTok", class: "form-label fw-bold small" %>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0"><i class="bi bi-tiktok text-dark"></i></span>
+          <%= f.text_field :link_tiktok, class: "form-control mobile-input border-start-0", placeholder: "Link do perfil" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Público Alvo -->
+  <div class="mobile-card mb-4">
+    <div class="card-body">
+      <h6 class="fw-bold text-primary mb-2">Público Alvo</h6>
+      <p class="text-muted small mb-3">Quem deve receber este convite? Deixe em branco para todos.</p>
+
+      <div class="mb-3">
+        <%= f.label :filtro_funcao_id, "Função", class: "form-label fw-bold small" %>
+        <%= f.collection_select :filtro_funcao_id, Funcao.order(:name), :id, :name, { prompt: "Todas as Funções" }, { class: "form-select mobile-input" } %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :filtro_municipio_id, "Município", class: "form-label fw-bold small" %>
+        <%= f.collection_select :filtro_municipio_id, Municipio.order(:name), :id, :name, { prompt: "Todos os Municípios" }, { class: "form-select mobile-input", data: { location_select_target: "municipio", action: "change->location-select#filterRegioes" } } %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :filtro_regiao_id, "Região", class: "form-label fw-bold small" %>
+        <%= f.select :filtro_regiao_id, 
+            options_for_select([["Todas as Regiões", ""]] + Regiao.order(:name).map { |r| [r.name, r.id, { 'data-municipio-id': r.municipio_id }] }, evento.filtro_regiao_id),
+            {}, 
+            { class: "form-select mobile-input", data: { location_select_target: "regiao", action: "change->location-select#filterBairros" } } %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :filtro_bairro_id, "Bairro", class: "form-label fw-bold small" %>
+        <%= f.select :filtro_bairro_id, 
+            options_for_select([["Todos os Bairros", ""]] + Bairro.order(:name).map { |b| [b.name, b.id, { 'data-regiao-id': b.regiao_id }] }, evento.filtro_bairro_id),
+            {}, 
+            { class: "form-select mobile-input", data: { location_select_target: "bairro" } } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-grid mb-5">
+    <%= f.submit evento.new_record? ? "Criar Evento" : "Atualizar Evento", class: "btn btn-primary rounded-pill py-3 fw-bold shadow-sm" %>
+  </div>
+<% end %>
