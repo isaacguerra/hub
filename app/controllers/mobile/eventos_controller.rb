@@ -50,7 +50,11 @@ module Mobile
     end
 
     def evento_params
-      params.require(:evento).permit(:titulo, :data, :local, :descricao)
+      params.require(:evento).permit(
+        :titulo, :data, :local, :descricao,
+        :link_whatsapp, :link_instagram, :link_facebook, :link_tiktok,
+        :filtro_funcao_id, :filtro_municipio_id, :filtro_regiao_id, :filtro_bairro_id
+      )
     end
 
     def authorize_create

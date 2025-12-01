@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_21_195158) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_01_130851) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -101,6 +101,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_21_195158) do
     t.datetime "created_at", null: false
     t.datetime "data", null: false
     t.text "descricao"
+    t.bigint "filtro_bairro_id"
+    t.bigint "filtro_funcao_id"
+    t.bigint "filtro_municipio_id"
+    t.bigint "filtro_regiao_id"
     t.string "imagem"
     t.string "link_facebook"
     t.string "link_instagram"
@@ -110,6 +114,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_21_195158) do
     t.string "titulo", null: false
     t.datetime "updated_at", null: false
     t.index ["coordenador_id"], name: "index_eventos_on_coordenador_id"
+    t.index ["filtro_bairro_id"], name: "index_eventos_on_filtro_bairro_id"
+    t.index ["filtro_funcao_id"], name: "index_eventos_on_filtro_funcao_id"
+    t.index ["filtro_municipio_id"], name: "index_eventos_on_filtro_municipio_id"
+    t.index ["filtro_regiao_id"], name: "index_eventos_on_filtro_regiao_id"
   end
 
   create_table "funcoes", force: :cascade do |t|
@@ -181,6 +189,10 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_21_195158) do
   add_foreign_key "comunicados", "apoiadores", column: "lider_id"
   add_foreign_key "convites", "apoiadores", column: "enviado_por_id"
   add_foreign_key "eventos", "apoiadores", column: "coordenador_id"
+  add_foreign_key "eventos", "bairros", column: "filtro_bairro_id"
+  add_foreign_key "eventos", "funcoes", column: "filtro_funcao_id"
+  add_foreign_key "eventos", "municipios", column: "filtro_municipio_id"
+  add_foreign_key "eventos", "regioes", column: "filtro_regiao_id"
   add_foreign_key "linkpaineis", "apoiadores"
   add_foreign_key "regioes", "apoiadores", column: "coordenador_id"
   add_foreign_key "regioes", "municipios"

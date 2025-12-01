@@ -4,7 +4,7 @@ require "ostruct"
 
 class MensageriaTest < ActiveSupport::TestCase
   def setup
-    @apoiador = apoiadores(:pedro_lider)
+    @apoiador = apoiadores(:lider_1)
     @convite = convites(:convite_pendente)
     @visita = visitas(:visita_pendente)
     @evento = OpenStruct.new(
@@ -12,7 +12,8 @@ class MensageriaTest < ActiveSupport::TestCase
       titulo: "Reunião Geral",
       descricao: "Discussão de pautas",
       data: Time.now + 1.day,
-      coordenador: @apoiador
+      coordenador: @apoiador,
+      descricao_publico_alvo: "Todos (Rede completa)"
     )
     @comunicado = OpenStruct.new(
       id: 1,
@@ -200,6 +201,7 @@ class MensageriaTest < ActiveSupport::TestCase
 
   # Teste para Mensagens::Convites (verificação de variáveis de ambiente)
   test "Mensagens::Convites deve usar BASE_URL correta" do
+    ENV['BASE_URL'] ||= "http://localhost:3000"
     texto = Mensageria::Mensagens::Convites.novo_convite(@convite, @apoiador)
     assert_includes texto, ENV['BASE_URL']
     assert_includes texto, "/convite/aceitar/#{@convite.id}"
@@ -238,15 +240,15 @@ class MensageriaTest < ActiveSupport::TestCase
   # Teste para Lideranca
   test "Lideranca.buscar_hierarquia deve retornar lista de lideres" do
     # Ana (apoiadora) -> Pedro (lider) -> Maria (coord geral) -> João (candidato)
-    ana = apoiadores(:ana_apoiadora)
+    ana = apoiadores(:apoiador_1)
     
     lideres = Mensageria::Lideranca.buscar_hierarquia(ana)
     
     # Deve incluir Pedro (lider direto)
-    assert_includes lideres, apoiadores(:pedro_lider)
+    assert_includes lideres, apoiadores(:lider_1)
     
     # Deve incluir Maria (coord geral)
-    assert_includes lideres, apoiadores(:maria_coord_geral)
+    assert_includes lideres, apoiadores(:coordenador_geral_1)
     
     # Deve incluir João (candidato)
     assert_includes lideres, apoiadores(:joao_candidato)

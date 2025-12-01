@@ -15,9 +15,11 @@ module Mensageria
             *#{evento.titulo}*
 
             📝 #{evento.descricao}
-
+            
             📆 Data: #{evento.data.strftime('%d/%m/%Y às %H:%M')}
             📍 Local: #{evento.local || municipio&.name}
+
+            🎯 Público Alvo: #{evento.descricao_publico_alvo}
 
             👤 Organizado por: #{coordenador&.name}
 
@@ -36,7 +38,10 @@ module Mensageria
             O evento sofreu alterações.
 
             📝 #{evento.descricao}
+            
             📆 Nova Data: #{evento.data.strftime('%d/%m/%Y às %H:%M')}
+
+            🎯 Público Alvo: #{evento.descricao_publico_alvo}
 
             👤 Organizado por: #{coordenador&.name}
           TEXTO

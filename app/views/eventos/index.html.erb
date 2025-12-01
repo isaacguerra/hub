@@ -16,6 +16,7 @@
             <th class="ps-4 py-3">Título</th>
             <th class="py-3">Data e Hora</th>
             <th class="py-3">Local</th>
+            <th class="py-3">Público</th>
             <th class="py-3">Coordenador</th>
             <th class="text-end pe-4 py-3">Ações</th>
           </tr>
@@ -35,6 +36,9 @@
                   <i class="bi bi-geo-alt me-2"></i>
                   <%= evento.local %>
                 </div>
+              </td>
+              <td>
+                <small class="text-muted"><%= descricao_publico_alvo(evento) %></small>
               </td>
               <td>
                 <% if evento.coordenador %>

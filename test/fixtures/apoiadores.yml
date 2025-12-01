@@ -2,7 +2,7 @@
 joao_candidato:
   id: 1
   name: "João Candidato"
-  whatsapp: "559699100001"
+  whatsapp: "5596999100001"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1

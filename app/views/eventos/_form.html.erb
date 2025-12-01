@@ -81,6 +81,39 @@
     </div>
   </div>
 
+  <div class="card card-custom mb-4" data-controller="location-select">
+    <div class="card-header bg-light">
+      <h5 class="mb-0 text-primary-custom"><i class="bi bi-funnel-fill me-2"></i>Público Alvo (Filtros de Notificação)</h5>
+      <small class="text-muted">Deixe em branco para enviar para todos os liderados. Coordenadores sempre serão notificados.</small>
+    </div>
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-3">
+          <%= form.label :filtro_funcao_id, "Filtrar por Função", class: "form-label" %>
+          <%= form.collection_select :filtro_funcao_id, Funcao.order(:name), :id, :name, { prompt: "Todas as Funções" }, { class: "form-select" } %>
+        </div>
+        <div class="col-md-3">
+          <%= form.label :filtro_municipio_id, "Filtrar por Município", class: "form-label" %>
+          <%= form.collection_select :filtro_municipio_id, Municipio.order(:name), :id, :name, { prompt: "Todos os Municípios" }, { class: "form-select", data: { location_select_target: "municipio", action: "change->location-select#filterRegioes" } } %>
+        </div>
+        <div class="col-md-3">
+          <%= form.label :filtro_regiao_id, "Filtrar por Região", class: "form-label" %>
+          <%= form.select :filtro_regiao_id, 
+              options_for_select([["Todas as Regiões", ""]] + Regiao.order(:name).map { |r| [r.name, r.id, { 'data-municipio-id': r.municipio_id }] }, evento.filtro_regiao_id),
+              {}, 
+              { class: "form-select", data: { location_select_target: "regiao", action: "change->location-select#filterBairros" } } %>
+        </div>
+        <div class="col-md-3">
+          <%= form.label :filtro_bairro_id, "Filtrar por Bairro", class: "form-label" %>
+          <%= form.select :filtro_bairro_id, 
+              options_for_select([["Todos os Bairros", ""]] + Bairro.order(:name).map { |b| [b.name, b.id, { 'data-regiao-id': b.regiao_id }] }, evento.filtro_bairro_id),
+              {}, 
+              { class: "form-select", data: { location_select_target: "bairro" } } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="d-flex justify-content-end gap-2">
     <%= link_to "Cancelar", eventos_path, class: "btn btn-outline-secondary" %>
     <%= form.submit "Salvar Evento", class: "btn btn-primary-custom" %>

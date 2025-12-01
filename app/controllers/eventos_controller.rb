@@ -69,7 +69,11 @@ class EventosController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def evento_params
-      params.expect(evento: [ :titulo, :data, :local, :descricao ])
+      params.expect(evento: [
+        :titulo, :data, :local, :descricao,
+        :link_whatsapp, :link_instagram, :link_facebook, :link_tiktok,
+        :filtro_funcao_id, :filtro_municipio_id, :filtro_regiao_id, :filtro_bairro_id
+      ])
     end
 
     def authorize_create

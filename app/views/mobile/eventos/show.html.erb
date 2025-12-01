@@ -23,6 +23,11 @@
       <span><%= @evento.local || "Local não informado" %></span>
     </div>
 
+    <div class="d-flex align-items-center mb-3 text-muted">
+      <i class="bi bi-people me-2"></i>
+      <span class="small"><%= descricao_publico_alvo(@evento) %></span>
+    </div>
+
     <% if @evento.descricao.present? %>
       <div class="bg-light p-3 rounded-3 mb-3">
         <p class="mb-0 small text-muted"><%= @evento.descricao %></p>

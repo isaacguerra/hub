@@ -37,11 +37,12 @@ module Utils
           return "55#{cleaned}"
         end
 
-        # Caso 4: Número com DDI mas sem DDD (conforme lógica original, embora estranho para 12 digitos)
-        # Exemplo: 55991120579 (falta o 96) - Nota: O exemplo original tinha 11 digitos mas a logica checava 12.
-        # Mantendo a lógica do TS: if (cleaned.length === 12 && cleaned.startsWith('55'))
+        # Caso 4: Número com 12 dígitos começando com 55 (DDI + DDD + 8 dígitos)
+        # Exemplo: 559691120579 -> 5596991120579
         if cleaned.length == 12 && cleaned.start_with?("55")
-          return "5596#{cleaned[2..]}"
+          ddd = cleaned[2..3]
+          numero = cleaned[4..]
+          return "55#{ddd}9#{numero}"
         end
 
         # Caso 5: Já está no formato completo

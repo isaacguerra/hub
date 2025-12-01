@@ -15,13 +15,14 @@ class NormalizaNumeroWhatsappTest < ActiveSupport::TestCase
     # Caso 3b: 11 dígitos (DDD + 9)
     assert_equal "5596991120579", Utils::NormalizaNumeroWhatsapp.format("96991120579")
     
-    # Caso 4: 12 dígitos com 55 (DDI + 10 digitos?) - Testando a lógica implementada
-    # Se a entrada for 55 + 91120579 (10 digitos) -> length 10, cai no caso 3.
-    # Se a entrada for 55 + 96 + 91120579 (12 digitos) -> length 12.
-    # O código diz: return "5596#{cleaned[2..]}" -> 5596 + 9691120579.
-    # Vamos testar o que o código faz, não necessariamente o que faz sentido se a lógica original for estranha.
-    # Input: 55 + 10 digits (e.g. 11 91120579)
-    assert_equal "55961191120579", Utils::NormalizaNumeroWhatsapp.format("551191120579")
+    # Caso 4: 12 dígitos com 55 (DDI + DDD + 8 digitos)
+    # Exemplo: 55 + 11 + 91120579 -> 5511991120579
+    assert_equal "5511991120579", Utils::NormalizaNumeroWhatsapp.format("551191120579")
+    
+    # Caso 4b: Fixture (55 + 96 + 99100001) -> 5596999100001
+    # Nota: O fixture tem 8 digitos (99100001) apos o DDD 96? 
+    # Se 99100001 tem 8 digitos, entao vira 999100001.
+    assert_equal "5596999100001", Utils::NormalizaNumeroWhatsapp.format("559699100001")
 
     # Caso 5: 13 dígitos completo 5596...
     assert_equal "5596991120579", Utils::NormalizaNumeroWhatsapp.format("5596991120579")

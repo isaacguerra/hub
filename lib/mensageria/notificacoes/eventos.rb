@@ -8,41 +8,26 @@ module Mensageria
           coordenador = evento.coordenador
           return unless coordenador
 
-          # Envia convite para a rede do coordenador
-          enviar_convite_para_rede(evento)
-
-          # Notifica a liderança do coordenador (apenas informativo, sem link de participar)
-          # Para liderança usamos uma mensagem genérica ou adaptamos o novo_evento para não ter link se apoiador for nil?
-          # Vamos usar o novo_evento passando o próprio coordenador como "apoiador" alvo apenas para gerar o texto,
-          # mas idealmente teríamos um texto específico para liderança.
-          # Vou manter a lógica anterior de notificar liderança mas adaptando a chamada.
-
-          mensagem_lideranca = Mensagens::Eventos.novo_evento(evento, coordenador) # Link para o próprio coordenador se quiser testar
-
+          # 1. Notificar Liderança (Sempre, sem filtros)
+          # Notifica a hierarquia ascendente do coordenador
+          # Usamos uma mensagem genérica ou a de novo evento
+          mensagem_lideranca = Mensagens::Eventos.novo_evento(evento, coordenador) 
+          
           Lideranca.notificar(
             apoiador: coordenador,
             mensagem: mensagem_lideranca
           )
 
-          # Loga no Redis
-          imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(coordenador.whatsapp)
-          Logger.log_mensagem_apoiador(
-            fila: "mensageria",
-            image_url: imagem_whatsapp,
-            whatsapp: Helpers.format_phone_number(coordenador.whatsapp),
-            mensagem: mensagem_lideranca
-          )
-        rescue StandardError => e
-          Rails.logger.error "Erro em notificar_novo_evento: #{e.message}"
-        end
+          # 2. Notificar Liderados (Com Filtros)
+          # Busca destinatários baseados nos filtros definidos no evento
+          destinatarios = evento.destinatarios_filtrados
 
-        def enviar_convite_para_rede(evento)
-          coordenador = evento.coordenador
-          # Busca subordinados diretos e indiretos para convidar
-          # Dependendo da regra de negócio, pode ser apenas diretos. Vamos assumir rede completa.
-          rede = coordenador.todos_subordinados(incluir_indiretos: true)
+          # Se o coordenador não for Candidato ou Coordenador Geral, talvez devêssemos restringir à rede dele?
+          # Por enquanto, seguindo a solicitação, aplicamos os filtros sobre todos os apoiadores.
+          # Mas vamos garantir que o próprio coordenador não receba a mensagem de "convite" duplicada se ele cair no filtro.
+          destinatarios = destinatarios.where.not(id: coordenador.id)
 
-          rede.each do |apoiador|
+          destinatarios.find_each do |apoiador|
             texto = Mensagens::Eventos.novo_evento(evento, apoiador)
             imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
@@ -53,7 +38,12 @@ module Mensageria
               mensagem: texto
             )
           end
+        rescue StandardError => e
+          Rails.logger.error "Erro em notificar_novo_evento: #{e.message}"
         end
+
+        # Método antigo removido ou mantido se usado em outro lugar (parece que só era usado aqui)
+        # def enviar_convite_para_rede(evento) ... end
 
         def notificar_participacao_confirmada(apoiadores_evento)
           evento = apoiadores_evento.evento
