@@ -1,0 +1,28 @@
+<%# Locals: form, wrapper_class, select_class, label_class, include_containers %>
+<% include_containers = local_assigns.fetch(:include_containers, false) %>
+
+<div class="<%= wrapper_class %>">
+  <%= form.label :filtro_funcao_id, "Filtrar por Função", class: label_class %>
+  <%= form.collection_select :filtro_funcao_id, Funcao.order(:name), :id, :name, { prompt: "Todas as Funções" }, { class: select_class } %>
+</div>
+
+<div class="<%= wrapper_class %>">
+  <%= form.label :filtro_municipio_id, "Filtrar por Município", class: label_class %>
+  <%= form.collection_select :filtro_municipio_id, Municipio.order(:name), :id, :name, { prompt: "Todos os Municípios" }, { class: select_class, data: { location_select_target: "municipio", action: "change->location-select#filterRegioes" } } %>
+</div>
+
+<div class="<%= wrapper_class %>" <%= 'data-location-select-target="regiaoContainer"'.html_safe if include_containers %>>
+  <%= form.label :filtro_regiao_id, "Filtrar por Região", class: label_class %>
+  <%= form.select :filtro_regiao_id, 
+      options_for_select([["Todas as Regiões", ""]] + Regiao.order(:name).map { |r| [r.name, r.id, { 'data-municipio-id': r.municipio_id }] }, form.object.filtro_regiao_id),
+      {}, 
+      { class: select_class, data: { location_select_target: "regiao", action: "change->location-select#filterBairros" } } %>
+</div>
+
+<div class="<%= wrapper_class %>" <%= 'data-location-select-target="bairroContainer"'.html_safe if include_containers %>>
+  <%= form.label :filtro_bairro_id, "Filtrar por Bairro", class: label_class %>
+  <%= form.select :filtro_bairro_id, 
+      options_for_select([["Todos os Bairros", ""]] + Bairro.order(:name).map { |b| [b.name, b.id, { 'data-regiao-id': b.regiao_id }] }, form.object.filtro_bairro_id),
+      {}, 
+      { class: select_class, data: { location_select_target: "bairro" } } %>
+</div>

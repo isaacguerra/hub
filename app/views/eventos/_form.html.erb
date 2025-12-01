@@ -88,28 +88,13 @@
     </div>
     <div class="card-body">
       <div class="row g-3">
-        <div class="col-md-3">
-          <%= form.label :filtro_funcao_id, "Filtrar por Função", class: "form-label" %>
-          <%= form.collection_select :filtro_funcao_id, Funcao.order(:name), :id, :name, { prompt: "Todas as Funções" }, { class: "form-select" } %>
-        </div>
-        <div class="col-md-3">
-          <%= form.label :filtro_municipio_id, "Filtrar por Município", class: "form-label" %>
-          <%= form.collection_select :filtro_municipio_id, Municipio.order(:name), :id, :name, { prompt: "Todos os Municípios" }, { class: "form-select", data: { location_select_target: "municipio", action: "change->location-select#filterRegioes" } } %>
-        </div>
-        <div class="col-md-3">
-          <%= form.label :filtro_regiao_id, "Filtrar por Região", class: "form-label" %>
-          <%= form.select :filtro_regiao_id, 
-              options_for_select([["Todas as Regiões", ""]] + Regiao.order(:name).map { |r| [r.name, r.id, { 'data-municipio-id': r.municipio_id }] }, evento.filtro_regiao_id),
-              {}, 
-              { class: "form-select", data: { location_select_target: "regiao", action: "change->location-select#filterBairros" } } %>
-        </div>
-        <div class="col-md-3">
-          <%= form.label :filtro_bairro_id, "Filtrar por Bairro", class: "form-label" %>
-          <%= form.select :filtro_bairro_id, 
-              options_for_select([["Todos os Bairros", ""]] + Bairro.order(:name).map { |b| [b.name, b.id, { 'data-regiao-id': b.regiao_id }] }, evento.filtro_bairro_id),
-              {}, 
-              { class: "form-select", data: { location_select_target: "bairro" } } %>
-        </div>
+        <%= render partial: "eventos/location_fields", locals: { 
+              form: form, 
+              wrapper_class: "col-md-3", 
+              select_class: "form-select", 
+              label_class: "form-label",
+              include_containers: false 
+            } %>
       </div>
     </div>
   </div>
