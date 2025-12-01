@@ -1,4 +1,4 @@
-<%= form_with(model: [:mobile, evento], local: true, data: { controller: "location-select" }) do |f| %>
+<%= form_with(model: [:mobile, evento], local: true) do |f| %>
   <% if evento.errors.any? %>
     <div class="alert alert-danger">
       <ul class="mb-0">
@@ -83,7 +83,7 @@
   </div>
 
   <!-- Público Alvo -->
-  <div class="mobile-card mb-4">
+  <div class="mobile-card mb-4" data-controller="location-select">
     <div class="card-body">
       <h6 class="fw-bold text-primary mb-2">Público Alvo</h6>
       <p class="text-muted small mb-3">Quem deve receber este convite? Deixe em branco para todos.</p>
@@ -101,7 +101,7 @@
       <div class="mb-3">
         <%= f.label :filtro_regiao_id, "Região", class: "form-label fw-bold small" %>
         <%= f.select :filtro_regiao_id, 
-            options_for_select([["Todas as Regiões", ""]] + Regiao.order(:name).map { |r| [r.name, r.id, { 'data-municipio-id': r.municipio_id }] }, evento.filtro_regiao_id),
+            options_for_select([["Todas as Regiões", ""]] + Regiao.order(:name).map { |r| [r.name, r.id, { "data-municipio-id" => r.municipio_id }] }, evento.filtro_regiao_id),
             {}, 
             { class: "form-select mobile-input", data: { location_select_target: "regiao", action: "change->location-select#filterBairros" } } %>
       </div>
@@ -109,7 +109,7 @@
       <div class="mb-3">
         <%= f.label :filtro_bairro_id, "Bairro", class: "form-label fw-bold small" %>
         <%= f.select :filtro_bairro_id, 
-            options_for_select([["Todos os Bairros", ""]] + Bairro.order(:name).map { |b| [b.name, b.id, { 'data-regiao-id': b.regiao_id }] }, evento.filtro_bairro_id),
+            options_for_select([["Todos os Bairros", ""]] + Bairro.order(:name).map { |b| [b.name, b.id, { "data-regiao-id" => b.regiao_id }] }, evento.filtro_bairro_id),
             {}, 
             { class: "form-select mobile-input", data: { location_select_target: "bairro" } } %>
       </div>
