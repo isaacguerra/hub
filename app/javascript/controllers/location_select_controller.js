@@ -4,21 +4,33 @@ export default class extends Controller {
   static targets = ["municipio", "regiao", "bairro", "regiaoContainer", "bairroContainer"]
 
   connect() {
+    // Evita inicialização duplicada se o connect rodar múltiplas vezes sem disconnect
+    if (this.initialized) return
+    this.initialized = true
+
     // Clona as opções originais para preservar a lista completa
-    // Usamos cloneNode(true) para garantir que temos cópias independentes
     this.originalRegiaoOptions = Array.from(this.regiaoTarget.options).map(opt => opt.cloneNode(true))
     this.originalBairroOptions = Array.from(this.bairroTarget.options).map(opt => opt.cloneNode(true))
     
     // Aplica o filtro inicial
     this.filterRegioes()
+
+    // Garante limpeza antes do cache do Turbo para evitar salvar estado filtrado
+    this.cleanup = this.cleanup.bind(this)
+    document.addEventListener("turbo:before-cache", this.cleanup)
   }
 
-  // Restaura o estado original ao desconectar para garantir que o Turbo Cache
-  // salve a página com todas as opções disponíveis, evitando perda de dados na navegação
   disconnect() {
+    this.cleanup()
+    document.removeEventListener("turbo:before-cache", this.cleanup)
+    this.initialized = false
+  }
+
+  cleanup() {
+    // Restaura todas as opções e visibilidade original
     this.restoreOptions(this.regiaoTarget, this.originalRegiaoOptions)
     this.restoreOptions(this.bairroTarget, this.originalBairroOptions)
-    // Restaura visibilidade
+    
     if (this.hasRegiaoContainerTarget) this.regiaoContainerTarget.style.display = ""
     if (this.hasBairroContainerTarget) this.bairroContainerTarget.style.display = ""
   }
@@ -28,32 +40,36 @@ export default class extends Controller {
     const currentRegiaoValue = this.regiaoTarget.value
     
     // Controle de visibilidade
-    if (municipioId) {
-      this.regiaoContainerTarget.style.display = "block"
-    } else {
-      this.regiaoContainerTarget.style.display = "none"
-      this.regiaoTarget.value = "" // Limpa seleção se ocultar
+    if (this.hasRegiaoContainerTarget) {
+      if (municipioId) {
+        this.regiaoContainerTarget.style.display = "block"
+      } else {
+        this.regiaoContainerTarget.style.display = "none"
+        this.regiaoTarget.value = "" 
+      }
     }
 
     // Limpa e reconstrói o select de regiões
     this.regiaoTarget.innerHTML = ""
     
     // Adiciona o placeholder (primeira opção)
-    this.regiaoTarget.appendChild(this.originalRegiaoOptions[0].cloneNode(true))
+    if (this.originalRegiaoOptions.length > 0) {
+      this.regiaoTarget.appendChild(this.originalRegiaoOptions[0].cloneNode(true))
+    }
 
     // Adiciona opções filtradas
     this.originalRegiaoOptions.slice(1).forEach(option => {
       const optionMunicipioId = option.dataset.municipioId
       
-      // Se não tem município selecionado (value vazio), ou se o ID bate
       if (!municipioId || optionMunicipioId == municipioId) {
         this.regiaoTarget.appendChild(option.cloneNode(true))
       }
     })
 
-    // Tenta manter a seleção se ainda for válida
+    // Tenta manter a seleção
     if (municipioId) {
         this.regiaoTarget.value = currentRegiaoValue
+        // Se o valor selecionado não existe mais na lista filtrada, reseta
         if (this.regiaoTarget.value !== currentRegiaoValue) {
           this.regiaoTarget.selectedIndex = 0
         }
@@ -70,15 +86,19 @@ export default class extends Controller {
     const currentBairroValue = this.bairroTarget.value
     
     // Controle de visibilidade
-    if (regiaoId) {
-      this.bairroContainerTarget.style.display = "block"
-    } else {
-      this.bairroContainerTarget.style.display = "none"
-      this.bairroTarget.value = "" // Limpa seleção se ocultar
+    if (this.hasBairroContainerTarget) {
+      if (regiaoId) {
+        this.bairroContainerTarget.style.display = "block"
+      } else {
+        this.bairroContainerTarget.style.display = "none"
+        this.bairroTarget.value = ""
+      }
     }
 
     this.bairroTarget.innerHTML = ""
-    this.bairroTarget.appendChild(this.originalBairroOptions[0].cloneNode(true))
+    if (this.originalBairroOptions.length > 0) {
+      this.bairroTarget.appendChild(this.originalBairroOptions[0].cloneNode(true))
+    }
 
     this.originalBairroOptions.slice(1).forEach(option => {
       const optionRegiaoId = option.dataset.regiaoId
