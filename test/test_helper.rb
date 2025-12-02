@@ -1,4 +1,12 @@
 ENV["RAILS_ENV"] ||= "test"
+
+# Safeguard: Unset DATABASE_URL to ensure tests use the sqlite3 config from database.yml
+# This prevents accidental connection to production/development databases if the env var is set in the terminal
+if ENV["DATABASE_URL"].present?
+  puts "WARNING: DATABASE_URL environment variable detected. Unsetting it to ensure tests use the local SQLite database."
+  ENV.delete("DATABASE_URL")
+end
+
 require_relative "../config/environment"
 require "rails/test_help"
 require "minitest/mock"

@@ -3,6 +3,16 @@
   <head>
     <title>Appivone Mobile</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    
+    <!-- PWA / Mobile Standalone Config -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Appivone">
+    <meta name="theme-color" content="#0d6efd">
+    
+    <%= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+    
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -14,7 +24,14 @@
     <%= stylesheet_link_tag "mobile_design_system" %>
     <%= javascript_importmap_tags %>
   </head>
-  <body>
+  <body data-controller="mobile-loader">
+    <!-- Loader Overlay -->
+    <div class="mobile-loader-overlay d-none" data-mobile-loader-target="spinner">
+      <div class="spinner-border mobile-loader-spinner" role="status">
+        <span class="visually-hidden">Carregando...</span>
+      </div>
+    </div>
+
     <div class="mobile-header d-flex justify-content-between align-items-center">
       <% if Current.apoiador %>
         <div class="d-flex align-items-center gap-3">
