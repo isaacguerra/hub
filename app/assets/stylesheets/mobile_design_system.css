@@ -173,3 +173,27 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
   border: 2px solid rgba(255,255,255,0.4);
 }
+
+/* Loader Overlay */
+.mobile-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: none; /* Controlado via JS (d-flex para mostrar) */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.mobile-loader-spinner {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.25em;
+  color: #0d6efd; /* Primary Color */
+}
