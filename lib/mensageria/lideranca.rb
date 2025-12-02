@@ -60,13 +60,13 @@ module Mensageria
         destinatarios = []
         destinatarios << rede[:lider] if rede[:lider]
         destinatarios.concat(rede[:coordenadores]) if rede[:coordenadores]
-        
+
         # Remove duplicidades pelo ID
         destinatarios.uniq! { |d| d[:id] }
 
         destinatarios.each do |destinatario|
-          Logger.log_mensagem_apoiador(
-            fila: 'mensageria',
+          Mensageria::Logger.log_mensagem_apoiador(
+            fila: "mensageria",
             image_url: image_whatsapp,
             whatsapp: Helpers.format_phone_number(destinatario[:whatsapp]),
             mensagem: mensagem

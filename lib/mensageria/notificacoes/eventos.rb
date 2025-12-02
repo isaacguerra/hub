@@ -11,8 +11,8 @@ module Mensageria
           # 1. Notificar Liderança (Sempre, sem filtros)
           # Notifica a hierarquia ascendente do coordenador
           # Usamos uma mensagem genérica ou a de novo evento
-          mensagem_lideranca = Mensagens::Eventos.novo_evento(evento, coordenador) 
-          
+          mensagem_lideranca = Mensagens::Eventos.novo_evento(evento, coordenador)
+
           Lideranca.notificar(
             apoiador: coordenador,
             mensagem: mensagem_lideranca
@@ -25,13 +25,13 @@ module Mensageria
           # Se o coordenador não for Candidato ou Coordenador Geral, talvez devêssemos restringir à rede dele?
           # Por enquanto, seguindo a solicitação, aplicamos os filtros sobre todos os apoiadores.
           # Mas vamos garantir que o próprio coordenador não receba a mensagem de "convite" duplicada se ele cair no filtro.
-          destinatarios = destinatarios.where.not(id: coordenador.id)
+          # destinatarios = destinatarios.where.not(id: coordenador.id)
 
           destinatarios.find_each do |apoiador|
             texto = Mensagens::Eventos.novo_evento(evento, apoiador)
             imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
-            Logger.log_mensagem_apoiador(
+            Mensageria::Logger.log_mensagem_apoiador(
               fila: "mensageria",
               image_url: imagem_whatsapp,
               whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
@@ -54,7 +54,7 @@ module Mensageria
           texto_apoiador = Mensagens::Eventos.confirmacao_participacao_apoiador(evento, apoiador)
           imagem_apoiador = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
-          Logger.log_mensagem_apoiador(
+          Mensageria::Logger.log_mensagem_apoiador(
             fila: "mensageria",
             image_url: imagem_apoiador,
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
@@ -66,7 +66,7 @@ module Mensageria
              texto_organizador = Mensagens::Eventos.notificacao_participacao_organizador(evento, apoiador)
              imagem_organizador = Utils::BuscaImagemWhatsapp.buscar(organizador.whatsapp)
 
-             Logger.log_mensagem_apoiador(
+             Mensageria::Logger.log_mensagem_apoiador(
                fila: "mensageria",
                image_url: imagem_organizador,
                whatsapp: Helpers.format_phone_number(organizador.whatsapp),
@@ -98,7 +98,7 @@ module Mensageria
 
           # Loga no Redis
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(coordenador.whatsapp)
-          Logger.log_mensagem_apoiador(
+          Mensageria::Logger.log_mensagem_apoiador(
             fila: "mensageria",
             image_url: imagem_whatsapp,
             whatsapp: Helpers.format_phone_number(coordenador.whatsapp),
@@ -112,7 +112,7 @@ module Mensageria
           mensagem = Mensagens::Eventos.novo_evento(evento)
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
-          Logger.log_mensagem_apoiador(
+          Mensageria::Logger.log_mensagem_apoiador(
             fila: "mensageria",
             image_url: imagem_whatsapp,
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
