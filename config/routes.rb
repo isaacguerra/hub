@@ -7,6 +7,12 @@ Rails.application.routes.draw do
     namespace :mobile do
       post "auth/login", to: "auths#login"
     end
+    namespace :chatbot do
+      resources :apoiadores, only: [ :create ]
+      resources :convites, only: [ :create, :index ]
+      resources :eventos, only: [ :index ]
+      resources :visitas, only: [ :index ]
+    end
   end
 
   # Magic Link

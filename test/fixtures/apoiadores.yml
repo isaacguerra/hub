@@ -12,7 +12,7 @@ joao_candidato:
 coordenador_geral_1:
   id: 2
   name: "Maria Coordenadora Geral"
-  whatsapp: "559699100002"
+  whatsapp: "5596999100002"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1
