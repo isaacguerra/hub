@@ -15,7 +15,7 @@ class ConvitesPublicosController < ApplicationController
 
   def accept
     @apoiador = Apoiador.new(apoiador_params)
-    @apoiador.name = @convite.nome # Garante que usa o nome do convite
+    @apoiador.name = params[:apoiador][:nome] || @convite.nome
     @apoiador.whatsapp = @convite.whatsapp # Garante que usa o whats do convite
     @apoiador.lider_id = @convite.enviado_por_id
 
@@ -25,7 +25,7 @@ class ConvitesPublicosController < ApplicationController
 
     if @apoiador.save
       @convite.update(status: "aceito")
-      
+
       # Dispara notificações de boas-vindas e avisos à liderança
       Mensageria::Notificacoes::Convites.notificar_convite_aceito(@apoiador)
 
@@ -61,8 +61,7 @@ class ConvitesPublicosController < ApplicationController
 
   def apoiador_params
     params.require(:apoiador).permit(
-      :email, :municipio_id, :regiao_id, :bairro_id,
-      :facebook, :instagram, :tiktok, :titulo_eleitoral, :zona_eleitoral, :secao_eleitoral
+      :email, :municipio_id, :regiao_id, :bairro_id, :nome
     )
   end
 end

@@ -28,8 +28,8 @@
 
       <div class="mb-3">
         <label class="form-label fw-bold">Nome</label>
-        <input type="text" class="form-control bg-light" value="<%= @convite.nome %>" disabled>
-        <small class="text-muted">O nome foi definido no convite.</small>
+        <%= f.text_field :nome, class: "form-control", value: @convite.nome %>
+        <small class="text-muted">Informe o Nome Completo</small>
       </div>
 
       <div class="mb-3">
@@ -80,20 +80,6 @@
               { class: "form-select", 
                 data: { location_select_target: "bairro" } 
               } %>
-        </div>
-      </div>
-
-      <h6 class="fw-bold mb-3 mt-4 text-primary">Redes Sociais (Opcional)</h6>
-
-      <div class="row g-2">
-        <div class="col-4">
-          <%= f.text_field :instagram, class: "form-control", placeholder: "Instagram" %>
-        </div>
-        <div class="col-4">
-          <%= f.text_field :facebook, class: "form-control", placeholder: "Facebook" %>
-        </div>
-        <div class="col-4">
-          <%= f.text_field :tiktok, class: "form-control", placeholder: "TikTok" %>
         </div>
       </div>
 
