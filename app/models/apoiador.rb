@@ -121,14 +121,14 @@ class Apoiador < ApplicationRecord
   end
 
   # Gera um código de 6 dígitos, salva e envia via WhatsApp
-  def gerar_codigo_acesso!
+  def gerar_codigo_acesso!(enviar_whatsapp: true)
     codigo = SecureRandom.random_number(100_000..999_999).to_s
     update_columns(
       verification_code: codigo,
       verification_code_expires_at: 5.minutes.from_now
     )
 
-    Mensageria::Notificacoes::Autenticacao.enviar_codigo(self)
+    Mensageria::Notificacoes::Autenticacao.enviar_codigo(self) if enviar_whatsapp
   end
 
   # Verifica se o código é válido e não expirou

@@ -16,7 +16,7 @@ module Api
         apoiador = Apoiador.find_by(whatsapp: normalized_whatsapp)
 
         if apoiador
-          apoiador.gerar_codigo_acesso!
+          apoiador.gerar_codigo_acesso!(enviar_whatsapp: false)
           Mensageria::Notificacoes::Autenticacao.enviar_link_magico(apoiador)
           render json: { message: "Link enviado com sucesso" }, status: :ok
         else

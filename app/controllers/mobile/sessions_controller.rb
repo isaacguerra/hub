@@ -8,7 +8,9 @@ module Mobile
 
       if apoiador && apoiador.codigo_valido?(codigo)
         session[:apoiador_id] = apoiador.id
-        apoiador.limpar_codigo_acesso!
+        # Não limpamos o código imediatamente para evitar problemas com previewers de link
+        # O código irá expirar naturalmente pelo tempo (5 minutos)
+        # apoiador.limpar_codigo_acesso!
 
         redirect_to mobile_dashboard_path, notice: "Bem-vindo, #{apoiador.nome}!"
       else
