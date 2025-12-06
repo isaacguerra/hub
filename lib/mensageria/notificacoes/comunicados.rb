@@ -5,23 +5,6 @@ module Mensageria
     module Comunicados
       class << self
         def notificar_novo_comunicado(comunicado)
-          # Publicar evento no canal mensageria
-          payload = {
-            event: "novo_comunicado",
-            data: {
-              id: comunicado.id,
-              titulo: comunicado.titulo,
-              mensagem: comunicado.mensagem,
-              lider_id: comunicado.lider_id,
-              lider_nome: comunicado.lider&.nome,
-              data: comunicado.data,
-              created_at: comunicado.created_at
-            }
-          }
-
-          Rails.logger.info "Publicando no Redis channel 'mensageria': #{payload.to_json}"
-          Mensageria::RedisClient.publish("mensageria", payload.to_json)
-
           lider = comunicado.lider
           return unless lider
 

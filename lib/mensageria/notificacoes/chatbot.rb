@@ -1,4 +1,16 @@
 module Mensageria
+  module Mensagens
+    module Chatbot
+      class << self
+        def notificar_numero_nao_cadastrado(nome)
+          I18n.t("mensagens.chatbot.nao_cadastrado", nome: nome)
+        end
+      end
+    end
+  end
+end
+
+module Mensageria
   module Notificacoes
     module Chatbot
       class << self
@@ -7,7 +19,7 @@ module Mensageria
         end
 
         def notificar_numero_nao_cadastrado(whatsapp, nome)
-          mensagem = "Olá #{nome}, seu número não está cadastrado em nossa base. Entre em contato com a administração."
+          mensagem = Mensageria::Mensagens::Chatbot.notificar_numero_nao_cadastrado(nome)
           SendWhatsappJob.perform_later(whatsapp: whatsapp, mensagem: mensagem)
         end
       end

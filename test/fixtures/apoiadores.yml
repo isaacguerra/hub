@@ -9,7 +9,7 @@ joao_candidato:
   funcao_id: 1
   lider_id: 
 
-coordenador_geral_1:
+maria_coord_geral:
   id: 2
   name: "Maria Coordenadora Geral"
   whatsapp: "5596999100002"
@@ -22,7 +22,7 @@ coordenador_geral_1:
 coordenador_geral_2:
   id: 3
   name: "Carlos Coordenador Geral"
-  whatsapp: "559699100003"
+  whatsapp: "5596999100003"
   municipio_id: 2
   regiao_id: 4
   bairro_id: 7
@@ -32,7 +32,7 @@ coordenador_geral_2:
 coordenador_geral_3:
   id: 4
   name: "Ana Coordenadora Geral"
-  whatsapp: "559699100004"
+  whatsapp: "5596999100004"
   municipio_id: 3
   regiao_id: 7
   bairro_id: 13
@@ -43,7 +43,7 @@ coordenador_geral_3:
 coordenador_municipio_1:
   id: 5
   name: "Pedro Coordenador Município 1"
-  whatsapp: "559699100005"
+  whatsapp: "5596999100005"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1
@@ -53,7 +53,7 @@ coordenador_municipio_1:
 coordenador_municipio_2:
   id: 6
   name: "Paula Coordenadora Município 2"
-  whatsapp: "559699100006"
+  whatsapp: "5596999100006"
   municipio_id: 2
   regiao_id: 4
   bairro_id: 7
@@ -63,7 +63,7 @@ coordenador_municipio_2:
 coordenador_municipio_3:
   id: 7
   name: "Rafael Coordenador Município 3"
-  whatsapp: "559699100007"
+  whatsapp: "5596999100007"
   municipio_id: 3
   regiao_id: 7
   bairro_id: 13
@@ -74,7 +74,7 @@ coordenador_municipio_3:
 coordenador_regiao_1:
   id: 8
   name: "Julia Coordenadora Região 1"
-  whatsapp: "559699100008"
+  whatsapp: "5596999100008"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1
@@ -84,7 +84,7 @@ coordenador_regiao_1:
 coordenador_regiao_2:
   id: 9
   name: "Bruno Coordenador Região 2"
-  whatsapp: "559699100009"
+  whatsapp: "5596999100009"
   municipio_id: 1
   regiao_id: 2
   bairro_id: 2
@@ -94,7 +94,7 @@ coordenador_regiao_2:
 coordenador_regiao_3:
   id: 10
   name: "Fernanda Coordenadora Região 3"
-  whatsapp: "559699100010"
+  whatsapp: "5596999100010"
   municipio_id: 2
   regiao_id: 4
   bairro_id: 7
@@ -105,7 +105,7 @@ coordenador_regiao_3:
 coordenador_bairro_1:
   id: 11
   name: "Lucas Coordenador Bairro 1"
-  whatsapp: "559699100011"
+  whatsapp: "5596999100011"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1
@@ -115,7 +115,7 @@ coordenador_bairro_1:
 coordenador_bairro_2:
   id: 12
   name: "Marina Coordenadora Bairro 2"
-  whatsapp: "559699100012"
+  whatsapp: "5596999100012"
   municipio_id: 1
   regiao_id: 2
   bairro_id: 2
@@ -125,7 +125,7 @@ coordenador_bairro_2:
 coordenador_bairro_3:
   id: 13
   name: "Gustavo Coordenador Bairro 3"
-  whatsapp: "559699100013"
+  whatsapp: "5596999100013"
   municipio_id: 2
   regiao_id: 4
   bairro_id: 7
@@ -133,10 +133,10 @@ coordenador_bairro_3:
   lider_id: 10
 
 # Líderes e apoiadores
-lider_1:
+pedro_lider:
   id: 14
-  name: "Líder 1"
-  whatsapp: "559699100014"
+  name: "Pedro Líder"
+  whatsapp: "5596999100014"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1
@@ -146,7 +146,7 @@ lider_1:
 lider_2:
   id: 15
   name: "Líder 2"
-  whatsapp: "559699100015"
+  whatsapp: "5596999100015"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1
@@ -156,7 +156,7 @@ lider_2:
 lider_3:
   id: 16
   name: "Líder 3"
-  whatsapp: "559699100016"
+  whatsapp: "5596999100016"
   municipio_id: 1
   regiao_id: 2
   bairro_id: 2
@@ -166,7 +166,7 @@ lider_3:
 lider_4:
   id: 17
   name: "Líder 4"
-  whatsapp: "559699100017"
+  whatsapp: "5596999100017"
   municipio_id: 2
   regiao_id: 4
   bairro_id: 7
@@ -176,7 +176,7 @@ lider_4:
 lider_5:
   id: 18
   name: "Líder 5"
-  whatsapp: "559699100018"
+  whatsapp: "5596999100018"
   municipio_id: 2
   regiao_id: 4
   bairro_id: 7
@@ -184,10 +184,10 @@ lider_5:
   lider_id: 13
 
 # Apoiadores (amostra)
-apoiador_1:
+ana_apoiadora:
   id: 19
-  name: "Apoiador 1"
-  whatsapp: "559699100019"
+  name: "Ana Apoiadora"
+  whatsapp: "5596999100019"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1
@@ -197,7 +197,7 @@ apoiador_1:
 apoiador_2:
   id: 20
   name: "Apoiador 2"
-  whatsapp: "559699100020"
+  whatsapp: "5596999100020"
   municipio_id: 1
   regiao_id: 1
   bairro_id: 1

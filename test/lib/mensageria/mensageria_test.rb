@@ -6,7 +6,7 @@ class MensageriaTest < ActiveSupport::TestCase
   include ActiveJob::TestHelper
 
   def setup
-    @apoiador = apoiadores(:lider_1)
+    @apoiador = apoiadores(:pedro_lider)
     @convite = convites(:convite_pendente)
     @visita = visitas(:visita_pendente)
     @evento = OpenStruct.new(
@@ -31,30 +31,11 @@ class MensageriaTest < ActiveSupport::TestCase
 
   # Teste para Utils::BuscaImagemWhatsapp
   test "Utils::BuscaImagemWhatsapp deve fazer requisição POST correta" do
-    ENV['N8N_WEBHOOK_BUSCA_IMAGEM_WHATSAPP'] = "https://n8n.exemplo.com/webhook/busca-imagem"
-    
-    url = ENV['N8N_WEBHOOK_BUSCA_IMAGEM_WHATSAPP']
-    uri = URI(url)
-    
-    mock_http = Minitest::Mock.new
-    mock_response = Minitest::Mock.new
-    
-    mock_response.expect :body, { "imageUrl" => "http://imagem.com/foto.jpg" }.to_json
-    mock_http.expect :use_ssl=, true, [true]
-    
-    mock_http.expect :request, mock_response do |request|
-      request.is_a?(Net::HTTP::Post) && 
-      request.path == uri.path &&
-      JSON.parse(request.body)["whatsappNumber"] == "96991234567"
-    end
-
-    Net::HTTP.stub :new, mock_http do
+    # Mock Utils::BuscaPerfilWhatsapp.buscar instead of Net::HTTP
+    Utils::BuscaPerfilWhatsapp.stub :buscar, { picture: "http://imagem.com/foto.jpg" } do
       resultado = Utils::BuscaImagemWhatsapp.buscar("96991234567")
       assert_equal "http://imagem.com/foto.jpg", resultado
     end
-    
-    mock_http.verify
-    mock_response.verify
   end
 
   # Teste para Notificacoes::Convites
@@ -164,11 +145,11 @@ class MensageriaTest < ActiveSupport::TestCase
 
   # Teste para Lideranca
   test "Lideranca.buscar_hierarquia deve retornar lista de lideres" do
-    ana = apoiadores(:apoiador_1)
+    ana = apoiadores(:ana_apoiadora)
     lideres = Mensageria::Lideranca.buscar_hierarquia(ana)
     
-    assert_includes lideres, apoiadores(:lider_1)
-    assert_includes lideres, apoiadores(:coordenador_geral_1)
+    assert_includes lideres, apoiadores(:pedro_lider)
+    assert_includes lideres, apoiadores(:maria_coord_geral)
     assert_includes lideres, apoiadores(:joao_candidato)
     assert_equal lideres.uniq.length, lideres.length
   end

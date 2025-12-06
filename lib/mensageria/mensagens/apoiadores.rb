@@ -5,25 +5,21 @@ module Mensageria
     module Apoiadores
       class << self
         def novo_apoiador(apoiador)
-          <<~TEXTO
-            🎉 *Novo Apoiador Cadastrado*
-
-            #{apoiador.name}
-            📱 #{apoiador.whatsapp}
-            🎯 #{apoiador.funcao&.name}
-            📍 #{apoiador.municipio&.name}
-          TEXTO
+          I18n.t("mensagens.apoiadores.novo",
+            nome: apoiador.name,
+            whatsapp: apoiador.whatsapp,
+            funcao: apoiador.funcao&.name,
+            municipio: apoiador.municipio&.name
+          )
         end
 
         def mudanca_funcao(apoiador, funcao_anterior)
-          <<~TEXTO
-            🎯 *Atualização de Função*
-
-            #{apoiador.name} agora é *#{apoiador.funcao&.name}*!
-
-            Função anterior: #{funcao_anterior&.name}
-            📍 #{apoiador.municipio&.name}
-          TEXTO
+          I18n.t("mensagens.apoiadores.mudanca_funcao",
+            nome: apoiador.name,
+            nova_funcao: apoiador.funcao&.name,
+            funcao_anterior: funcao_anterior&.name,
+            municipio: apoiador.municipio&.name
+          )
         end
       end
     end

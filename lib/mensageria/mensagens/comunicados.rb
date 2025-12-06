@@ -9,71 +9,48 @@ module Mensageria
           regiao_info = comunicado.respond_to?(:regiao) && comunicado.regiao ? "📍 Região: #{comunicado.regiao.name}" : "📍 Geral"
           link = "#{ENV['BASE_URL']}/comunicado/#{comunicado.id}/ler/#{apoiador.id}"
 
-          <<~TEXTO
-            📢 *Novo Comunicado*
-
-            *#{comunicado.titulo}*
-
-            #{comunicado.mensagem}
-
-            👤 Enviado por: #{lider&.name}
-            #{regiao_info}
-            📆 #{comunicado.data.strftime('%d/%m/%Y')}
-
-            🔗 *Confirmar leitura:* #{link}
-          TEXTO
+          I18n.t("mensagens.comunicados.novo",
+            titulo: comunicado.titulo,
+            mensagem: comunicado.mensagem,
+            nome_lider: lider&.name,
+            regiao_info: regiao_info,
+            data: comunicado.data.strftime("%d/%m/%Y"),
+            link: link
+          )
         end
 
         def notificacao_lideranca(comunicado)
           lider = comunicado.lider
           regiao_info = comunicado.respond_to?(:regiao) && comunicado.regiao ? "Região: #{comunicado.regiao.name}" : "Todos"
 
-          <<~TEXTO
-            📢 *Comunicado Disparado*
-
-            O líder *#{lider&.name}* enviou um novo comunicado.
-
-            *#{comunicado.titulo}*
-            👥 Destino: #{regiao_info}
-
-            📝 Conteúdo:
-            #{comunicado.mensagem.truncate(100)}
-          TEXTO
+          I18n.t("mensagens.comunicados.notificacao_lideranca",
+            nome_lider: lider&.name,
+            titulo: comunicado.titulo,
+            regiao_info: regiao_info,
+            conteudo_truncado: comunicado.mensagem.truncate(100)
+          )
         end
 
         def confirmacao_leitura_apoiador(comunicado, apoiador)
-          <<~TEXTO
-            ✅ *Leitura Confirmada!*
-
-            Obrigado por confirmar a leitura do comunicado:
-            *#{comunicado.titulo}*
-
-            Sua participação é muito importante! 🤝
-          TEXTO
+          I18n.t("mensagens.comunicados.confirmacao_leitura", titulo: comunicado.titulo)
         end
 
         def notificacao_engajamento_criador(comunicado, apoiador)
-          <<~TEXTO
-            👁️ *Comunicado Lido*
-
-            O apoiador *#{apoiador.name}* confirmou a leitura.
-
-            📄 Comunicado: #{comunicado.titulo}
-            📱 WhatsApp: #{apoiador.whatsapp}
-          TEXTO
+          I18n.t("mensagens.comunicados.notificacao_engajamento_criador",
+            nome_apoiador: apoiador.name,
+            titulo_comunicado: comunicado.titulo,
+            whatsapp_apoiador: apoiador.whatsapp
+          )
         end
 
         def notificacao_engajamento_lideranca(comunicado, apoiador)
           municipio = apoiador.municipio
 
-          <<~TEXTO
-            📊 *Engajamento em Comunicado*
-
-            O apoiador *#{apoiador.name}* leu o comunicado.
-
-            📄 Comunicado: #{comunicado.titulo}
-            📍 #{municipio&.name}
-          TEXTO
+          I18n.t("mensagens.comunicados.notificacao_engajamento_lideranca",
+            nome_apoiador: apoiador.name,
+            titulo_comunicado: comunicado.titulo,
+            municipio: municipio&.name
+          )
         end
       end
     end

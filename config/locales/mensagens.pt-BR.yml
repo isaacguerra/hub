@@ -1,0 +1,309 @@
+pt-BR:
+  mensagens:
+    apoiadores:
+      novo: |
+        🎉 *Novo Apoiador Cadastrado*
+
+        %{nome}
+        📱 %{whatsapp}
+        🎯 %{funcao}
+        📍 %{municipio}
+      mudanca_funcao: |
+        🎯 *Atualização de Função*
+
+        %{nome} agora é *%{nova_funcao}*!
+
+        Função anterior: %{funcao_anterior}
+        📍 %{municipio}
+    autenticacao:
+      codigo_acesso: |
+        🔐 *Seu Código de Acesso*
+
+        Use o código abaixo para entrar no App Ivone:
+
+        *%{codigo}*
+
+        ⚠️ Este código é válido por 5 minutos.
+        Não compartilhe com ninguém.
+      link_magico: |
+        🔐 *Acesso ao App Ivone*
+
+        Toque no link abaixo para entrar automaticamente:
+
+        %{link}
+
+        ⚠️ Este link é válido por 5 minutos.
+        Não compartilhe com ninguém.
+    chatbot:
+      erro_identificacao: "Não consegui identificar o número desse contato. Tente enviar novamente."
+      numero_invalido: "O número do contato parece inválido."
+      ja_cadastrado: "Esse contato já está cadastrado como apoiador!"
+      convite_existente: "Já existe um convite ativo para esse contato (Status: %{status})."
+      convite_sucesso: "Parabéns %{nome_apoiador}! Convite criado com sucesso para %{nome_convidado}!"
+      erro_convite: "Erro ao criar convite: %{erros}"
+      nao_cadastrado: "Olá %{nome}, seu número não está cadastrado em nossa base. Entre em contato com a administração."
+      menu_inicial: |
+        Olá %{nome}! 
+        escolha uma das opções abaixo:
+
+        0 - Acessar o Sistema
+        1 - Convidar um apoiador
+        2 - Eventos de Hoje
+        3 - Minhas Visitas
+        4 - Conhecer a IVONE CHAGAS
+        5 - Falar com um Lider
+      solicitar_contato: "Por favor, envie o contato do apoiador que você deseja convidar."
+      eventos_hoje_titulo: "Eventos de hoje:\n"
+      evento_item: "- %{nome} às %{horario}\n"
+      sem_eventos: "Não há eventos agendados para hoje."
+      visitas_pendentes_titulo: "Suas visitas pendentes:\n"
+      visita_item: "- Visita a %{nome}:\n Contato: %{whatsapp}:\n Situacao:%{status}\n\n"
+      sem_visitas: "Você não tem visitas pendentes."
+      informacoes_ivone: |
+        Acesse o site:
+
+        https://www.ivonechagas.com.br/
+
+        E Conheça mais sobre nosso Projeto!
+      atendente_contato: "Ok %{nome}! Um Lider entrará em contato com você em breve."
+      mensagem_padrao: "Desculpe, não entendi sua mensagem. Por favor, envie 'OLA' para ver o menu de opções."
+    comunicados:
+      novo: |
+        📢 *Novo Comunicado*
+
+        *%{titulo}*
+
+        %{mensagem}
+
+        👤 Enviado por: %{nome_lider}
+        %{regiao_info}
+        📆 %{data}
+
+        🔗 *Confirmar leitura:* %{link}
+      notificacao_lideranca: |
+        📢 *Comunicado Disparado*
+
+        O líder *%{nome_lider}* enviou um novo comunicado.
+
+        *%{titulo}*
+        👥 Destino: %{regiao_info}
+
+        📝 Conteúdo:
+        %{conteudo_truncado}
+      confirmacao_leitura: |
+        ✅ *Leitura Confirmada!*
+
+        Obrigado por confirmar a leitura do comunicado:
+        *%{titulo}*
+
+        Sua participação é muito importante! 🤝
+      notificacao_engajamento_criador: |
+        👁️ *Comunicado Lido*
+
+        O apoiador *%{nome_apoiador}* confirmou a leitura.
+
+        📄 Comunicado: %{titulo_comunicado}
+        📱 WhatsApp: %{whatsapp_apoiador}
+      notificacao_engajamento_lideranca: |
+        📊 *Engajamento em Comunicado*
+
+        O apoiador *%{nome_apoiador}* leu o comunicado.
+
+        📄 Comunicado: %{titulo_comunicado}
+        📍 %{municipio}
+    convites:
+      novo: |
+        🎉 *Olá %{nome_convidado}!*
+
+        👋 Seu amigo *%{nome_apoiador}* lhe enviou esse convite.
+
+        🤝 Somos o *Grupo de Ação Amigos da Ivone Chagas*
+
+        ✨ Sua presença será muito importante para nós!
+
+        👉 Por favor, confirme sua presença no link abaixo:
+
+        🔗 %{link}
+      aceito: |
+        🎊 *Que Legal voce Aceitou Nosso Convite*
+
+        ✅ *Agora %{nome_apoiador} voce é um novo membro de nossa Equipe!
+
+        👤 *Convidado por:*
+        %{nome_lider}
+        📍 %{municipio}
+
+        🎯 *Próximos passos importantes:*
+        • Convidar outros amigos, ter 25 pessoas participando do Grupo vai fazer voce se tornar um lider importante de nosso Projeto!
+        • Se voce for o maior Lider de sua cidade voce se Torna Coordenador Municipal
+        • Quanto mais Apoiadores voce Convidar mais voce crescerá em nosso Grupo, que tal ser um Coordenador Geral, ou um Coordenador de Regiao! Basta convidar pessoas, Fazer visitas, e participar dos
+        • Envolver nas atividades do grupo
+        • Integrar ao nosso time
+
+        Vamos recebê-lo(a) com muito carinho! 🤝
+
+        Agora voce ja pode acessar o Sistema de Admistracao onde poderá:
+        • Convidar novos Apoiadores
+        • Acompanhar os Eventos e Comunicaçoes
+        • Ver seu Perfil
+
+        Para receber o link de acesso a pagina de Administracao basta nesse mesmo whatsapp mandar uma mensagem com um "Ola" voce receberá um link de acesso para sua pagina de administracao!
+        • Tente agora diga "Ola" e comece a Convidar mais Pessoas para esse projeto!
+
+        • Do mais é cada um fazer sua parte para "Melhorarmos o Amapá Junstos"!
+
+        • Aqui vc tembém será informado de tudo que está acontecendo em Nosso Grupo, sempre de uma olhada nas atividadades!
+      aceito_lider: |
+        🎊 *Parabéns %{nome_lider}!*
+
+        O Apoiador *%{nome_apoiador}* aceitou o convite!
+
+        Agora é hora de fazer uma visita de boas-vindas e integrar ele ao nosso time! 🤝
+      notificacao_lideranca_novo: |
+        📩 *Novo Convite Enviado*
+
+        👤 *Enviado por:*
+        %{nome_apoiador}
+        %{funcao}
+        📍 %{municipio}
+
+        🎯 *Convidado:*
+        Nome: %{nome_convidado}
+        📱 WhatsApp: %{whatsapp_convidado}
+
+        %{estatisticas}
+      notificacao_lideranca_aceito: |
+        🎊 *Convite Aceito!*
+
+        O Apoiador *%{nome_apoiador}* aceitou o convite e agora faz parte do time!
+
+        👤 *Dados:*
+        %{funcao}
+        📍 %{municipio}
+        %{bairro_info}
+
+        %{estatisticas}
+      notificacao_lideranca_recusado: |
+        ❌ *Convite Recusado*
+
+        O convite enviado para *%{nome_convidado}* foi recusado.
+
+        👤 *Enviado por:* %{nome_apoiador}
+        📱 WhatsApp Convidado: %{whatsapp_convidado}
+    eventos:
+      novo: |
+        📅 *Novo Evento Agendado*
+
+        *%{titulo}*
+
+        📝 %{descricao}
+        
+        📆 Data: %{data}
+        📍 Local: %{local}
+
+        🎯 Público Alvo: %{publico_alvo}
+
+        👤 Organizado por: %{nome_organizador}
+
+        👉 *Confirme sua presença:* %{link}
+      atualizado: |
+        🔄 *Evento Atualizado*
+
+        *%{titulo}*
+
+        O evento sofreu alterações.
+
+        📝 %{descricao}
+        
+        📆 Nova Data: %{data}
+
+        🎯 Público Alvo: %{publico_alvo}
+
+        👤 Organizado por: %{nome_organizador}
+      confirmacao_participacao: |
+        ✅ *Presença Confirmada!*
+
+        Você confirmou presença no evento:
+        *%{titulo}*
+
+        📆 %{data}
+        📍 %{local}
+
+        Te esperamos lá! 🤝
+      notificacao_participacao_organizador: |
+        🙋 *Nova Confirmação de Presença*
+
+        O apoiador *%{nome_apoiador}* confirmou presença no seu evento.
+
+        📅 Evento: %{titulo}
+        📱 WhatsApp: %{whatsapp_apoiador}
+      notificacao_participacao_lideranca: |
+        📊 *Participação em Evento*
+
+        O apoiador *%{nome_apoiador}* vai participar do evento.
+
+        📅 Evento: %{titulo}
+        📍 %{municipio}
+    visitas:
+      nova: |
+        🏠 *Olá %{nome_visitado}!*
+
+        👋 Seu amigo *%{nome_lider}* gostaria de fazer uma visita para conhecê-lo melhor e conversar sobre como você pode se envolver mais com o nosso grupo.
+
+        Vou encaminhar seu contato para ele entrar em contato e combinar a visita.
+
+        📱 WhatsApp do líder que vai visitá-lo: %{whatsapp_lider}
+
+        🤝 Estamos ansiosos para fortalecer nossa comunidade juntos!
+      nova_lider: |
+        🏠 *Olá %{nome_lider}!*
+
+        👋 Você deve fazer uma visita ao apoiador *%{nome_visitado}*.
+
+        📋 *Dados de contato:*
+        📱 WhatsApp do apoiador: %{whatsapp_visitado}
+        👤 Líder do apoiador: %{nome_lider_apoiador}
+        📍 Município: %{municipio}
+        🏘️ Bairro: %{bairro}
+
+        🤝 Vamos fortalecer nossa comunidade juntos!
+      realizada: |
+        ✅ *Olá %{nome_visitado}!*
+
+        👋 Seu amigo *%{nome_lider}* realizou a visita que vocês combinaram!
+
+        Espero que tenham tido uma ótima conversa sobre como você pode se envolver mais com o nosso grupo. 🤝
+      notificacao_lideranca_nova: |
+        🏠 *Nova Visita Solicitada*
+
+        👤 *Quem será visitado:*
+        %{nome_visitado}
+        %{funcao_visitado}
+        📍 %{municipio}
+        %{bairro_info}
+
+        🎯 *Líder que o visitará:*
+        Nome: %{nome_lider}
+        📱 WhatsApp: %{whatsapp_lider}
+        %{funcao_lider}
+      notificacao_lideranca_realizada: |
+        ✅ *Visita Realizada*
+
+        O Líder *%{nome_lider}* realizou a visita ao apoiador *%{nome_visitado}*.
+
+        📝 *Relato:*
+        %{relato}
+
+        📍 %{municipio_lider}
+      cancelada: |
+        ❌ *Visita Cancelada*
+
+        Olá %{nome_visitado},
+
+        A visita agendada com *%{nome_lider}* foi cancelada.
+
+        Entraremos em contato em breve para reagendar.
+      notificacao_lideranca_cancelada: |
+        ❌ *Visita Cancelada*
+
+        A visita do líder *%{nome_lider}* ao apoiador *%{nome_visitado}* foi cancelada.

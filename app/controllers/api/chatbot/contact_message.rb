@@ -12,11 +12,11 @@ module Api
 
           waid = extract_waid(contact_data["vcard"])
           unless waid
-            return enviar_resposta(apoiador, "Não consegui identificar o número desse contato. Tente enviar novamente.")
+            return enviar_resposta(apoiador, I18n.t("mensagens.chatbot.erro_identificacao"))
           end
 
           numero = Utils::NormalizaNumeroWhatsapp.format(waid)
-          return enviar_resposta(apoiador, "O número do contato parece inválido.") if numero.blank?
+          return enviar_resposta(apoiador, I18n.t("mensagens.chatbot.numero_invalido")) if numero.blank?
 
           return if contact_already_registered?(apoiador, numero)
 
@@ -27,13 +27,13 @@ module Api
 
         def contact_already_registered?(apoiador, numero)
           if Apoiador.exists?(whatsapp: numero)
-            enviar_resposta(apoiador, "Esse contato já está cadastrado como apoiador!")
+            enviar_resposta(apoiador, I18n.t("mensagens.chatbot.ja_cadastrado"))
             return true
           end
 
           # Verifica se existe convite PENDENTE ou ACEITO. Se foi recusado, permite criar outro.
           if (convite = Convite.where(whatsapp: numero).where.not(status: "recusado").first)
-            enviar_resposta(apoiador, "Já existe um convite ativo para esse contato (Status: #{convite.status}).")
+            enviar_resposta(apoiador, I18n.t("mensagens.chatbot.convite_existente", status: convite.status))
             return true
           end
 
@@ -53,10 +53,10 @@ module Api
 
           if convite.save
             imagem_url = perfil&.dig(:picture)
-            texto = "Parabéns #{apoiador.name}! Convite criado com sucesso para #{nome_final}!"
+            texto = I18n.t("mensagens.chatbot.convite_sucesso", nome_apoiador: apoiador.name, nome_convidado: nome_final)
             enviar_resposta(apoiador, texto, image_url: imagem_url)
           else
-            enviar_resposta(apoiador, "Erro ao criar convite: #{convite.errors.full_messages.join(', ')}")
+            enviar_resposta(apoiador, I18n.t("mensagens.chatbot.erro_convite", erros: convite.errors.full_messages.join(", ")))
           end
         end
 

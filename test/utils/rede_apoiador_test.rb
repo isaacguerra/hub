@@ -3,13 +3,13 @@ require "test_helper"
 class RedeApoiadorTest < ActiveSupport::TestCase
   def setup
      @candidato = apoiadores(:joao_candidato)
-     @coord_geral = apoiadores(:coordenador_geral_1)
+     @coord_geral = apoiadores(:maria_coord_geral)
      # Invertendo pois os fixtures parecem estar trocados ou com funções trocadas
      @coord_municipio = apoiadores(:coordenador_regiao_1) 
      @coord_regiao = apoiadores(:coordenador_municipio_1)
      @coord_bairro = apoiadores(:coordenador_bairro_1)
-     @lider = apoiadores(:lider_1)
-     @apoiador = apoiadores(:apoiador_1)
+     @lider = apoiadores(:pedro_lider)
+     @apoiador = apoiadores(:ana_apoiadora)
   end
 
   test "candidato retorna todos os apoiadores como liderados" do

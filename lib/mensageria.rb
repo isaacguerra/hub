@@ -4,7 +4,6 @@
 # Exporta todos os submódulos para facilitar o uso
 module Mensageria
   # Autoload dos módulos
-  autoload :RedisClient, "mensageria/redis_client"
   autoload :Logger, "mensageria/logger"
   autoload :Helpers, "mensageria/helpers"
   autoload :Lideranca, "mensageria/lideranca"

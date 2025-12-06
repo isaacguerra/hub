@@ -4,7 +4,7 @@ module Api
   module Mobile
     class AuthsControllerTest < ActionDispatch::IntegrationTest
       setup do
-        @apoiador = apoiadores(:apoiador_1)
+        @apoiador = apoiadores(:ana_apoiadora)
         # Garante um número conhecido para os testes
         @apoiador.update!(whatsapp: "5596991120579")
       end

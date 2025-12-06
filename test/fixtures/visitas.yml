@@ -1,8 +1,8 @@
 # Fixtures para Visitas
 visita_pendente:
   id: 1
-  lider_id: 4
-  apoiador_id: 5
+  lider_id: 14
+  apoiador_id: 19
   relato: "Visita agendada"
   status: "pendente"
   created_at: <%= Time.current %>
@@ -10,8 +10,8 @@ visita_pendente:
 
 visita_concluida:
   id: 2
-  lider_id: 4
-  apoiador_id: 5
+  lider_id: 14
+  apoiador_id: 19
   relato: "Visita realizada com sucesso"
   status: "concluida"
   created_at: <%= Time.current %>

@@ -9,17 +9,11 @@ module Mensageria
           apoiador_visitado = Apoiador.find_by(id: visita.apoiador_id)
           apoiador_lider = Apoiador.find_by(id: visita.lider_id)
 
-          <<~TEXTO
-            🏠 *Olá #{apoiador_visitado&.name}!*
-
-            👋 Seu amigo *#{apoiador_lider&.name}* gostaria de fazer uma visita para conhecê-lo melhor e conversar sobre como você pode se envolver mais com o nosso grupo.
-
-            Vou encaminhar seu contato para ele entrar em contato e combinar a visita.
-
-            📱 WhatsApp do líder que vai visitá-lo: #{apoiador_lider&.whatsapp}
-
-            🤝 Estamos ansiosos para fortalecer nossa comunidade juntos!
-          TEXTO
+          I18n.t("mensagens.visitas.nova",
+            nome_visitado: apoiador_visitado&.name,
+            nome_lider: apoiador_lider&.name,
+            whatsapp_lider: apoiador_lider&.whatsapp
+          )
         end
 
         # Monta texto para notificar líder sobre visita que deve fazer
@@ -30,21 +24,16 @@ module Mensageria
           municipio = Municipio.find_by(id: apoiador_visitado&.municipio_id)
           bairro = Bairro.find_by(id: apoiador_visitado&.bairro_id)
 
-          bairro_info = bairro ? bairro.name : 'N/A'
+          bairro_info = bairro ? bairro.name : "N/A"
 
-          <<~TEXTO
-            🏠 *Olá #{apoiador_lider&.name}!*
-
-            👋 Você deve fazer uma visita ao apoiador *#{apoiador_visitado&.name}*.
-
-            📋 *Dados de contato:*
-            📱 WhatsApp do apoiador: #{apoiador_visitado&.whatsapp}
-            👤 Líder do apoiador: #{lider&.name}
-            📍 Município: #{municipio&.name}
-            🏘️ Bairro: #{bairro_info}
-
-            🤝 Vamos fortalecer nossa comunidade juntos!
-          TEXTO
+          I18n.t("mensagens.visitas.nova_lider",
+            nome_lider: apoiador_lider&.name,
+            nome_visitado: apoiador_visitado&.name,
+            whatsapp_visitado: apoiador_visitado&.whatsapp,
+            nome_lider_apoiador: lider&.name,
+            municipio: municipio&.name,
+            bairro: bairro_info
+          )
         end
 
         # Monta texto para notificar apoiador que a visita foi realizada
@@ -52,13 +41,10 @@ module Mensageria
           apoiador_visitado = Apoiador.find_by(id: visita.apoiador_id)
           apoiador_lider = Apoiador.find_by(id: visita.lider_id)
 
-          <<~TEXTO
-            ✅ *Olá #{apoiador_visitado&.name}!*
-
-            👋 Seu amigo *#{apoiador_lider&.name}* realizou a visita que vocês combinaram!
-
-            Espero que tenham tido uma ótima conversa sobre como você pode se envolver mais com o nosso grupo. 🤝
-          TEXTO
+          I18n.t("mensagens.visitas.realizada",
+            nome_visitado: apoiador_visitado&.name,
+            nome_lider: apoiador_lider&.name
+          )
         end
 
         # Monta texto para notificar liderança sobre nova visita agendada
@@ -70,41 +56,31 @@ module Mensageria
           lider = Apoiador.find_by(id: visita.lider_id)
           lider_funcao = Funcao.find_by(id: lider&.funcao_id)
 
-          bairro_info = bairro ? "🏘️ Bairro: #{bairro.name}" : ''
+          bairro_info = bairro ? "🏘️ Bairro: #{bairro.name}" : ""
 
-          <<~TEXTO
-            🏠 *Nova Visita Solicitada*
-
-            👤 *Quem será visitado:*
-            #{apoiador&.name}
-            #{funcao&.name}
-            📍 #{municipio&.name}
-            #{bairro_info}
-
-            🎯 *Líder que o visitará:*
-            Nome: #{lider&.name}
-            📱 WhatsApp: #{lider&.whatsapp}
-            #{lider_funcao&.name}
-          TEXTO
+          I18n.t("mensagens.visitas.notificacao_lideranca_nova",
+            nome_visitado: apoiador&.name,
+            funcao_visitado: funcao&.name,
+            municipio: municipio&.name,
+            bairro_info: bairro_info,
+            nome_lider: lider&.name,
+            whatsapp_lider: lider&.whatsapp,
+            funcao_lider: lider_funcao&.name
+          )
         end
 
         # Monta texto para notificar liderança sobre visita realizada
         def notificacao_lideranca_visita_realizada(visita)
           apoiador_visita = Apoiador.find_by(id: visita.apoiador_id)
           lider = Apoiador.find_by(id: visita.lider_id)
-          lider_funcao = Funcao.find_by(id: lider&.funcao_id)
           lider_municipio = Municipio.find_by(id: lider&.municipio_id)
 
-          <<~TEXTO
-            ✅ *Visita Realizada*
-
-            O Líder *#{lider&.name}* realizou a visita ao apoiador *#{apoiador_visita&.name}*.
-
-            📝 *Relato:*
-            #{visita.relato}
-
-            📍 #{lider_municipio&.name}
-          TEXTO
+          I18n.t("mensagens.visitas.notificacao_lideranca_realizada",
+            nome_lider: lider&.name,
+            nome_visitado: apoiador_visita&.name,
+            relato: visita.relato,
+            municipio_lider: lider_municipio&.name
+          )
         end
 
         # Monta texto para notificar cancelamento de visita
@@ -112,15 +88,10 @@ module Mensageria
           apoiador_visitado = Apoiador.find_by(id: visita.apoiador_id)
           apoiador_lider = Apoiador.find_by(id: visita.lider_id)
 
-          <<~TEXTO
-            ❌ *Visita Cancelada*
-
-            Olá #{apoiador_visitado&.name},
-
-            A visita agendada com *#{apoiador_lider&.name}* foi cancelada.
-
-            Entraremos em contato em breve para reagendar.
-          TEXTO
+          I18n.t("mensagens.visitas.cancelada",
+            nome_visitado: apoiador_visitado&.name,
+            nome_lider: apoiador_lider&.name
+          )
         end
 
         # Monta texto para notificar liderança sobre visita cancelada
@@ -128,11 +99,10 @@ module Mensageria
           apoiador = Apoiador.find_by(id: visita.apoiador_id)
           lider = Apoiador.find_by(id: visita.lider_id)
 
-          <<~TEXTO
-            ❌ *Visita Cancelada*
-
-            A visita do líder *#{lider&.name}* ao apoiador *#{apoiador&.name}* foi cancelada.
-          TEXTO
+          I18n.t("mensagens.visitas.notificacao_lideranca_cancelada",
+            nome_lider: lider&.name,
+            nome_visitado: apoiador&.name
+          )
         end
       end
     end

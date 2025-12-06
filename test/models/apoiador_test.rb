@@ -16,13 +16,13 @@ class ApoiadorTest < ActiveSupport::TestCase
   test "não deve ser válido sem name" do
     @apoiador.name = nil
     assert_not @apoiador.valid?
-    assert_includes @apoiador.errors[:name], "can't be blank"
+    assert_includes @apoiador.errors[:name], "não pode ficar em branco"
   end
 
   test "não deve ser válido sem whatsapp" do
     @apoiador.whatsapp = nil
     assert_not @apoiador.valid?
-    assert_includes @apoiador.errors[:whatsapp], "can't be blank"
+    assert_includes @apoiador.errors[:whatsapp], "não pode ficar em branco"
   end
 
   # Testes de hierarquia de liderança

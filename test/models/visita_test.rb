@@ -15,13 +15,13 @@ class VisitaTest < ActiveSupport::TestCase
   test "não deve ser válido sem relato" do
     @visita.relato = nil
     assert_not @visita.valid?
-    assert_includes @visita.errors[:relato], "can't be blank"
+    assert_includes @visita.errors[:relato], "não pode ficar em branco"
   end
 
   test "não deve ser válido sem status" do
     @visita.status = nil
     assert_not @visita.valid?
-    assert_includes @visita.errors[:status], "can't be blank"
+    assert_includes @visita.errors[:status], "não pode ficar em branco"
   end
 
   # Validação de status
@@ -37,7 +37,7 @@ class VisitaTest < ActiveSupport::TestCase
 
     @visita.status = "invalido"
     assert_not @visita.valid?
-    assert_includes @visita.errors[:status], "is not included in the list"
+    assert_includes @visita.errors[:status], "não está incluído na lista"
   end
 
   # Testes de associações

@@ -47,7 +47,7 @@ module Api
       end
 
       test "should not create invite if already apoiador" do
-        existing_apoiador = apoiadores(:coordenador_geral_1)
+        existing_apoiador = apoiadores(:maria_coord_geral)
         vcard = "BEGIN:VCARD\nVERSION:3.0\nFN:Existente\nTEL;waid=#{existing_apoiador.whatsapp}:+#{existing_apoiador.whatsapp}\nEND:VCARD"
         message = { "contactMessage" => { "displayName" => "Existente", "vcard" => vcard } }
 

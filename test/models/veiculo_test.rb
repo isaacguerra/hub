@@ -17,13 +17,13 @@ class VeiculoTest < ActiveSupport::TestCase
   test "não deve ser válido sem modelo" do
     @veiculo.modelo = nil
     assert_not @veiculo.valid?
-    assert_includes @veiculo.errors[:modelo], "can't be blank"
+    assert_includes @veiculo.errors[:modelo], "não pode ficar em branco"
   end
 
   test "não deve ser válido sem placa" do
     @veiculo.placa = nil
     assert_not @veiculo.valid?
-    assert_includes @veiculo.errors[:placa], "can't be blank"
+    assert_includes @veiculo.errors[:placa], "não pode ficar em branco"
   end
 
   test "deve pertencer a apoiador" do

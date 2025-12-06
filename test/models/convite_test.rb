@@ -14,19 +14,19 @@ class ConviteTest < ActiveSupport::TestCase
   test "não deve ser válido sem nome" do
     @convite.nome = nil
     assert_not @convite.valid?
-    assert_includes @convite.errors[:nome], "can't be blank"
+    assert_includes @convite.errors[:nome], "não pode ficar em branco"
   end
 
   test "não deve ser válido sem whatsapp" do
     @convite.whatsapp = nil
     assert_not @convite.valid?
-    assert_includes @convite.errors[:whatsapp], "can't be blank"
+    assert_includes @convite.errors[:whatsapp], "não pode ficar em branco"
   end
 
   test "não deve ser válido sem status" do
     @convite.status = nil
     assert_not @convite.valid?
-    assert_includes @convite.errors[:status], "can't be blank"
+    assert_includes @convite.errors[:status], "não pode ficar em branco"
   end
 
   # Validação de status
@@ -42,7 +42,7 @@ class ConviteTest < ActiveSupport::TestCase
 
     @convite.status = "invalido"
     assert_not @convite.valid?
-    assert_includes @convite.errors[:status], "is not included in the list"
+    assert_includes @convite.errors[:status], "não está incluído na lista"
   end
 
   # Testes de associações

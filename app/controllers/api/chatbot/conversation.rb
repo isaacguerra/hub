@@ -71,17 +71,7 @@ module Api
           image = ENV.fetch("IMAGE_IVI_AVATAR", nil)
           Rails.logger.info "Chatbot: Enviando menu inicial para #{apoiador.name}. Imagem: #{image.inspect}"
 
-          mensagem = <<~MSG
-            Olá #{apoiador.name}!#{' '}
-            escolha uma das opções abaixo:
-
-            0 - Acessar o Sistema
-            1 - Convidar um apoiador
-            2 - Eventos de Hoje
-            3 - Minhas Visitas
-            4 - Conhecer a IVONE CHAGAS
-            5 - Falar com um Lider
-          MSG
+          mensagem = I18n.t("mensagens.chatbot.menu_inicial", nome: apoiador.name)
 
           Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, mensagem, imagem: image)
         end
@@ -91,19 +81,19 @@ module Api
         end
         def solicitar_contato_apoiador(apoiador)
           image = ENV.fetch("PASSO_A_PASSO_CONTATO", nil)
-          mensagem = "Por favor, envie o contato do apoiador que você deseja convidar."
+          mensagem = I18n.t("mensagens.chatbot.solicitar_contato")
 
           Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, mensagem, imagem: image)
         end
         def enviar_eventos_do_dia(apoiador)
           eventos = Evento.where(data: Date.current)
           if eventos.any?
-            mensagem = "Eventos de hoje:\n"
+            mensagem = I18n.t("mensagens.chatbot.eventos_hoje_titulo")
             eventos.each do |evento|
-              mensagem += "- #{evento.nome} às #{evento.horario.strftime('%H:%M')}\n"
+              mensagem += I18n.t("mensagens.chatbot.evento_item", nome: evento.nome, horario: evento.horario.strftime("%H:%M"))
             end
           else
-            mensagem = "Não há eventos agendados para hoje."
+            mensagem = I18n.t("mensagens.chatbot.sem_eventos")
           end
 
           Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, mensagem)
@@ -113,34 +103,28 @@ module Api
           visitas = apoiador.visitas_como_lider.where(status: "pendente")
 
           if visitas.any?
-            mensagem = "Suas visitas pendentes:\n"
+            mensagem = I18n.t("mensagens.chatbot.visitas_pendentes_titulo")
             visitas.each do |visita|
-              mensagem += "- Visita a #{visita.apoiador.name}:\n Contato: #{visita.apoiador.whatsapp}:\n Situacao:#{visita.status}\n\n"
+              mensagem += I18n.t("mensagens.chatbot.visita_item", nome: visita.apoiador.name, whatsapp: visita.apoiador.whatsapp, status: visita.status)
             end
           else
-            mensagem = "Você não tem visitas pendentes."
+            mensagem = I18n.t("mensagens.chatbot.sem_visitas")
           end
 
           Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, mensagem)
         end
         def enviar_informacoes_ivone(apoiador)
-          mensagem = <<~MSG
-            Acesse o site:
-
-            https://www.ivonechagas.com.br/
-
-            E Conheça mais sobre nosso Projeto!
-          MSG
+          mensagem = I18n.t("mensagens.chatbot.informacoes_ivone")
 
           Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, mensagem)
         end
         def informar_atendente_entrara_em_contato(apoiador)
-          mensagem = "Ok #{apoiador.name}! Um Lider entrará em contato com você em breve."
+          mensagem = I18n.t("mensagens.chatbot.atendente_contato", nome: apoiador.name)
 
           Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, mensagem)
         end
         def enviar_mensagem_padrao(apoiador)
-          mensagem = "Desculpe, não entendi sua mensagem. Por favor, envie 'OLA' para ver o menu de opções."
+          mensagem = I18n.t("mensagens.chatbot.mensagem_padrao")
 
           Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, mensagem)
         end

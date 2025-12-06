@@ -12,7 +12,7 @@ class MunicipioTest < ActiveSupport::TestCase
   test "não deve ser válido sem name" do
     @municipio.name = nil
     assert_not @municipio.valid?
-    assert_includes @municipio.errors[:name], "can't be blank"
+    assert_includes @municipio.errors[:name], "não pode ficar em branco"
   end
 
   test "deve ter muitas regiões" do

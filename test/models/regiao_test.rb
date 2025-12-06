@@ -12,7 +12,7 @@ class RegiaoTest < ActiveSupport::TestCase
   test "não deve ser válido sem name" do
     @regiao.name = nil
     assert_not @regiao.valid?
-    assert_includes @regiao.errors[:name], "can't be blank"
+    assert_includes @regiao.errors[:name], "não pode ficar em branco"
   end
 
   test "deve pertencer a município" do

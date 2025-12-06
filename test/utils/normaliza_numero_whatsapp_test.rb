@@ -37,7 +37,7 @@ class NormalizaNumeroWhatsappTest < ActiveSupport::TestCase
     
     # Testando conforme implementação:
     input = "559112345678" # 12 digitos
-    expected = "55969112345678"
+    expected = "5591912345678"
     assert_equal expected, Utils::NormalizaNumeroWhatsapp.format(input)
   end
 
@@ -112,7 +112,7 @@ class NormalizaNumeroWhatsappTest < ActiveSupport::TestCase
     # Se o numero for 55 + 91120579 (10 digitos) -> cai no case 10.
     
     # Vamos assumir que o teste deve garantir o que está codado.
-    assert_equal "55961191120579", Utils::NormalizaNumeroWhatsapp.format_chatbot_number("551191120579")
+    assert_equal "5511991120579", Utils::NormalizaNumeroWhatsapp.format_chatbot_number("551191120579")
   end
 
   test "format_chatbot_number deve tratar 13 dígitos (formato completo)" do

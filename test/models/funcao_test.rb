@@ -12,7 +12,7 @@ class FuncaoTest < ActiveSupport::TestCase
   test "não deve ser válido sem name" do
     @funcao.name = nil
     assert_not @funcao.valid?
-    assert_includes @funcao.errors[:name], "can't be blank"
+    assert_includes @funcao.errors[:name], "não pode ficar em branco"
   end
 
   test "deve ter muitos apoiadores" do
