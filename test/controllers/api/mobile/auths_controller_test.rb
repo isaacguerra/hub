@@ -26,7 +26,7 @@ module Api
       test "deve realizar login com sucesso se apoiador existir (param whatsapp)" do
         # Mockar o envio de mensagem
         mock = Minitest::Mock.new
-        mock.expect :call, nil, [@apoiador]
+        mock.expect :call, nil, [ @apoiador ]
 
         Mensageria::Notificacoes::Autenticacao.stub :enviar_link_magico, mock do
           post "/api/mobile/auth/login", params: { whatsapp: @apoiador.whatsapp }
@@ -34,9 +34,9 @@ module Api
           json_response = JSON.parse(response.body)
           assert_equal "Link enviado com sucesso", json_response["message"]
         end
-        
+
         mock.verify
-        
+
         # Verificar se gerou código
         @apoiador.reload
         assert_not_nil @apoiador.verification_code
@@ -44,43 +44,43 @@ module Api
 
       test "deve realizar login com sucesso usando whatsappNumber (param alternativo)" do
         mock = Minitest::Mock.new
-        mock.expect :call, nil, [@apoiador]
+        mock.expect :call, nil, [ @apoiador ]
 
         Mensageria::Notificacoes::Autenticacao.stub :enviar_link_magico, mock do
           post "/api/mobile/auth/login", params: { whatsappNumber: @apoiador.whatsapp }
           assert_response :ok
         end
-        
+
         mock.verify
       end
 
       test "deve normalizar o número e encontrar o apoiador" do
         # O apoiador tem "5596991120579"
         # Enviamos "96991120579" (sem 55) - O format_chatbot_number deve corrigir para 5596991120579
-        
+
         mock = Minitest::Mock.new
-        mock.expect :call, nil, [@apoiador]
+        mock.expect :call, nil, [ @apoiador ]
 
         Mensageria::Notificacoes::Autenticacao.stub :enviar_link_magico, mock do
           post "/api/mobile/auth/login", params: { whatsapp: "96991120579" }
           assert_response :ok
         end
-        
+
         mock.verify
       end
-      
+
       test "deve normalizar número vindo do chatbot sem nono digito e encontrar apoiador" do
         # O apoiador tem "5596991120579"
         # Enviamos "9691120579" (sem 9 e sem 55) - O format_chatbot_number deve corrigir
-        
+
         mock = Minitest::Mock.new
-        mock.expect :call, nil, [@apoiador]
+        mock.expect :call, nil, [ @apoiador ]
 
         Mensageria::Notificacoes::Autenticacao.stub :enviar_link_magico, mock do
           post "/api/mobile/auth/login", params: { whatsapp: "9691120579" }
           assert_response :ok
         end
-        
+
         mock.verify
       end
     end

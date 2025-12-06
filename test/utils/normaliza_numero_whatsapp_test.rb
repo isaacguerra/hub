@@ -34,7 +34,7 @@ class NormalizaNumeroWhatsappTest < ActiveSupport::TestCase
     # Se entrada é 55991120579 (11 digitos) -> length 11 cai no caso anterior.
     # Se entrada é 55 + 10 digitos (ex: 55 91 1234 5678) = 12 digitos.
     # O código faz: "5596" + "9112345678".
-    
+
     # Testando conforme implementação:
     input = "559112345678" # 12 digitos
     expected = "5591912345678"
@@ -105,12 +105,12 @@ class NormalizaNumeroWhatsappTest < ActiveSupport::TestCase
     # start_with?("5596") -> sim. cleaned = cleaned[4..] -> "1191120579" (10 digitos).
     # Garante 9 digitos? Nao.
     # Retorna "5596" + "1191120579" = "55961191120579".
-    
+
     # Vamos testar um caso que faça sentido para a regra "DDI + número sem DDD" (talvez DDI + 9 digitos + algo?)
     # O comentário diz: "DDI + número sem DDD (raro, mas cobre)".
     # Se o numero for 55 + 991120579 (11 digitos) -> cai no case 11.
     # Se o numero for 55 + 91120579 (10 digitos) -> cai no case 10.
-    
+
     # Vamos assumir que o teste deve garantir o que está codado.
     assert_equal "5511991120579", Utils::NormalizaNumeroWhatsapp.format_chatbot_number("551191120579")
   end

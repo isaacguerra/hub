@@ -15,7 +15,7 @@ module Api
         Mensageria::Notificacoes::Chatbot.stub :enviar_mensagem, ->(apoiador, mensagem, **kwargs) {
           imagem = kwargs[:imagem]
           # Verifica se a mensagem é a traduzida (I18n)
-          expected_msg = I18n.t('mensagens.chatbot.menu_inicial', nome: @apoiador.name)
+          expected_msg = I18n.t("mensagens.chatbot.menu_inicial", nome: @apoiador.name)
           called = true if apoiador == @apoiador && mensagem == expected_msg && imagem == "https://app.ivonechagas.com.br/ivi_avatar.jpg"
         } do
           Api::Chatbot::Conversation.process(@apoiador, { "text" => "OLA" })
@@ -30,7 +30,7 @@ module Api
 
         Mensageria::Notificacoes::Chatbot.stub :enviar_mensagem, ->(apoiador, mensagem, **kwargs) {
           imagem = kwargs[:imagem]
-          expected_msg = I18n.t('mensagens.chatbot.menu_inicial', nome: @apoiador.name)
+          expected_msg = I18n.t("mensagens.chatbot.menu_inicial", nome: @apoiador.name)
           called = true if apoiador == @apoiador && mensagem == expected_msg && imagem == "https://app.ivonechagas.com.br/ivi_avatar.jpg"
         } do
           Api::Chatbot::Conversation.process(@apoiador, { "text" => "olá" })
@@ -59,7 +59,7 @@ module Api
 
         Mensageria::Notificacoes::Chatbot.stub :enviar_mensagem, ->(apoiador, mensagem, **kwargs) {
           imagem = kwargs[:imagem]
-          expected_msg = I18n.t('mensagens.chatbot.solicitar_contato')
+          expected_msg = I18n.t("mensagens.chatbot.solicitar_contato")
           called = true if mensagem == expected_msg && imagem == "http://example.com/contact.png"
         } do
           Api::Chatbot::Conversation.process(@apoiador, { "text" => "1" })
@@ -71,7 +71,7 @@ module Api
       test "should list pending visits for 3" do
         called = false
         Mensageria::Notificacoes::Chatbot.stub :enviar_mensagem, ->(apoiador, mensagem, **kwargs) {
-          expected_msg = I18n.t('mensagens.chatbot.sem_visitas')
+          expected_msg = I18n.t("mensagens.chatbot.sem_visitas")
           called = true if mensagem == expected_msg
         } do
           Api::Chatbot::Conversation.process(@apoiador, { "text" => "3" })

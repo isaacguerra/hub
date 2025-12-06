@@ -25,7 +25,7 @@ class MensageriaTest < ActiveSupport::TestCase
       data: Time.now,
       lider: @apoiador,
       regiao: nil,
-      apoiadores: Apoiador.where(id: [@apoiador.id])
+      apoiadores: Apoiador.where(id: [ @apoiador.id ])
     )
   end
 
@@ -129,9 +129,9 @@ class MensageriaTest < ActiveSupport::TestCase
 
   # Teste para Mensagens::Convites
   test "Mensagens::Convites deve usar BASE_URL correta" do
-    ENV['BASE_URL'] ||= "http://localhost:3000"
+    ENV["BASE_URL"] ||= "http://localhost:3000"
     texto = Mensageria::Mensagens::Convites.novo_convite(@convite, @apoiador)
-    assert_includes texto, ENV['BASE_URL']
+    assert_includes texto, ENV["BASE_URL"]
     assert_includes texto, "/convite/aceitar/#{@convite.id}"
   end
 
@@ -147,7 +147,7 @@ class MensageriaTest < ActiveSupport::TestCase
   test "Lideranca.buscar_hierarquia deve retornar lista de lideres" do
     ana = apoiadores(:ana_apoiadora)
     lideres = Mensageria::Lideranca.buscar_hierarquia(ana)
-    
+
     assert_includes lideres, apoiadores(:pedro_lider)
     assert_includes lideres, apoiadores(:maria_coord_geral)
     assert_includes lideres, apoiadores(:joao_candidato)

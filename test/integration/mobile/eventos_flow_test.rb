@@ -8,32 +8,32 @@ class Mobile::EventosFlowTest < ActionDispatch::IntegrationTest
 
   test "renderiza formulário mobile com atributos stimulus corretos" do
     sign_in_as(@apoiador)
-    
+
     get new_mobile_evento_url
     assert_response :success
-    
+
     # Verifica se o controller stimulus está conectado
     assert_select "div[data-controller='location-select']"
-    
+
     # Verifica se os selects têm os targets e data attributes corretos
     assert_select "select#evento_filtro_municipio_id[data-location-select-target='municipio']"
-    
+
     # Verifica containers e selects
     assert_select "div[data-location-select-target='regiaoContainer']" do
       assert_select "select#evento_filtro_regiao_id[data-location-select-target='regiao']"
     end
-    
+
     assert_select "div[data-location-select-target='bairroContainer']" do
       assert_select "select#evento_filtro_bairro_id[data-location-select-target='bairro']"
     end
-    
+
     # Verifica se as opções têm os data attributes de filtro
     # Macapá (id: 1)
     assert_select "select#evento_filtro_municipio_id option[value='1']", text: "Macapá"
-    
+
     # Região Centro (id: 1, municipio_id: 1)
     assert_select "select#evento_filtro_regiao_id option[value='1'][data-municipio-id='1']"
-    
+
     # Bairro Centro (id: 1, regiao_id: 1)
     assert_select "select#evento_filtro_bairro_id option[value='1'][data-regiao-id='1']"
   end
@@ -57,7 +57,7 @@ class Mobile::EventosFlowTest < ActionDispatch::IntegrationTest
     assert_redirected_to mobile_eventos_url
     follow_redirect!
     assert_select "div", text: "Evento criado com sucesso."
-    
+
     evento = Evento.last
     assert_equal "Novo Evento Mobile", evento.titulo
     assert_equal municipios(:macapa).id, evento.filtro_municipio_id
@@ -80,7 +80,7 @@ class Mobile::EventosFlowTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
     assert_select "div.alert.alert-danger"
     assert_select "div", text: "Titulo não pode ficar em branco"
-    
+
     # Verifica se o formulário foi renderizado novamente com os campos
     assert_select "input[name='evento[local]'][value='Local Teste']"
   end

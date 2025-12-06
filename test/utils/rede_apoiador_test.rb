@@ -5,7 +5,7 @@ class RedeApoiadorTest < ActiveSupport::TestCase
      @candidato = apoiadores(:joao_candidato)
      @coord_geral = apoiadores(:maria_coord_geral)
      # Invertendo pois os fixtures parecem estar trocados ou com funções trocadas
-     @coord_municipio = apoiadores(:coordenador_regiao_1) 
+     @coord_municipio = apoiadores(:coordenador_regiao_1)
      @coord_regiao = apoiadores(:coordenador_municipio_1)
      @coord_bairro = apoiadores(:coordenador_bairro_1)
      @lider = apoiadores(:pedro_lider)
