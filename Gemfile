@@ -68,3 +68,5 @@ end
 
 gem "dotenv-rails", "~> 3.1", groups: [ :development, :test ]
 # gem "tzinfo-data"
+
+gem "prawn", "~> 2.5", group: :development
