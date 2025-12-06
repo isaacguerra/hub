@@ -44,11 +44,10 @@ module Mensageria
           texto = Mensagens::Comunicados.novo_comunicado(comunicado, apoiador)
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
-          Logger.log_mensagem_apoiador(
-            fila: "mensageria",
-            image_url: imagem_whatsapp,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
-            mensagem: texto
+            mensagem: texto,
+            image_url: imagem_whatsapp
           )
         rescue StandardError => e
           Rails.logger.error "Erro ao enviar comunicado #{comunicado.id} para apoiador #{apoiador.id}: #{e.message}"
@@ -63,11 +62,10 @@ module Mensageria
           texto_apoiador = Mensagens::Comunicados.confirmacao_leitura_apoiador(comunicado, apoiador)
           imagem_apoiador = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
-          Logger.log_mensagem_apoiador(
-            fila: "mensageria",
-            image_url: imagem_apoiador,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
-            mensagem: texto_apoiador
+            mensagem: texto_apoiador,
+            image_url: imagem_apoiador
           )
 
           # 2. Notificar criador do comunicado
@@ -75,11 +73,10 @@ module Mensageria
              texto_criador = Mensagens::Comunicados.notificacao_engajamento_criador(comunicado, apoiador)
              imagem_criador = Utils::BuscaImagemWhatsapp.buscar(criador.whatsapp)
 
-             Logger.log_mensagem_apoiador(
-               fila: "mensageria",
-               image_url: imagem_criador,
+             SendWhatsappJob.perform_later(
                whatsapp: Helpers.format_phone_number(criador.whatsapp),
-               mensagem: texto_criador
+               mensagem: texto_criador,
+               image_url: imagem_criador
              )
           end
 

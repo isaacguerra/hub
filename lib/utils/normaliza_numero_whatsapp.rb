@@ -8,6 +8,7 @@ module Utils
 
         # Remove todos os caracteres não numéricos
         cleaned = phone.gsub(/\D/, "")
+        return nil if cleaned.blank?
 
         # Remove o zero inicial do DDD se presente (ex: 096 -> 96)
         cleaned = cleaned[1..] if cleaned.start_with?("0")
@@ -101,6 +102,7 @@ module Utils
         # Remove domínio e caracteres não numéricos
         # O split("@") remove sufixos como @c.us ou @s.whatsapp.net
         numero = whatsapp.to_s.split("@")[0].gsub(/\D/, "")
+        return nil if numero.blank?
 
         # Casos de entrada:
         case numero.length
@@ -119,7 +121,7 @@ module Utils
         when 12
           # DDI + DDD + número sem nono dígito (Ex: 55 96 8409 4117)
           # Ou DDI + número sem DDD (Ex: 55 99112 0579) - menos provável se vier do WhatsApp
-          
+
           if numero.start_with?("55")
              # Assume que é DDI 55 + DDD + 8 dígitos
              # Ex: 559684094117 -> 5596984094117

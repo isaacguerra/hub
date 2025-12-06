@@ -65,11 +65,10 @@ module Mensageria
         destinatarios.uniq! { |d| d[:id] }
 
         destinatarios.each do |destinatario|
-          Mensageria::Logger.log_mensagem_apoiador(
-            fila: "mensageria",
-            image_url: image_whatsapp,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(destinatario[:whatsapp]),
-            mensagem: mensagem
+            mensagem: mensagem,
+            image_url: image_whatsapp
           )
         rescue StandardError => e
           Rails.logger.error "Erro ao notificar líder #{destinatario[:name]}: #{e.message}"

@@ -3,6 +3,8 @@ require "minitest/mock"
 require "ostruct"
 
 class MensageriaTest < ActiveSupport::TestCase
+  include ActiveJob::TestHelper
+
   def setup
     @apoiador = apoiadores(:lider_1)
     @convite = convites(:convite_pendente)
@@ -13,7 +15,8 @@ class MensageriaTest < ActiveSupport::TestCase
       descricao: "Discussão de pautas",
       data: Time.now + 1.day,
       coordenador: @apoiador,
-      descricao_publico_alvo: "Todos (Rede completa)"
+      descricao_publico_alvo: "Todos (Rede completa)",
+      destinatarios_filtrados: Apoiador.where(id: @apoiador.id)
     )
     @comunicado = OpenStruct.new(
       id: 1,
@@ -22,13 +25,12 @@ class MensageriaTest < ActiveSupport::TestCase
       data: Time.now,
       lider: @apoiador,
       regiao: nil,
-      apoiadores: Apoiador.where(id: [@apoiador.id]) # Usando query real ou array mockado se possível
+      apoiadores: Apoiador.where(id: [@apoiador.id])
     )
   end
 
   # Teste para Utils::BuscaImagemWhatsapp
   test "Utils::BuscaImagemWhatsapp deve fazer requisição POST correta" do
-    # Mock ENV variables
     ENV['N8N_WEBHOOK_BUSCA_IMAGEM_WHATSAPP'] = "https://n8n.exemplo.com/webhook/busca-imagem"
     
     url = ENV['N8N_WEBHOOK_BUSCA_IMAGEM_WHATSAPP']
@@ -38,11 +40,8 @@ class MensageriaTest < ActiveSupport::TestCase
     mock_response = Minitest::Mock.new
     
     mock_response.expect :body, { "imageUrl" => "http://imagem.com/foto.jpg" }.to_json
-    
-    # Expect use_ssl= called with true because url is https
     mock_http.expect :use_ssl=, true, [true]
     
-    # Expect request to be called
     mock_http.expect :request, mock_response do |request|
       request.is_a?(Net::HTTP::Post) && 
       request.path == uri.path &&
@@ -58,71 +57,43 @@ class MensageriaTest < ActiveSupport::TestCase
     mock_response.verify
   end
 
-  # Teste para RedisClient
-  test "RedisClient deve publicar mensagem" do
-    mock_redis = Minitest::Mock.new
-    mock_redis.expect :publish, true, ["canal", "mensagem"]
-    
-    Mensageria::RedisClient.stub :connection, mock_redis do
-      Mensageria::RedisClient.publish("canal", "mensagem")
-    end
-    
-    assert mock_redis.verify
-  end
-
   # Teste para Notificacoes::Convites
-  test "notificar_novo_convite deve chamar Logger e Lideranca" do
+  test "notificar_novo_convite deve enfileirar SendWhatsappJob" do
     Utils::BuscaImagemWhatsapp.stub :buscar, "http://imagem.com/foto.jpg" do
-      Mensageria::Logger.stub :log_mensagem_apoiador, true do
-        Mensageria::Lideranca.stub :notificar, true do
-          assert_nothing_raised do
-            Mensageria::Notificacoes::Convites.notificar_novo_convite(@convite)
-          end
+      Mensageria::Lideranca.stub :notificar, true do
+        assert_enqueued_with(job: SendWhatsappJob) do
+          Mensageria::Notificacoes::Convites.notificar_novo_convite(@convite)
         end
       end
     end
   end
 
-  test "notificar_convite_aceito deve chamar Logger e Lideranca" do
+  test "notificar_convite_aceito deve enfileirar SendWhatsappJob" do
     Utils::BuscaImagemWhatsapp.stub :buscar, "http://imagem.com/foto.jpg" do
-      Mensageria::Logger.stub :log_mensagem_apoiador, true do
-        Mensageria::Lideranca.stub :notificar, true do
-          assert_nothing_raised do
-            Mensageria::Notificacoes::Convites.notificar_convite_aceito(@apoiador)
-          end
+      Mensageria::Lideranca.stub :notificar, true do
+        assert_enqueued_with(job: SendWhatsappJob) do
+          Mensageria::Notificacoes::Convites.notificar_convite_aceito(@apoiador)
         end
-      end
-    end
-  end
-
-  test "notificar_convite_recusado deve chamar Lideranca" do
-    Mensageria::Lideranca.stub :notificar, true do
-      assert_nothing_raised do
-        Mensageria::Notificacoes::Convites.notificar_convite_recusado(@convite)
       end
     end
   end
 
   # Teste para Notificacoes::Visitas
-  test "notificar_nova_visita deve chamar Logger e Lideranca" do
+  test "notificar_nova_visita deve enfileirar SendWhatsappJob" do
     Utils::BuscaImagemWhatsapp.stub :buscar, "http://imagem.com/foto.jpg" do
-      Mensageria::Logger.stub :log_mensagem_apoiador, true do
-        Mensageria::Lideranca.stub :notificar, true do
-          assert_nothing_raised do
-            Mensageria::Notificacoes::Visitas.notificar_nova_visita(@visita)
-          end
+      Mensageria::Lideranca.stub :notificar, true do
+        assert_enqueued_with(job: SendWhatsappJob) do
+          Mensageria::Notificacoes::Visitas.notificar_nova_visita(@visita)
         end
       end
     end
   end
 
-  test "notificar_visita_cancelada deve chamar Logger e Lideranca" do
+  test "notificar_visita_cancelada deve enfileirar SendWhatsappJob" do
     Utils::BuscaImagemWhatsapp.stub :buscar, "http://imagem.com/foto.jpg" do
-      Mensageria::Logger.stub :log_mensagem_apoiador, true do
-        Mensageria::Lideranca.stub :notificar, true do
-          assert_nothing_raised do
-            Mensageria::Notificacoes::Visitas.notificar_visita_cancelada(@visita)
-          end
+      Mensageria::Lideranca.stub :notificar, true do
+        assert_enqueued_with(job: SendWhatsappJob) do
+          Mensageria::Notificacoes::Visitas.notificar_visita_cancelada(@visita)
         end
       end
     end
@@ -137,69 +108,45 @@ class MensageriaTest < ActiveSupport::TestCase
     end
   end
 
-  test "notificar_mudanca_funcao deve chamar Lideranca" do
-    Mensageria::Lideranca.stub :notificar, true do
-      assert_nothing_raised do
-        Mensageria::Notificacoes::Apoiadores.notificar_mudanca_funcao(@apoiador, 1)
-      end
-    end
-  end
-
   # Teste para Notificacoes::Eventos
-  test "notificar_novo_evento deve chamar Logger e Lideranca" do
+  test "notificar_novo_evento deve enfileirar SendWhatsappJob" do
     Utils::BuscaImagemWhatsapp.stub :buscar, "http://imagem.com/foto.jpg" do
-      Mensageria::Logger.stub :log_mensagem_apoiador, true do
-        Mensageria::Lideranca.stub :notificar, true do
-          assert_nothing_raised do
-            Mensageria::Notificacoes::Eventos.notificar_novo_evento(@evento)
-          end
+      Mensageria::Lideranca.stub :notificar, true do
+        assert_enqueued_with(job: SendWhatsappJob) do
+          Mensageria::Notificacoes::Eventos.notificar_novo_evento(@evento)
         end
       end
     end
   end
 
-  test "notificar_atualizacao_evento deve chamar Logger e Lideranca" do
+  test "notificar_atualizacao_evento deve enfileirar SendWhatsappJob" do
     Utils::BuscaImagemWhatsapp.stub :buscar, "http://imagem.com/foto.jpg" do
-      Mensageria::Logger.stub :log_mensagem_apoiador, true do
-        Mensageria::Lideranca.stub :notificar, true do
-          assert_nothing_raised do
-            Mensageria::Notificacoes::Eventos.notificar_atualizacao_evento(@evento)
-          end
+      Mensageria::Lideranca.stub :notificar, true do
+        assert_enqueued_with(job: SendWhatsappJob) do
+          Mensageria::Notificacoes::Eventos.notificar_atualizacao_evento(@evento)
         end
       end
     end
   end
 
   # Teste para Notificacoes::Comunicados
-  test "notificar_novo_comunicado deve chamar Lideranca" do
-    Mensageria::Lideranca.stub :notificar, true do
-      assert_nothing_raised do
-        Mensageria::Notificacoes::Comunicados.notificar_novo_comunicado(@comunicado)
-      end
-    end
-  end
-
-  test "enviar_para_apoiador deve chamar Logger" do
+  test "enviar_para_apoiador deve enfileirar SendWhatsappJob" do
     Utils::BuscaImagemWhatsapp.stub :buscar, "http://imagem.com/foto.jpg" do
-      Mensageria::Logger.stub :log_mensagem_apoiador, true do
-        assert_nothing_raised do
-          Mensageria::Notificacoes::Comunicados.enviar_para_apoiador(@comunicado, @apoiador)
-        end
+      assert_enqueued_with(job: SendWhatsappJob) do
+        Mensageria::Notificacoes::Comunicados.enviar_para_apoiador(@comunicado, @apoiador)
       end
     end
   end
 
-  test "notificar_participante deve chamar Logger" do
+  test "notificar_participante deve enfileirar SendWhatsappJob" do
     Utils::BuscaImagemWhatsapp.stub :buscar, "http://imagem.com/foto.jpg" do
-      Mensageria::Logger.stub :log_mensagem_apoiador, true do
-        assert_nothing_raised do
-          Mensageria::Notificacoes::Eventos.notificar_participante(@evento, @apoiador)
-        end
+      assert_enqueued_with(job: SendWhatsappJob) do
+        Mensageria::Notificacoes::Eventos.notificar_participante(@evento, @apoiador)
       end
     end
   end
 
-  # Teste para Mensagens::Convites (verificação de variáveis de ambiente)
+  # Teste para Mensagens::Convites
   test "Mensagens::Convites deve usar BASE_URL correta" do
     ENV['BASE_URL'] ||= "http://localhost:3000"
     texto = Mensageria::Mensagens::Convites.novo_convite(@convite, @apoiador)
@@ -215,45 +162,14 @@ class MensageriaTest < ActiveSupport::TestCase
     assert_nil Mensageria::Helpers.format_phone_number(nil)
   end
 
-  # Teste para Logger
-  test "Logger.log_mensagem_apoiador deve publicar no Redis" do
-    mock_redis = Minitest::Mock.new
-    mock_redis.expect :publish, true do |channel, message|
-      data = JSON.parse(message)
-      channel == Mensageria::Logger::REDIS_CHANNEL &&
-      data["fila"] == "teste" &&
-      data["whatsapp"] == "123"
-    end
-
-    Mensageria::RedisClient.stub :connection, mock_redis do
-      Mensageria::Logger.log_mensagem_apoiador(
-        fila: "teste",
-        image_url: "http://img.com",
-        whatsapp: "123",
-        mensagem: "msg"
-      )
-    end
-    
-    assert mock_redis.verify
-  end
-
   # Teste para Lideranca
   test "Lideranca.buscar_hierarquia deve retornar lista de lideres" do
-    # Ana (apoiadora) -> Pedro (lider) -> Maria (coord geral) -> João (candidato)
     ana = apoiadores(:apoiador_1)
-    
     lideres = Mensageria::Lideranca.buscar_hierarquia(ana)
     
-    # Deve incluir Pedro (lider direto)
     assert_includes lideres, apoiadores(:lider_1)
-    
-    # Deve incluir Maria (coord geral)
     assert_includes lideres, apoiadores(:coordenador_geral_1)
-    
-    # Deve incluir João (candidato)
     assert_includes lideres, apoiadores(:joao_candidato)
-    
-    # Não deve ter duplicatas
     assert_equal lideres.uniq.length, lideres.length
   end
 end

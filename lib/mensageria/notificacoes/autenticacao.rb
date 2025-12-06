@@ -10,11 +10,10 @@ module Mensageria
           texto = Mensagens::Autenticacao.codigo_acesso(apoiador.verification_code)
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
-          Logger.log_mensagem_apoiador(
-            fila: "mensageria",
-            image_url: imagem_whatsapp,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
-            mensagem: texto
+            mensagem: texto,
+            image_url: imagem_whatsapp
           )
         rescue StandardError => e
           Rails.logger.error "Erro ao enviar código de autenticação para apoiador #{apoiador.id}: #{e.message}"
@@ -33,11 +32,10 @@ module Mensageria
           texto = Mensagens::Autenticacao.link_magico(link)
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
-          Logger.log_mensagem_apoiador(
-            fila: "mensageria",
-            image_url: imagem_whatsapp,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
-            mensagem: texto
+            mensagem: texto,
+            image_url: imagem_whatsapp
           )
         rescue StandardError => e
           Rails.logger.error "Erro ao enviar link mágico para apoiador #{apoiador.id}: #{e.message}"

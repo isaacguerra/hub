@@ -20,13 +20,12 @@ module Mensageria
           end
 
           texto = Mensagens::Convites.novo_convite(convite, apoiador)
-          imagem_url = ENV['IMAGEM_CONVITE']
+          imagem_url = ENV["IMAGEM_CONVITE"]
 
-          Logger.log_mensagem_apoiador(
-            fila: 'mensageria',
-            image_url: imagem_url,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(convite.whatsapp),
-            mensagem: texto
+            mensagem: texto,
+            image_url: imagem_url
           )
 
           mensagem_lideranca = Mensagens::Convites.notificacao_lideranca_novo_convite(convite, apoiador)
@@ -47,14 +46,13 @@ module Mensageria
         # - Liderança do apoiador
         def notificar_convite_aceito(apoiador)
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
-          image_url = ENV['IMAGEM_CONVITE']
+          image_url = ENV["IMAGEM_CONVITE"]
 
           texto = Mensagens::Convites.convite_aceito(apoiador)
-          Logger.log_mensagem_apoiador(
-            fila: 'mensageria',
-            image_url: image_url,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
-            mensagem: texto
+            mensagem: texto,
+            image_url: image_url
           )
 
           # Busca a rede para identificar o líder direto
@@ -62,11 +60,10 @@ module Mensageria
 
           if rede && rede[:lider]
             texto_lider = Mensagens::Convites.convite_aceito_lider(apoiador)
-            Logger.log_mensagem_apoiador(
-              fila: 'mensageria',
-              image_url: imagem_whatsapp,
+            SendWhatsappJob.perform_later(
               whatsapp: Helpers.format_phone_number(rede[:lider][:whatsapp]),
-              mensagem: texto_lider
+              mensagem: texto_lider,
+              image_url: imagem_whatsapp
             )
           end
 
@@ -89,7 +86,7 @@ module Mensageria
           return unless apoiador
 
           mensagem = Mensagens::Convites.notificacao_lideranca_convite_recusado(convite)
-          
+
           Lideranca.notificar(
             apoiador: apoiador,
             mensagem: mensagem

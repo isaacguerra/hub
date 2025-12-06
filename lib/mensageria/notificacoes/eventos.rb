@@ -31,11 +31,10 @@ module Mensageria
             texto = Mensagens::Eventos.novo_evento(evento, apoiador)
             imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
-            Mensageria::Logger.log_mensagem_apoiador(
-              fila: "mensageria",
-              image_url: imagem_whatsapp,
+            SendWhatsappJob.perform_later(
               whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
-              mensagem: texto
+              mensagem: texto,
+              image_url: imagem_whatsapp
             )
           end
         rescue StandardError => e
@@ -54,11 +53,10 @@ module Mensageria
           texto_apoiador = Mensagens::Eventos.confirmacao_participacao_apoiador(evento, apoiador)
           imagem_apoiador = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
-          Mensageria::Logger.log_mensagem_apoiador(
-            fila: "mensageria",
-            image_url: imagem_apoiador,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
-            mensagem: texto_apoiador
+            mensagem: texto_apoiador,
+            image_url: imagem_apoiador
           )
 
           # 2. Notificar organizador
@@ -66,11 +64,10 @@ module Mensageria
              texto_organizador = Mensagens::Eventos.notificacao_participacao_organizador(evento, apoiador)
              imagem_organizador = Utils::BuscaImagemWhatsapp.buscar(organizador.whatsapp)
 
-             Mensageria::Logger.log_mensagem_apoiador(
-               fila: "mensageria",
-               image_url: imagem_organizador,
+             SendWhatsappJob.perform_later(
                whatsapp: Helpers.format_phone_number(organizador.whatsapp),
-               mensagem: texto_organizador
+               mensagem: texto_organizador,
+               image_url: imagem_organizador
              )
           end
 
@@ -98,25 +95,23 @@ module Mensageria
 
           # Loga no Redis
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(coordenador.whatsapp)
-          Mensageria::Logger.log_mensagem_apoiador(
-            fila: "mensageria",
-            image_url: imagem_whatsapp,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(coordenador.whatsapp),
-            mensagem: mensagem
+            mensagem: mensagem,
+            image_url: imagem_whatsapp
           )
         rescue StandardError => e
           Rails.logger.error "Erro em notificar_atualizacao_evento: #{e.message}"
         end
 
         def notificar_participante(evento, apoiador)
-          mensagem = Mensagens::Eventos.novo_evento(evento)
+          mensagem = Mensagens::Eventos.novo_evento(evento, apoiador)
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
-          Mensageria::Logger.log_mensagem_apoiador(
-            fila: "mensageria",
-            image_url: imagem_whatsapp,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
-            mensagem: mensagem
+            mensagem: mensagem,
+            image_url: imagem_whatsapp
           )
         rescue StandardError => e
           Rails.logger.error "Erro ao notificar participante #{apoiador.id} do evento #{evento.id}: #{e.message}"

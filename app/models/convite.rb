@@ -9,7 +9,7 @@
 # alem de convite aceito podemos ter o convite recusado, nesse caso o status deve ser atualizado para "recusado" e devemos gravar uma mensagem de convite recusado no redis.
 
 class Convite < ApplicationRecord
-  belongs_to :enviado_por, class_name: 'Apoiador'
+  belongs_to :enviado_por, class_name: "Apoiador"
 
   validates :nome, :whatsapp, :status, presence: true
   validates :enviado_por, presence: true
@@ -27,6 +27,7 @@ class Convite < ApplicationRecord
   end
 
   def notificar_novo_convite
+    Rails.logger.info "Convite criado: #{id}. Iniciando notificação..."
     Mensageria::Notificacoes::Convites.notificar_novo_convite(self)
   rescue StandardError => e
     Rails.logger.error "Erro ao notificar novo convite #{id}: #{e.message}"
@@ -34,10 +35,10 @@ class Convite < ApplicationRecord
 
   def notificar_mudanca_status
     case status
-    when 'aceito'
+    when "aceito"
       # Nota: a notificação de convite aceito é disparada ao criar o apoiador
       # não aqui, pois precisamos do objeto Apoiador completo
-    when 'recusado'
+    when "recusado"
       Mensageria::Notificacoes::Convites.notificar_convite_recusado(self)
     end
   end

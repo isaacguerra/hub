@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       post "auth/login", to: "auths#login"
     end
     namespace :chatbot do
+      post "webhook", to: "webhook#receive"
       resources :apoiadores, only: [ :create ]
       resources :convites, only: [ :create, :index ]
       resources :eventos, only: [ :index ]

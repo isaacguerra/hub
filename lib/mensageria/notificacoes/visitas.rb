@@ -19,19 +19,17 @@ module Mensageria
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
           texto = Mensagens::Visitas.nova_visita(visita)
-          Logger.log_mensagem_apoiador(
-            fila: 'mensageria',
-            image_url: imagem_whatsapp,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
-            mensagem: texto
+            mensagem: texto,
+            image_url: imagem_whatsapp
           )
 
           texto_lider = Mensagens::Visitas.nova_visita_lider(visita)
-          Logger.log_mensagem_apoiador(
-            fila: 'mensageria',
-            image_url: imagem_whatsapp,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(lider.whatsapp),
-            mensagem: texto_lider
+            mensagem: texto_lider,
+            image_url: imagem_whatsapp
           )
 
           mensagem_lideranca = Mensagens::Visitas.notificacao_lideranca_nova_visita(visita)
@@ -58,11 +56,10 @@ module Mensageria
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
           texto = Mensagens::Visitas.visita_realizada(visita)
-          Logger.log_mensagem_apoiador(
-            fila: 'mensageria',
-            image_url: imagem_whatsapp,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
-            mensagem: texto
+            mensagem: texto,
+            image_url: imagem_whatsapp
           )
 
           mensagem_lideranca = Mensagens::Visitas.notificacao_lideranca_visita_realizada(visita)
@@ -89,11 +86,10 @@ module Mensageria
           imagem_whatsapp = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp)
 
           texto = Mensagens::Visitas.visita_cancelada(visita)
-          Logger.log_mensagem_apoiador(
-            fila: 'mensageria',
-            image_url: imagem_whatsapp,
+          SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
-            mensagem: texto
+            mensagem: texto,
+            image_url: imagem_whatsapp
           )
 
           mensagem_lideranca = Mensagens::Visitas.notificacao_lideranca_visita_cancelada(visita)
