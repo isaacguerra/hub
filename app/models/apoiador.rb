@@ -16,6 +16,8 @@ Ao Mudar a funcao de um Apoiador devemos gravar uma mensagem no channel mensager
 =end
 
 class Apoiador < ApplicationRecord
+  include RedeApoiadores
+
   belongs_to :municipio
   belongs_to :regiao
   belongs_to :bairro
@@ -147,11 +149,6 @@ class Apoiador < ApplicationRecord
       verification_code_expires_at: nil
     )
   end
-
-    # Compatibilidade para utilitário e testes
-    def liderados
-      todos_subordinados(incluir_indiretos: true)
-    end
 
   private
 

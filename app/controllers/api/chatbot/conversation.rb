@@ -56,7 +56,8 @@ module Api
           when "5"
             informar_atendente_entrara_em_contato(apoiador)
           else
-            enviar_mensagem_padrao(apoiador)
+            # Tenta processar como número de contato (ou envia mensagem padrão)
+            Api::Chatbot::ContatoNumero.process(apoiador, message)
           end
         end
 

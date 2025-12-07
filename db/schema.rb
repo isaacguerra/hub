@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_01_130851) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_06_210809) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -33,11 +33,14 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_01_130851) do
     t.datetime "verification_code_expires_at"
     t.string "whatsapp", null: false
     t.string "zona_eleitoral"
+    t.index ["bairro_id", "funcao_id"], name: "index_apoiadores_on_bairro_id_and_funcao_id"
     t.index ["bairro_id"], name: "index_apoiadores_on_bairro_id"
     t.index ["email"], name: "index_apoiadores_on_email", unique: true
     t.index ["funcao_id"], name: "index_apoiadores_on_funcao_id"
     t.index ["lider_id"], name: "index_apoiadores_on_lider_id"
+    t.index ["municipio_id", "funcao_id"], name: "index_apoiadores_on_municipio_id_and_funcao_id"
     t.index ["municipio_id"], name: "index_apoiadores_on_municipio_id"
+    t.index ["regiao_id", "funcao_id"], name: "index_apoiadores_on_regiao_id_and_funcao_id"
     t.index ["regiao_id"], name: "index_apoiadores_on_regiao_id"
   end
 
@@ -124,6 +127,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_01_130851) do
     t.datetime "created_at", null: false
     t.string "name", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_funcoes_on_name", unique: true
   end
 
   create_table "linkpaineis", force: :cascade do |t|
