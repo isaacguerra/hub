@@ -10,7 +10,7 @@
         <div class="card border-0 shadow-sm h-100 text-center py-3 rounded-4 bg-white">
           <div class="position-relative d-inline-block mb-2">
             <% if @daily_winner %>
-              <img src="<%= Utils::BuscaImagemWhatsapp.imprimir_imagem(@daily_winner[:apoiador].whatsapp) %>" 
+              <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@daily_winner[:apoiador].whatsapp) %>" 
                    class="rounded-circle border border-3 border-info p-1" 
                    style="width: 60px; height: 60px; object-fit: cover;"
                    onerror="this.src='https://ui-avatars.com/api/?name=<%= @daily_winner[:apoiador].name %>&background=random'">
@@ -33,7 +33,7 @@
         <div class="card border-0 shadow-sm h-100 text-center py-3 rounded-4 bg-white transform-scale-105" style="transform: scale(1.05); z-index: 1;">
           <div class="position-relative d-inline-block mb-2">
             <% if @weekly_winner %>
-              <img src="<%= Utils::BuscaImagemWhatsapp.imprimir_imagem(@weekly_winner[:apoiador].whatsapp) %>" 
+              <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@weekly_winner[:apoiador].whatsapp) %>" 
                    class="rounded-circle border border-3 border-warning p-1" 
                    style="width: 70px; height: 70px; object-fit: cover;"
                    onerror="this.src='https://ui-avatars.com/api/?name=<%= @weekly_winner[:apoiador].name %>&background=random'">
@@ -56,7 +56,7 @@
         <div class="card border-0 shadow-sm h-100 text-center py-3 rounded-4 bg-white">
           <div class="position-relative d-inline-block mb-2">
             <% if @monthly_winner %>
-              <img src="<%= Utils::BuscaImagemWhatsapp.imprimir_imagem(@monthly_winner[:apoiador].whatsapp) %>" 
+              <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@monthly_winner[:apoiador].whatsapp) %>" 
                    class="rounded-circle border border-3 border-primary p-1" 
                    style="width: 60px; height: 60px; object-fit: cover;"
                    onerror="this.src='https://ui-avatars.com/api/?name=<%= @monthly_winner[:apoiador].name %>&background=random'">
@@ -86,7 +86,7 @@
           <% @gold_champions.each_with_index do |point, index| %>
             <div class="list-group-item p-3 d-flex align-items-center border-bottom-0 border-top">
               <div class="me-3 position-relative">
-                <img src="<%= Utils::BuscaImagemWhatsapp.imprimir_imagem(point.apoiador.whatsapp) %>" 
+                <img src="<%= Utils::BuscaImagemWhatsapp.buscar(point.apoiador.whatsapp) %>" 
                      class="rounded-circle" 
                      style="width: 45px; height: 45px; object-fit: cover;"
                      onerror="this.src='https://ui-avatars.com/api/?name=<%= point.apoiador.name %>&background=random'">

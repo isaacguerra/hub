@@ -28,11 +28,11 @@ Rails.application.routes.draw do
     resources :visitas
     resource :perfil, only: [ :show ], controller: "perfil"
     get "estatisticas", to: "estatisticas#index"
-    
-    resources :gamification, only: [:index, :show], controller: "gamification"
-    
+
+    resources :gamification, only: [ :index, :show ], controller: "gamification"
+
     namespace :gamification do
-      resource :strategy, only: [:edit, :update], controller: "strategies"
+      resource :strategy, only: [ :edit, :update ], controller: "strategies"
     end
 
     resources :municipios do
@@ -76,9 +76,11 @@ Rails.application.routes.draw do
   # Gamification Admin Routes
   namespace :gamification do
     resources :challenges
-    resources :badges, only: [:index, :edit, :update]
-    resources :points, only: [:index] do
-      post :adjust, on: :collection
+    resources :configurations, only: [ :index ] do
+      member do
+        patch :update_weight
+        patch :update_level
+      end
     end
   end
 

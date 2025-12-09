@@ -1,0 +1,34 @@
+convite_sent:
+  action_type: "convite_sent"
+  points: 2
+  description: "Envio de convite"
+
+convite_accepted:
+  action_type: "convite_accepted"
+  points: 10
+  description: "Convite aceito"
+
+visit_created:
+  action_type: "visit_created"
+  points: 15
+  description: "Visita realizada"
+
+comunicado_received:
+  action_type: "comunicado_received"
+  points: 1
+  description: "Recebimento de comunicado"
+
+comunicado_engaged:
+  action_type: "comunicado_engaged"
+  points: 5
+  description: "Engajamento em comunicado"
+
+event_participation:
+  action_type: "event_participation"
+  points: 8
+  description: "Participação em evento"
+
+daily_login:
+  action_type: "daily_login"
+  points: 1
+  description: "Login diário"

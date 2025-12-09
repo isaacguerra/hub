@@ -1,31 +1,33 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-2xl font-bold text-gray-800 mb-6">Gerenciar Medalhas</h1>
+<div class="container mt-4">
+  <h1 class="h3 text-gray-800 mb-4">Gerenciar Medalhas</h1>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     <% @badges.each do |badge| %>
-      <div class="bg-white shadow-md rounded-lg overflow-hidden flex flex-col">
-        <div class="p-4 flex-grow">
-          <div class="flex items-center mb-4">
-            <% if badge.image_url.present? %>
-              <%= image_tag badge.image_url, class: "w-12 h-12 rounded-full mr-4 object-cover bg-gray-200" %>
-            <% else %>
-              <div class="w-12 h-12 rounded-full mr-4 bg-gray-300 flex items-center justify-center text-gray-600">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+      <div class="col">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex align-items-center mb-3">
+              <% if badge.image_url.present? %>
+                <%= image_tag badge.image_url, class: "rounded-circle me-3 object-fit-cover bg-light", style: "width: 48px; height: 48px;" %>
+              <% else %>
+                <div class="rounded-circle me-3 bg-secondary bg-opacity-25 d-flex align-items-center justify-content-center text-secondary" style: "width: 48px; height: 48px;">
+                  <i class="bi bi-award fs-4"></i>
+                </div>
+              <% end %>
+              <div>
+                <h5 class="card-title mb-0 text-dark fw-bold"><%= badge.name %></h5>
+                <small class="text-muted font-monospace"><%= badge.key %></small>
               </div>
-            <% end %>
-            <div>
-              <h2 class="text-xl font-semibold text-gray-800"><%= badge.name %></h2>
-              <p class="text-xs text-gray-500 font-mono"><%= badge.key %></p>
+            </div>
+            <p class="card-text text-muted small mb-3 flex-grow-1"><%= badge.description %></p>
+            
+            <div class="bg-light p-2 rounded small text-dark font-monospace border">
+              <strong>Critérios:</strong> <%= badge.criteria %>
             </div>
           </div>
-          <p class="text-gray-600 text-sm mb-4"><%= badge.description %></p>
-          
-          <div class="bg-gray-50 p-3 rounded text-xs text-gray-700 font-mono">
-            <strong>Critérios:</strong> <%= badge.criteria %>
+          <div class="card-footer bg-light border-top-0">
+            <%= link_to "Editar", edit_gamification_badge_path(badge), class: "btn btn-sm btn-outline-primary w-100" %>
           </div>
-        </div>
-        <div class="bg-gray-100 px-4 py-3 border-t border-gray-200">
-          <%= link_to "Editar", edit_gamification_badge_path(badge), class: "text-blue-600 hover:text-blue-800 font-medium text-sm" %>
         </div>
       </div>
     <% end %>

@@ -1,0 +1,125 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 text-gray-800 mb-1">Regras do Jogo</h1>
+      <p class="text-muted mb-0">Defina como os apoiadores ganham pontos e evoluem de nível.</p>
+    </div>
+  </div>
+
+  <div class="alert alert-info border-0 shadow-sm mb-4">
+    <i class="bi bi-info-circle-fill me-2"></i>
+    <strong>Atenção:</strong> Alterações nos pesos afetam apenas ações futuras. Alterações nos níveis atualizam o progresso na próxima pontuação do apoiador.
+  </div>
+
+  <div class="row">
+    <!-- Pesos das Ações -->
+    <div class="col-lg-7 mb-4">
+      <div class="card shadow-sm h-100 border-0">
+        <div class="card-header bg-white py-3 border-bottom">
+          <h5 class="card-title mb-0 fw-bold text-primary">
+            <i class="bi bi-joystick me-2"></i>Recompensas por Ação
+          </h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th class="px-4 py-3">Ação Realizada</th>
+                <th class="px-4 py-3 text-center" style="width: 140px;">Recompensa (XP)</th>
+                <th style="width: 60px;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @action_weights.each do |weight| %>
+                <tr>
+                  <td class="px-4">
+                    <div class="d-flex align-items-center">
+                      <!-- Ícone baseado no tipo de ação (lógica simples na view para agilidade) -->
+                      <% icon = case weight.action_type 
+                         when /convite/ then "bi-envelope-paper"
+                         when /visit/ then "bi-geo-alt"
+                         when /comunicado/ then "bi-megaphone"
+                         when /event/ then "bi-calendar-event"
+                         when /login/ then "bi-phone"
+                         else "bi-star"
+                         end %>
+                      
+                      <div class="rounded-circle bg-light p-2 me-3 text-primary d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                        <i class="bi <%= icon %> fs-5"></i>
+                      </div>
+                      
+                      <div>
+                        <div class="fw-bold text-dark"><%= weight.description %></div>
+                        <code class="text-muted small" style="font-size: 0.75em;"><%= weight.action_type %></code>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-4">
+                    <%= form_with(model: weight, url: update_weight_gamification_configuration_path(weight), method: :patch, local: true, class: "d-flex justify-content-center") do |f| %>
+                      <div class="input-group input-group-sm" style="width: 140px;">
+                        <%= f.number_field :points, class: "form-control text-center fw-bold" %>
+                        <span class="input-group-text bg-light text-muted">XP</span>
+                      </div>
+                      <button type="submit" class="btn btn-sm btn-outline-primary ms-2" title="Salvar Alteração">
+                        <i class="bi bi-check-lg"></i>
+                      </button>
+                    <% end %>
+                  </td>
+                  <td></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Níveis -->
+    <div class="col-lg-5 mb-4">
+      <div class="card shadow-sm h-100 border-0">
+        <div class="card-header bg-white py-3 border-bottom">
+          <h5 class="card-title mb-0 fw-bold text-success">
+            <i class="bi bi-ladder me-2"></i>Escala de Evolução
+          </h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th class="px-4 py-3 text-center">Nível</th>
+                <th class="px-4 py-3">XP Total Acumulado</th>
+                <th style="width: 60px;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @levels.each do |level| %>
+                <tr>
+                  <td class="px-4 text-center">
+                    <span class="badge bg-success rounded-pill px-3 py-2">
+                      Nível <%= level.level %>
+                    </span>
+                  </td>
+                  <td class="px-4">
+                    <%= form_with(model: level, url: update_level_gamification_configuration_path(level), method: :patch, local: true, class: "d-flex align-items-center") do |f| %>
+                      <div class="input-group input-group-sm" style="width: 160px;">
+                        <%= f.number_field :experience_threshold, class: "form-control" %>
+                        <span class="input-group-text bg-light text-muted">XP</span>
+                      </div>
+                      <button type="submit" class="btn btn-sm btn-outline-success ms-2" title="Salvar Alteração">
+                        <i class="bi bi-check-lg"></i>
+                      </button>
+                    <% end %>
+                  </td>
+                  <td></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer bg-light text-muted small">
+          <i class="bi bi-info-circle me-1"></i> O XP é cumulativo. O apoiador precisa atingir esse total para desbloquear o nível.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -109,4 +109,37 @@ else
   puts "Erro: Não foi possível encontrar os dados necessários para criar o apoiador padrão."
 end
 
+# Gamification Seeds
+puts "Populando dados de Gamificação..."
+
+# Action Weights
+weights = {
+  "convite_sent" => { points: 2, description: "Envio de convite" },
+  "convite_accepted" => { points: 10, description: "Convite aceito" },
+  "visit_created" => { points: 15, description: "Visita realizada" },
+  "comunicado_received" => { points: 1, description: "Recebimento de comunicado" },
+  "comunicado_engaged" => { points: 5, description: "Engajamento em comunicado" },
+  "event_participation" => { points: 8, description: "Participação em evento" },
+  "daily_login" => { points: 1, description: "Login diário" }
+}
+
+weights.each do |action_type, data|
+  Gamification::ActionWeight.find_or_create_by!(action_type: action_type) do |w|
+    w.points = data[:points]
+    w.description = data[:description]
+  end
+end
+
+# Levels
+levels = [ 0, 100, 300, 700, 1500, 3000, 6000, 12000, 25000, 50000 ]
+
+levels.each_with_index do |threshold, index|
+  level_number = index + 1
+  Gamification::Level.find_or_create_by!(level: level_number) do |l|
+    l.experience_threshold = threshold
+  end
+end
+
+puts "Dados de Gamificação populados com sucesso!"
+
 puts "Seed concluído!"

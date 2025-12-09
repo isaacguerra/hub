@@ -35,16 +35,17 @@ pt-BR:
         ⚠️ Este link é válido por 5 minutos.
         Não compartilhe com ninguém.
     chatbot:
-      erro_identificacao: "Não consegui identificar o número desse contato. Tente enviar novamente."
-      numero_invalido: "O número do contato parece inválido."
-      ja_cadastrado: "Esse contato já está cadastrado como apoiador!"
-      convite_existente: "Já existe um convite ativo para esse contato (Status: %{status})."
-      convite_sucesso: "Parabéns %{nome_apoiador}! Convite criado com sucesso para %{nome_convidado}!"
-      erro_convite: "Erro ao criar convite: %{erros}"
-      nao_cadastrado: "Olá %{nome}, seu número não está cadastrado em nossa base. Entre em contato com a administração."
+      erro_identificacao: "🤔 Não consegui identificar o número desse contato. Tente enviar novamente."
+      numero_invalido: "🚫 O número do contato parece inválido."
+      ja_cadastrado: "⚠️ Esse contato já está cadastrado como apoiador!"
+      convite_existente: "⏳ Já existe um convite ativo para esse contato (Status: %{status})."
+      convite_sucesso: "🎉 Parabéns %{nome_apoiador}! Convite criado com sucesso para %{nome_convidado}!"
+      erro_convite: "❌ Erro ao criar convite: %{erros}"
+      nome_nao_encontrado: "🤔 Não consegui encontrar o NOME desse contato. Por favor, cadastre manualmente."
+      nao_cadastrado: "👋 Olá %{nome}, seu número não está cadastrado em nossa base. Entre em contato com a administração."
       menu_inicial: |
-        Olá %{nome}! 
-        escolha uma das opções abaixo:
+        👋 Olá %{nome}! 
+        Escolha uma das opções abaixo:
 
         0 - Acessar o Sistema
         1 - Convidar um apoiador
@@ -61,76 +62,13 @@ pt-BR:
       visita_item: "- Visita a %{nome}:\n Contato: %{whatsapp}:\n Situacao:%{status}\n\n"
       sem_visitas: "Você não tem visitas pendentes."
       informacoes_ivone: |
-        Acesse o site:
+        🌟 Acesse o site:
 
         https://www.ivonechagas.com.br/
 
         E Conheça mais sobre nosso Projeto!
       atendente_contato: "Ok %{nome}! Um Lider entrará em contato com você em breve."
       mensagem_padrao: "Desculpe, não entendi sua mensagem. Por favor, envie 'OLA' para ver o menu de opções."
-      identificacao_contato: "Identifiquei que você enviou um número de contato: %{numero}. Vou verificar as informações."
-      nome_nao_encontrado: "Não consegui encontrar o NOME desse contato! Vou enviar para você um link do APP, crie o convite por lá."
-    gamification:
-      dica_vencedor: |
-        
-        💡 *Dica do Vencedor:*
-        _"%{estrategia}"_
-      missao_concluida: |
-        🏆 *MISSÃO CUMPRIDA!* 🏆
-
-        A missão *%{titulo}* foi completada!
-
-        🥇 Vencedor: *%{vencedor}*
-        🎁 Prêmio: *%{premio}*
-
-        Parabéns ao vencedor! Fiquem ligados para novas missões.
-      vencedor_semanal: |
-        🏆 *PARABÉNS CAMPEÃO DA SEMANA!* 🏆
-
-        Olá *%{nome}*, você foi o maior pontuador da semana com *%{pontos} XP*!
-
-        Queremos saber o seu segredo! 🤫
-        Compartilhe sua estratégia de vitória para inspirar outros apoiadores e aparecer no Hall da Fama.
-
-        👉 Clique aqui para contar sua história: %{link}
-      ranking:
-        intro: |
-          🏆 *HALL DA FAMA IVONE* 🏆
-
-          Confira quem está brilhando no nosso projeto! ✨
-        dia: |
-          🥇 *Destaque do Dia*
-
-          👤 *%{nome}*
-          ⚡ *%{pontos} XP hoje*
-
-          Parabéns pelo esforço diário!
-        semana: |
-          🥈 *Campeão da Semana*
-
-          👤 *%{nome}*
-          🔥 *%{pontos} XP na semana*
-          %{dica}
-        mes: |
-          🥉 *Líder do Mês*
-
-          👤 *%{nome}*
-          📅 *%{pontos} XP no mês*
-
-          Consistência é a chave!
-        geral: |
-          👑 *Lenda do Projeto (Top 1 Geral)*
-
-          👤 *%{nome}*
-          ⭐ *Lvl %{nivel}* - *%{pontos} XP Totais*
-
-          O maior influenciador do nosso time!
-        encerramento: |
-          🚀 *Quer ver seu rosto aqui?*
-
-          Convide amigos, participe dos eventos e cumpra as missões!
-
-          Digite *0* para acessar o App e ver mais detalhes.
     comunicados:
       novo: |
         📢 *Novo Comunicado*

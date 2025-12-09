@@ -7,7 +7,7 @@ module Gamification
     private
 
     def authorize_admin!
-      unless current_apoiador.candidato? || current_apoiador.coordenador_geral?
+      unless Current.apoiador&.candidato? || Current.apoiador&.coordenador_geral?
         redirect_to root_path, alert: "Acesso não autorizado. Apenas administradores podem acessar esta área."
       end
     end

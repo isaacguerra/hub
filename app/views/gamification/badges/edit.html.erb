@@ -1,10 +1,10 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-2xl font-bold text-gray-800 mb-6">Editar Medalha: <%= @badge.name %></h1>
+<div class="container mt-4">
+  <h1 class="h3 text-gray-800 mb-4">Editar Medalha: <%= @badge.name %></h1>
 
-  <%= form_with(model: [:gamification, @badge], local: true, class: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-lg") do |f| %>
+  <%= form_with(model: [:gamification, @badge], local: true, class: "card p-4 shadow-sm mw-100", style: "max-width: 600px;") do |f| %>
     <% if @badge.errors.any? %>
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
-        <ul class="list-disc list-inside">
+      <div class="alert alert-danger" role="alert">
+        <ul class="mb-0 ps-3">
           <% @badge.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
@@ -12,29 +12,29 @@
       </div>
     <% end %>
 
-    <div class="mb-4">
-      <%= f.label :name, "Nome", class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= f.text_field :name, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+    <div class="mb-3">
+      <%= f.label :name, "Nome", class: "form-label fw-bold" %>
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :description, "Descrição", class: "form-label fw-bold" %>
+      <%= f.text_area :description, rows: 3, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :image_url, "URL da Imagem", class: "form-label fw-bold" %>
+      <%= f.text_field :image_url, class: "form-control" %>
     </div>
 
     <div class="mb-4">
-      <%= f.label :description, "Descrição", class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= f.text_area :description, rows: 3, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
+      <%= f.label :criteria, "Critérios (JSON)", class: "form-label fw-bold" %>
+      <%= f.text_area :criteria, value: (@badge.criteria.to_json if @badge.criteria.present?), rows: 3, class: "form-control font-monospace" %>
     </div>
 
-    <div class="mb-4">
-      <%= f.label :image_url, "URL da Imagem", class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= f.text_field :image_url, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" %>
-    </div>
-
-    <div class="mb-6">
-      <%= f.label :criteria, "Critérios (JSON)", class: "block text-gray-700 text-sm font-bold mb-2" %>
-      <%= f.text_area :criteria, value: (@badge.criteria.to_json if @badge.criteria.present?), rows: 3, class: "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline font-mono" %>
-    </div>
-
-    <div class="flex items-center justify-between">
-      <%= f.submit "Salvar Alterações", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer" %>
-      <%= link_to "Cancelar", gamification_badges_path, class: "inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" %>
+    <div class="d-flex justify-content-between align-items-center">
+      <%= f.submit "Salvar Alterações", class: "btn btn-primary" %>
+      <%= link_to "Cancelar", gamification_badges_path, class: "btn btn-link text-decoration-none" %>
     </div>
   <% end %>
 </div>

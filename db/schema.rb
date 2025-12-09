@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_09_132224) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_09_202934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -26,6 +26,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_09_132224) do
     t.string "name", null: false
     t.bigint "regiao_id", null: false
     t.string "secao_eleitoral"
+    t.integer "subordinados_count", default: 0, null: false
     t.string "tiktok"
     t.string "titulo_eleitoral"
     t.datetime "updated_at", null: false
@@ -42,6 +43,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_09_132224) do
     t.index ["municipio_id"], name: "index_apoiadores_on_municipio_id"
     t.index ["regiao_id", "funcao_id"], name: "index_apoiadores_on_regiao_id_and_funcao_id"
     t.index ["regiao_id"], name: "index_apoiadores_on_regiao_id"
+    t.index ["whatsapp"], name: "index_apoiadores_on_whatsapp", unique: true
   end
 
   create_table "apoiadores_eventos", id: false, force: :cascade do |t|
@@ -141,7 +143,17 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_09_132224) do
     t.datetime "updated_at", null: false
     t.index ["apoiador_id", "action_type"], name: "index_gamification_action_logs_on_apoiador_id_and_action_type"
     t.index ["apoiador_id"], name: "index_gamification_action_logs_on_apoiador_id"
+    t.index ["created_at"], name: "index_gamification_action_logs_on_created_at"
     t.index ["resource_type", "resource_id"], name: "index_gamification_action_logs_on_resource"
+  end
+
+  create_table "gamification_action_weights", force: :cascade do |t|
+    t.string "action_type"
+    t.datetime "created_at", null: false
+    t.string "description"
+    t.integer "points"
+    t.datetime "updated_at", null: false
+    t.index ["action_type"], name: "index_gamification_action_weights_on_action_type"
   end
 
   create_table "gamification_apoiador_badges", force: :cascade do |t|
@@ -192,6 +204,14 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_09_132224) do
     t.index ["winner_id"], name: "index_gamification_challenges_on_winner_id"
   end
 
+  create_table "gamification_levels", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "experience_threshold"
+    t.integer "level"
+    t.datetime "updated_at", null: false
+    t.index ["level"], name: "index_gamification_levels_on_level"
+  end
+
   create_table "gamification_points", force: :cascade do |t|
     t.bigint "apoiador_id", null: false
     t.datetime "created_at", null: false
@@ -199,6 +219,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_09_132224) do
     t.integer "points", default: 0, null: false
     t.datetime "updated_at", null: false
     t.index ["apoiador_id"], name: "index_gamification_points_on_apoiador_id", unique: true
+    t.index ["points"], name: "index_gamification_points_on_points"
   end
 
   create_table "gamification_weekly_winners", force: :cascade do |t|

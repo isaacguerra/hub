@@ -28,14 +28,14 @@ module Gamification
         gamification_point = Gamification::Point.find_or_create_by!(apoiador: apoiador)
         gamification_point.with_lock do
           gamification_point.points += points
-          
+
           # 3. Verificar Level Up
           old_level = gamification_point.level
           new_level = calculate_level(gamification_point.points)
-          
+
           level_up = new_level > old_level
           gamification_point.level = new_level if level_up
-          
+
           gamification_point.save!
 
           # Aqui poderíamos disparar um evento ou job de notificação de Level Up
@@ -46,12 +46,12 @@ module Gamification
           # 4. Verificar Progresso em Missões
           Gamification::ChallengeService.check_progress(apoiador, action_type)
 
-          return { 
-            success: true, 
-            points_awarded: points, 
-            total_points: gamification_point.points, 
-            level: new_level, 
-            level_up: level_up 
+          return {
+            success: true,
+            points_awarded: points,
+            total_points: gamification_point.points,
+            level: new_level,
+            level_up: level_up
           }
         end
       end
@@ -61,16 +61,17 @@ module Gamification
     end
 
     def self.points_for(action_type)
-      GAMIFICATION_WEIGHTS[action_type.to_s] || 0
+      Rails.cache.fetch("gamification_weight_#{action_type}", expires_in: 24.hours) do
+        Gamification::ActionWeight.find_by(action_type: action_type)&.points || 0
+      end
     end
 
     def self.calculate_level(points)
-      # Encontra o índice do maior valor no array que é menor ou igual aos pontos
-      # GAMIFICATION_LEVELS = [0, 100, 300, ...]
-      # Se points = 150, levels.select { |l| l <= 150 }.count
-      # 0 e 100 são <= 150. Count = 2. Nível = 2.
-      
-      level = GAMIFICATION_LEVELS.select { |threshold| threshold <= points }.count
+      levels = Rails.cache.fetch("gamification_levels_map", expires_in: 24.hours) do
+        Gamification::Level.order(experience_threshold: :asc).pluck(:experience_threshold)
+      end
+
+      level = levels.select { |threshold| threshold <= points }.count
       level = 1 if level < 1
       level
     end
