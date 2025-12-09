@@ -1,0 +1,109 @@
+<div class="container-fluid p-0 bg-light min-vh-100">
+  <!-- Header da Missão -->
+  <div class="bg-white p-4 shadow-sm mb-3 position-relative">
+    <%= link_to mobile_gamification_index_path, class: "text-decoration-none text-muted position-absolute top-0 start-0 m-3" do %>
+      <i class="bi bi-arrow-left fs-4"></i>
+    <% end %>
+
+    <div class="text-center mt-2">
+      <div class="d-inline-block bg-warning-subtle text-warning p-3 rounded-circle mb-3">
+        <i class="bi bi-trophy-fill fs-1"></i>
+      </div>
+      <h4 class="fw-bold text-dark mb-1"><%= @challenge.title %></h4>
+      <span class="badge bg-primary rounded-pill px-3 py-2 mb-3">
+        Prêmio: <%= @challenge.reward %>
+      </span>
+    </div>
+
+    <div class="card bg-light border-0 rounded-3 p-3 mb-3">
+      <p class="text-muted small mb-0 text-center">
+        <%= @challenge.description %>
+      </p>
+    </div>
+
+    <div class="row text-center g-2">
+      <div class="col-6">
+        <div class="border rounded-3 p-2">
+          <small class="text-muted d-block">Início</small>
+          <span class="fw-bold text-dark"><%= @challenge.starts_at.strftime("%d/%m") %></span>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="border rounded-3 p-2">
+          <small class="text-muted d-block">Fim</small>
+          <span class="fw-bold text-danger"><%= @challenge.ends_at.strftime("%d/%m") %></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Regras e Progresso -->
+  <div class="px-3 mb-4">
+    <h6 class="fw-bold text-dark mb-3">Metas da Missão</h6>
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body">
+        <% rules = @challenge.rules || {} %>
+        <% progress = @my_participation&.progress || {} %>
+        
+        <% rules.each do |action, target| %>
+          <% current = (progress[action.to_s] || 0).to_i %>
+          <% percent = [(current.to_f / target.to_i * 100), 100].min %>
+          
+          <div class="mb-3 last:mb-0">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="text-muted small fw-bold"><%= action.humanize %></span>
+              <span class="text-primary small fw-bold"><%= current %> / <%= target %></span>
+            </div>
+            <div class="progress" style="height: 8px;">
+              <div class="progress-bar bg-success" role="progressbar" style="width: <%= percent %>%;" aria-valuenow="<%= percent %>" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ranking -->
+  <div class="px-3 pb-5">
+    <h6 class="fw-bold text-dark mb-3 d-flex align-items-center">
+      <i class="bi bi-bar-chart-line-fill text-primary me-2"></i> Ranking da Missão
+    </h6>
+
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+      <div class="list-group list-group-flush">
+        <% if @participants.any? %>
+          <% @participants.each_with_index do |participant, index| %>
+            <div class="list-group-item p-3 d-flex align-items-center border-bottom-0 border-top">
+              <div class="me-3 fw-bold text-muted" style="width: 20px;">
+                <% if index < 3 %>
+                  <i class="bi bi-trophy-fill text-<%= index == 0 ? 'warning' : (index == 1 ? 'secondary' : 'danger') %>"></i>
+                <% else %>
+                  #<%= index + 1 %>
+                <% end %>
+              </div>
+              
+              <div class="flex-grow-1">
+                <div class="fw-bold text-dark <%= 'text-primary' if participant.apoiador == Current.apoiador %>">
+                  <%= participant.apoiador.name %>
+                  <% if participant.apoiador == Current.apoiador %>
+                    <span class="badge bg-primary-subtle text-primary ms-1" style="font-size: 0.6rem;">Você</span>
+                  <% end %>
+                </div>
+                <div class="small text-muted">
+                  <% # Exibe o progresso resumido %>
+                  <% participant.progress.each do |k, v| %>
+                    <span class="me-2"><%= k.humanize %>: <%= v %></span>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="text-center py-4">
+            <p class="text-muted small mb-0">Nenhum participante pontuou ainda.</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

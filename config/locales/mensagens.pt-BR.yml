@@ -52,6 +52,7 @@ pt-BR:
         3 - Minhas Visitas
         4 - Conhecer a IVONE CHAGAS
         5 - Falar com um Lider
+        6 - Ranking e Prêmios 🏆
       solicitar_contato: "Por favor, envie o contato do apoiador que você deseja convidar."
       eventos_hoje_titulo: "Eventos de hoje:\n"
       evento_item: "- %{nome} às %{horario}\n"
@@ -67,6 +68,69 @@ pt-BR:
         E Conheça mais sobre nosso Projeto!
       atendente_contato: "Ok %{nome}! Um Lider entrará em contato com você em breve."
       mensagem_padrao: "Desculpe, não entendi sua mensagem. Por favor, envie 'OLA' para ver o menu de opções."
+      identificacao_contato: "Identifiquei que você enviou um número de contato: %{numero}. Vou verificar as informações."
+      nome_nao_encontrado: "Não consegui encontrar o NOME desse contato! Vou enviar para você um link do APP, crie o convite por lá."
+    gamification:
+      dica_vencedor: |
+        
+        💡 *Dica do Vencedor:*
+        _"%{estrategia}"_
+      missao_concluida: |
+        🏆 *MISSÃO CUMPRIDA!* 🏆
+
+        A missão *%{titulo}* foi completada!
+
+        🥇 Vencedor: *%{vencedor}*
+        🎁 Prêmio: *%{premio}*
+
+        Parabéns ao vencedor! Fiquem ligados para novas missões.
+      vencedor_semanal: |
+        🏆 *PARABÉNS CAMPEÃO DA SEMANA!* 🏆
+
+        Olá *%{nome}*, você foi o maior pontuador da semana com *%{pontos} XP*!
+
+        Queremos saber o seu segredo! 🤫
+        Compartilhe sua estratégia de vitória para inspirar outros apoiadores e aparecer no Hall da Fama.
+
+        👉 Clique aqui para contar sua história: %{link}
+      ranking:
+        intro: |
+          🏆 *HALL DA FAMA IVONE* 🏆
+
+          Confira quem está brilhando no nosso projeto! ✨
+        dia: |
+          🥇 *Destaque do Dia*
+
+          👤 *%{nome}*
+          ⚡ *%{pontos} XP hoje*
+
+          Parabéns pelo esforço diário!
+        semana: |
+          🥈 *Campeão da Semana*
+
+          👤 *%{nome}*
+          🔥 *%{pontos} XP na semana*
+          %{dica}
+        mes: |
+          🥉 *Líder do Mês*
+
+          👤 *%{nome}*
+          📅 *%{pontos} XP no mês*
+
+          Consistência é a chave!
+        geral: |
+          👑 *Lenda do Projeto (Top 1 Geral)*
+
+          👤 *%{nome}*
+          ⭐ *Lvl %{nivel}* - *%{pontos} XP Totais*
+
+          O maior influenciador do nosso time!
+        encerramento: |
+          🚀 *Quer ver seu rosto aqui?*
+
+          Convide amigos, participe dos eventos e cumpra as missões!
+
+          Digite *0* para acessar o App e ver mais detalhes.
     comunicados:
       novo: |
         📢 *Novo Comunicado*

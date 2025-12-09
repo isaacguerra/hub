@@ -1,0 +1,6 @@
+class Gamification::ApoiadorBadge < ApplicationRecord
+  belongs_to :apoiador
+  belongs_to :badge, class_name: "Gamification::Badge"
+
+  validates :apoiador_id, uniqueness: { scope: :badge_id }
+end

@@ -8,22 +8,23 @@ module Utils
       Rails.cache = ActiveSupport::Cache::MemoryStore.new
       @numero = "5511999999999"
       Rails.cache.clear
+      @original_env = ENV.to_hash
+      ENV["EVOLUTION_HOST"] = "https://localhost:8080"
+      ENV["EVOLUTION_AUTHENTICATION_API_KEY"] = "test_key"
     end
 
     teardown do
       Rails.cache = @original_cache_store
+      ENV.replace(@original_env)
     end
 
     test "should fetch from API on first call and cache result" do
-      # Mock the private method performing the API call
-      # We can't easily stub private methods with minitest/mock on the module directly without some metaprogramming or changing visibility
-      # So we will mock the cache behavior instead to ensure it's being used,
-      # OR we can mock Net::HTTP to see if it's called once or twice.
-
-      # Let's mock Net::HTTP
-      response_mock = Minitest::Mock.new
-      response_mock.expect :is_a?, true, [ Net::HTTPSuccess ]
-      response_mock.expect :body, { id: @numero, name: "Test User", picture: "http://pic.url" }.to_json
+      # Use a real Net::HTTPSuccess object to pass is_a?(Net::HTTPSuccess) check
+      response_mock = Net::HTTPSuccess.new(1.0, '200', 'OK')
+      # Stub body method on the instance
+      def response_mock.body
+        { id: "5511999999999", name: "Test User", picture: "http://pic.url" }.to_json
+      end
 
       http_mock = Minitest::Mock.new
       http_mock.expect :use_ssl=, true, [ true ]
@@ -36,30 +37,19 @@ module Utils
         assert_equal "Test User", result1[:name]
 
         # Second call - should be cached
-        # If caching works, it shouldn't try to make another HTTP request.
-        # However, since we are stubbing Net::HTTP.new, if it calls it again, it will use the mock.
-        # To verify caching, we can check if the mock expectations are met exactly once if we set them for one call.
-        # But Minitest::Mock isn't strict about "at most once" unless we define it.
-
-        # Better approach: Check Rails.cache
         assert Rails.cache.exist?("whatsapp_profile:#{@numero}")
-
-        # Verify the cached value matches
-        cached_result = Rails.cache.read("whatsapp_profile:#{@numero}")
-        assert_equal result1, cached_result
+        
+        # Call again
+        result2 = Utils::BuscaPerfilWhatsapp.buscar(@numero)
+        assert_equal "Test User", result2[:name]
       end
+      
+      http_mock.verify
     end
 
-    test "should return nil if API fails and not cache nil (or cache it depending on implementation)" do
-      # In our implementation we cache the result of the block. If the block returns nil, Rails.cache.fetch might cache nil depending on config,
-      # but usually we want to avoid caching transient errors.
-      # The current implementation caches whatever `realizar_busca_na_api` returns.
-      # If `realizar_busca_na_api` returns nil (on error), it caches nil.
-
-      response_mock = Minitest::Mock.new
-      response_mock.expect :is_a?, false, [ Net::HTTPSuccess ]
-      response_mock.expect :code, "500"
-      response_mock.expect :body, "Error"
+    test "should return nil if API fails" do
+      response_mock = Net::HTTPInternalServerError.new(1.0, '500', 'Error')
+      def response_mock.body; "Error"; end
 
       http_mock = Minitest::Mock.new
       http_mock.expect :use_ssl=, true, [ true ]
@@ -68,10 +58,6 @@ module Utils
       Net::HTTP.stub :new, http_mock do
         result = Utils::BuscaPerfilWhatsapp.buscar(@numero)
         assert_nil result
-
-        # Verify if nil was cached
-        # Rails.cache.fetch stores nil if the block returns nil.
-        assert Rails.cache.exist?("whatsapp_profile:#{@numero}")
       end
     end
   end

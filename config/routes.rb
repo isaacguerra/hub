@@ -9,10 +9,6 @@ Rails.application.routes.draw do
     end
     namespace :chatbot do
       post "webhook", to: "webhook#receive"
-      resources :apoiadores, only: [ :create ]
-      resources :convites, only: [ :create, :index ]
-      resources :eventos, only: [ :index ]
-      resources :visitas, only: [ :index ]
     end
   end
 
@@ -32,6 +28,12 @@ Rails.application.routes.draw do
     resources :visitas
     resource :perfil, only: [ :show ], controller: "perfil"
     get "estatisticas", to: "estatisticas#index"
+    
+    resources :gamification, only: [:index, :show], controller: "gamification"
+    
+    namespace :gamification do
+      resource :strategy, only: [:edit, :update], controller: "strategies"
+    end
 
     resources :municipios do
       resources :regioes do
@@ -68,6 +70,15 @@ Rails.application.routes.draw do
   resources :municipios do
     resources :regioes do
       resources :bairros
+    end
+  end
+
+  # Gamification Admin Routes
+  namespace :gamification do
+    resources :challenges
+    resources :badges, only: [:index, :edit, :update]
+    resources :points, only: [:index] do
+      post :adjust, on: :collection
     end
   end
 

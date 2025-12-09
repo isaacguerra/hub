@@ -18,9 +18,33 @@ class Convite < ApplicationRecord
   # Callbacks
   before_validation :normalizar_whatsapp
   after_create :notificar_novo_convite
+  after_create :pontuar_criacao
   after_update :notificar_mudanca_status, if: :saved_change_to_status?
+  after_update :pontuar_aceite, if: :saved_change_to_status?
 
   private
+
+  def pontuar_criacao
+    Gamification::PointsService.award_points(
+      apoiador: enviado_por,
+      action_type: "convite_sent",
+      resource: self
+    )
+  rescue StandardError => e
+    Rails.logger.error "Erro ao pontuar criação de convite #{id}: #{e.message}"
+  end
+
+  def pontuar_aceite
+    return unless status == "aceito"
+
+    Gamification::PointsService.award_points(
+      apoiador: enviado_por,
+      action_type: "convite_accepted",
+      resource: self
+    )
+  rescue StandardError => e
+    Rails.logger.error "Erro ao pontuar aceite de convite #{id}: #{e.message}"
+  end
 
   def normalizar_whatsapp
     self.whatsapp = Utils::NormalizaNumeroWhatsapp.format(whatsapp)

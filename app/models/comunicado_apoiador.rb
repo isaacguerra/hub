@@ -12,8 +12,30 @@ class ComunicadoApoiador < ApplicationRecord
   # Callbacks
   after_create :notificar_apoiador
   after_update :disparar_notificacoes_engajamento, if: -> { saved_change_to_engajado? && engajado? }
+  after_update :pontuar_recebimento, if: -> { saved_change_to_recebido? && recebido? }
+  after_update :pontuar_engajamento, if: -> { saved_change_to_engajado? && engajado? }
 
   private
+
+  def pontuar_recebimento
+    Gamification::PointsService.award_points(
+      apoiador: apoiador,
+      action_type: "comunicado_received",
+      resource: self
+    )
+  rescue StandardError => e
+    Rails.logger.error "Erro ao pontuar recebimento de comunicado #{id}: #{e.message}"
+  end
+
+  def pontuar_engajamento
+    Gamification::PointsService.award_points(
+      apoiador: apoiador,
+      action_type: "comunicado_engaged",
+      resource: self
+    )
+  rescue StandardError => e
+    Rails.logger.error "Erro ao pontuar engajamento de comunicado #{id}: #{e.message}"
+  end
 
   def notificar_apoiador
     Mensageria::Notificacoes::Comunicados.enviar_para_apoiador(comunicado, apoiador)

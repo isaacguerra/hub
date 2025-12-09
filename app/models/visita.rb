@@ -33,9 +33,20 @@ class Visita < ApplicationRecord
 
   # Callbacks
   after_create :notificar_nova_visita
+  after_create :pontuar_criacao
   after_update :notificar_atualizacao_visita, if: :saved_change_to_status?
 
   private
+
+  def pontuar_criacao
+    Gamification::PointsService.award_points(
+      apoiador: lider,
+      action_type: "visit_created",
+      resource: self
+    )
+  rescue StandardError => e
+    Rails.logger.error "Erro ao pontuar criação de visita #{id}: #{e.message}"
+  end
 
   def notificar_nova_visita
     Mensageria::Notificacoes::Visitas.notificar_nova_visita(self)

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: "Active Challenge"
+  description: "This is an active challenge"
+  starts_at: <%= 1.day.ago %>
+  ends_at: <%= 1.day.from_now %>
+  rules: {}
+  reward: 100
+
+two:
+  title: "Expired Challenge"
+  description: "This challenge has expired"
+  starts_at: <%= 10.days.ago %>
+  ends_at: <%= 5.days.ago %>
+  rules: {}
+  reward: 50 

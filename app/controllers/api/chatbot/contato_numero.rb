@@ -27,7 +27,7 @@ module Api
           # Validações de duplicidade
           return if contact_already_registered?(apoiador, numero_valido)
 
-          mensagem = "Identifiquei que voce enviou um numero de contato: #{numero_valido}. Vou verificar as informacoes."
+          mensagem = I18n.t('mensagens.chatbot.identificacao_contato', numero: numero_valido)
           enviar_resposta(apoiador, mensagem)
 
           create_invite(apoiador, numero_valido)
@@ -87,7 +87,7 @@ module Api
             end
           else
             # Mantendo a regra de negócio original: se não achar nome, pede para criar manualmente
-            mensagem = "Não consegui encontrar o NOME desse contato! Vou enviar para voce um link do APP crie o convite por lá."
+            mensagem = I18n.t('mensagens.chatbot.nome_nao_encontrado')
             enviar_resposta(apoiador, mensagem)
             apoiador.gerar_codigo_acesso!(enviar_whatsapp: false)
             Mensageria::Notificacoes::Autenticacao.enviar_link_magico(apoiador)

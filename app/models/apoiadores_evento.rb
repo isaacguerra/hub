@@ -10,8 +10,19 @@ class ApoiadoresEvento < ApplicationRecord
 
   # Callbacks
   after_create :notificar_participacao
+  after_create :pontuar_participacao
 
   private
+
+  def pontuar_participacao
+    Gamification::PointsService.award_points(
+      apoiador: apoiador,
+      action_type: "event_participation",
+      resource: self
+    )
+  rescue StandardError => e
+    Rails.logger.error "Erro ao pontuar participação em evento #{id}: #{e.message}"
+  end
 
   def notificar_participacao
     Mensageria::Notificacoes::Eventos.notificar_participacao_confirmada(self)

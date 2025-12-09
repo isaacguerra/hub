@@ -41,6 +41,14 @@ class Apoiador < ApplicationRecord
   has_many :eventos_coordenados, class_name: "Evento", foreign_key: "coordenador_id", dependent: :destroy
   has_many :comunicados_enviados, class_name: "Comunicado", foreign_key: "lider_id", dependent: :destroy
 
+  # Gamification
+  has_one :gamification_point, class_name: "Gamification::Point", dependent: :destroy
+  has_many :gamification_action_logs, class_name: "Gamification::ActionLog", dependent: :destroy
+  has_many :gamification_apoiador_badges, class_name: "Gamification::ApoiadorBadge", dependent: :destroy
+  has_many :gamification_badges, through: :gamification_apoiador_badges, source: :badge
+  has_many :gamification_challenge_participants, class_name: "Gamification::ChallengeParticipant", dependent: :destroy
+  has_many :gamification_challenges, through: :gamification_challenge_participants, source: :challenge
+
   validates :name, :whatsapp, presence: true
   validates :municipio, :regiao, :bairro, :funcao, presence: true
 

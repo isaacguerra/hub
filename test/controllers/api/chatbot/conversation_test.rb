@@ -79,6 +79,23 @@ module Api
         assert called
       end
 
+      test "should send ranking for 6" do
+        # Mock Gamification::RankingService to return some data
+        daily_winner = { apoiador: @apoiador, points: 50 }
+        
+        Gamification::RankingService.stub :winner, daily_winner do
+          # We expect multiple messages to be sent.
+          called_count = 0
+          Mensageria::Notificacoes::Chatbot.stub :enviar_mensagem, ->(apoiador, mensagem, **kwargs) {
+            called_count += 1
+          } do
+            Api::Chatbot::Conversation.process(@apoiador, { "text" => "6" })
+          end
+          
+          assert called_count >= 1
+        end
+      end
+
       test "should send default message for unknown option" do
         called = false
         # Since unknown options are delegated to ContatoNumero which uses SendWhatsappJob directly

@@ -55,6 +55,8 @@ module Api
             enviar_informacoes_ivone(apoiador)
           when "5"
             informar_atendente_entrara_em_contato(apoiador)
+          when "6"
+            enviar_ranking_gamificacao(apoiador)
           else
             # Tenta processar como número de contato (ou envia mensagem padrão)
             Api::Chatbot::ContatoNumero.process(apoiador, message)
@@ -124,6 +126,51 @@ module Api
 
           Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, mensagem)
         end
+
+        def enviar_ranking_gamificacao(apoiador)
+          # 1. Introdução
+          Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, I18n.t('mensagens.gamification.ranking.intro'))
+
+          # 2. Campeão do Dia
+          daily_winner = Gamification::RankingService.winner(period: :daily)
+          if daily_winner
+            msg = I18n.t('mensagens.gamification.ranking.dia', nome: daily_winner[:apoiador].name, pontos: daily_winner[:points])
+            img = Utils::BuscaImagemWhatsapp.buscar(daily_winner[:apoiador].whatsapp)
+            Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, msg, imagem: img)
+          end
+
+          # 3. Campeão da Semana
+          weekly_winner = Gamification::RankingService.winner(period: :weekly)
+          if weekly_winner
+            # Busca estratégia se houver
+            strategy_record = Gamification::WeeklyWinner.where(apoiador: weekly_winner[:apoiador]).order(week_end_date: :desc).first
+            dica = strategy_record&.winning_strategy.present? ? I18n.t('mensagens.gamification.dica_vencedor', estrategia: strategy_record.winning_strategy) : ""
+
+            msg = I18n.t('mensagens.gamification.ranking.semana', nome: weekly_winner[:apoiador].name, pontos: weekly_winner[:points], dica: dica)
+            img = Utils::BuscaImagemWhatsapp.buscar(weekly_winner[:apoiador].whatsapp)
+            Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, msg, imagem: img)
+          end
+
+          # 4. Campeão do Mês
+          monthly_winner = Gamification::RankingService.winner(period: :monthly)
+          if monthly_winner
+            msg = I18n.t('mensagens.gamification.ranking.mes', nome: monthly_winner[:apoiador].name, pontos: monthly_winner[:points])
+            img = Utils::BuscaImagemWhatsapp.buscar(monthly_winner[:apoiador].whatsapp)
+            Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, msg, imagem: img)
+          end
+
+          # 5. Top 1 Geral (Ouro)
+          gold_champion = Gamification::Point.includes(:apoiador).order(points: :desc).first
+          if gold_champion
+            msg = I18n.t('mensagens.gamification.ranking.geral', nome: gold_champion.apoiador.name, nivel: gold_champion.level, pontos: gold_champion.points)
+            img = Utils::BuscaImagemWhatsapp.buscar(gold_champion.apoiador.whatsapp)
+            Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, msg, imagem: img)
+          end
+
+          # 6. Encerramento
+          Mensageria::Notificacoes::Chatbot.enviar_mensagem(apoiador, I18n.t('mensagens.gamification.ranking.encerramento'))
+        end
+
         def enviar_mensagem_padrao(apoiador)
           mensagem = I18n.t("mensagens.chatbot.mensagem_padrao")
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_06_210809) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_09_132224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -130,6 +130,88 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_06_210809) do
     t.index ["name"], name: "index_funcoes_on_name", unique: true
   end
 
+  create_table "gamification_action_logs", force: :cascade do |t|
+    t.string "action_type", null: false
+    t.bigint "apoiador_id", null: false
+    t.datetime "created_at", null: false
+    t.jsonb "metadata", default: {}
+    t.integer "points_awarded", default: 0
+    t.bigint "resource_id"
+    t.string "resource_type"
+    t.datetime "updated_at", null: false
+    t.index ["apoiador_id", "action_type"], name: "index_gamification_action_logs_on_apoiador_id_and_action_type"
+    t.index ["apoiador_id"], name: "index_gamification_action_logs_on_apoiador_id"
+    t.index ["resource_type", "resource_id"], name: "index_gamification_action_logs_on_resource"
+  end
+
+  create_table "gamification_apoiador_badges", force: :cascade do |t|
+    t.bigint "apoiador_id", null: false
+    t.datetime "awarded_at"
+    t.bigint "badge_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["apoiador_id", "badge_id"], name: "index_gamification_apoiador_badges_on_apoiador_id_and_badge_id", unique: true
+    t.index ["apoiador_id"], name: "index_gamification_apoiador_badges_on_apoiador_id"
+    t.index ["badge_id"], name: "index_gamification_apoiador_badges_on_badge_id"
+  end
+
+  create_table "gamification_badges", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.jsonb "criteria", default: {}
+    t.text "description"
+    t.string "image_url"
+    t.string "key", null: false
+    t.string "name", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_gamification_badges_on_key", unique: true
+  end
+
+  create_table "gamification_challenge_participants", force: :cascade do |t|
+    t.bigint "apoiador_id", null: false
+    t.bigint "challenge_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "points", default: 0
+    t.jsonb "progress", default: {}
+    t.datetime "updated_at", null: false
+    t.index ["apoiador_id"], name: "index_gamification_challenge_participants_on_apoiador_id"
+    t.index ["challenge_id", "apoiador_id"], name: "idx_on_challenge_id_apoiador_id_6dd107188a", unique: true
+    t.index ["challenge_id"], name: "index_gamification_challenge_participants_on_challenge_id"
+  end
+
+  create_table "gamification_challenges", force: :cascade do |t|
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.datetime "ends_at"
+    t.string "reward"
+    t.jsonb "rules"
+    t.datetime "starts_at"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.bigint "winner_id"
+    t.index ["winner_id"], name: "index_gamification_challenges_on_winner_id"
+  end
+
+  create_table "gamification_points", force: :cascade do |t|
+    t.bigint "apoiador_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "level", default: 1, null: false
+    t.integer "points", default: 0, null: false
+    t.datetime "updated_at", null: false
+    t.index ["apoiador_id"], name: "index_gamification_points_on_apoiador_id", unique: true
+  end
+
+  create_table "gamification_weekly_winners", force: :cascade do |t|
+    t.bigint "apoiador_id", null: false
+    t.datetime "created_at", null: false
+    t.integer "points_total"
+    t.datetime "updated_at", null: false
+    t.date "week_end_date"
+    t.date "week_start_date"
+    t.text "winning_strategy"
+    t.index ["apoiador_id"], name: "index_gamification_weekly_winners_on_apoiador_id"
+  end
+
   create_table "linkpaineis", force: :cascade do |t|
     t.bigint "apoiador_id", null: false
     t.datetime "created_at", null: false
@@ -197,6 +279,14 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_06_210809) do
   add_foreign_key "eventos", "funcoes", column: "filtro_funcao_id"
   add_foreign_key "eventos", "municipios", column: "filtro_municipio_id"
   add_foreign_key "eventos", "regioes", column: "filtro_regiao_id"
+  add_foreign_key "gamification_action_logs", "apoiadores"
+  add_foreign_key "gamification_apoiador_badges", "apoiadores"
+  add_foreign_key "gamification_apoiador_badges", "gamification_badges", column: "badge_id"
+  add_foreign_key "gamification_challenge_participants", "apoiadores"
+  add_foreign_key "gamification_challenge_participants", "gamification_challenges", column: "challenge_id"
+  add_foreign_key "gamification_challenges", "apoiadores", column: "winner_id"
+  add_foreign_key "gamification_points", "apoiadores"
+  add_foreign_key "gamification_weekly_winners", "apoiadores"
   add_foreign_key "linkpaineis", "apoiadores"
   add_foreign_key "regioes", "apoiadores", column: "coordenador_id"
   add_foreign_key "regioes", "municipios"

@@ -18,7 +18,8 @@ module ActiveSupport
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     # fixtures :all
-    fixtures :municipios, :regioes, :bairros, :funcoes, :apoiadores, :convites, :visitas, :eventos, :comunicados
+    fixtures :municipios, :regioes, :bairros, :funcoes, :apoiadores, :convites, :visitas, :eventos, :comunicados,
+             "gamification/challenges", "gamification/points", "gamification/badges"
 
     # Add more helper methods to be used by all tests here...
   end

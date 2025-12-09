@@ -1,0 +1,42 @@
+<div class="container-fluid p-0 bg-light min-vh-100">
+  <div class="bg-warning p-4 shadow-sm mb-4 text-center">
+    <div class="bg-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3 shadow-sm" style="width: 80px; height: 80px;">
+      <i class="bi bi-lightbulb-fill text-warning fs-1"></i>
+    </div>
+    <h4 class="fw-bold text-dark mb-1">Compartilhe sua Estratégia!</h4>
+    <p class="text-dark opacity-75 small mb-0">
+      Você foi o campeão da semana com <%= @weekly_winner.points_total %> XP. Conte para nós como você conseguiu!
+    </p>
+  </div>
+
+  <div class="px-3">
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-4">
+        <%= form_with(model: @weekly_winner, url: mobile_gamification_strategy_path(@weekly_winner), method: :patch, local: true) do |f| %>
+          <% if @weekly_winner.errors.any? %>
+            <div class="alert alert-danger">
+              <ul class="mb-0 ps-3">
+                <% @weekly_winner.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="mb-4">
+            <%= f.label :winning_strategy, "Qual foi o seu segredo?", class: "form-label fw-bold text-dark" %>
+            <%= f.text_area :winning_strategy, rows: 6, class: "form-control bg-light border-0", placeholder: "Ex: Foquei em convidar amigos do trabalho e compartilhei o link nos grupos da família..." %>
+            <div class="form-text text-muted small mt-2">
+              Sua dica poderá aparecer no Hall da Fama para inspirar outros apoiadores.
+            </div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <%= f.submit "Salvar e Compartilhar", class: "btn btn-primary btn-lg rounded-pill fw-bold shadow-sm" %>
+            <%= link_to "Agora não", mobile_dashboard_path, class: "btn btn-link text-muted text-decoration-none" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
