@@ -1,7 +1,7 @@
 module Mobile
   class EstatisticasController < BaseController
     def index
-      @total_apoiadores = if Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+      @total_apoiadores = if Current.apoiador.e_autorizado?(:admin)
         Apoiador.count
       elsif Current.apoiador.lider?
         Current.apoiador.subordinados.count

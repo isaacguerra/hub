@@ -31,7 +31,7 @@ module Mobile
     private
 
     def scope_apoiadores
-      if Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+      if Current.apoiador.e_autorizado?(:admin)
         Apoiador.all
       elsif Current.apoiador.coordenador_municipal?
         Apoiador.where(municipio_id: Current.apoiador.municipio_id)
@@ -54,7 +54,7 @@ module Mobile
 
     def apoiador_params
       permitted = [ :nome, :email, :whatsapp, :nascimento, :cep, :endereco, :numero, :complemento, :bairro_id, :municipio_id ]
-      permitted << :funcao_id if Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+      permitted << :funcao_id if Current.apoiador.e_autorizado?(:admin)
       params.require(:apoiador).permit(permitted)
     end
 

@@ -70,7 +70,7 @@ class MunicipiosController < ApplicationController
     end
 
     def authorize_admin!
-      unless Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+      unless Current.apoiador.e_autorizado?(:admin)
         redirect_to root_path, alert: "Acesso não autorizado."
       end
     end

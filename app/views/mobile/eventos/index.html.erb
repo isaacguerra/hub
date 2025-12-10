@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
   <h5 class="fw-bold mb-0">Eventos</h5>
-  <% if Current.apoiador.pode_coordenar? || Current.apoiador.lider? %>
+  <% if Current.apoiador.e_autorizado?(:criar_evento) %>
     <%= link_to new_mobile_evento_path, class: "btn btn-sm btn-primary rounded-pill px-3" do %>
       <i class="bi bi-plus-lg me-1"></i> Novo
     <% end %>
@@ -37,7 +37,7 @@
             <i class="bi bi-person-fill me-1"></i> Org: <%= evento.coordenador&.nome&.split&.first %>
           </small>
           
-          <% can_manage = Current.apoiador.candidato? || Current.apoiador.coordenador_geral? || evento.coordenador_id == Current.apoiador.id %>
+          <% can_manage = Current.apoiador.e_autorizado?(:gerenciar_evento, evento) %>
           
           <% if can_manage %>
             <div class="dropdown" onclick="event.preventDefault(); event.stopPropagation();">

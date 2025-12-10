@@ -20,8 +20,7 @@ class ConvitesPublicosController < ApplicationController
     @apoiador.lider_id = @convite.enviado_por_id
 
     # Define função padrão "Apoiador"
-    funcao_apoiador = Funcao.find_by(name: "Apoiador") || Funcao.first
-    @apoiador.funcao = funcao_apoiador
+    @apoiador.funcao_id = Funcao::APOIADOR_ID
 
     if @apoiador.save
       @convite.update(status: "aceito")

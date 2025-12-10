@@ -2,7 +2,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h1 class="h3 text-primary-custom fw-bold"><i class="bi bi-calendar-check-fill me-2"></i>Visitas</h1>
-  <% if Current.apoiador.pode_coordenar? || Current.apoiador.lider? %>
+  <% if Current.apoiador.e_autorizado?(:criar_visita) %>
     <%= link_to new_visita_path, class: "btn btn-primary-custom text-white shadow-sm" do %>
       <i class="bi bi-plus-lg me-2"></i>Nova Visita
     <% end %>
@@ -60,7 +60,7 @@
                     <i class="bi bi-eye"></i>
                   <% end %>
                   
-                  <% if Current.apoiador.candidato? || Current.apoiador.coordenador_geral? || visita.lider_id == Current.apoiador.id %>
+                  <% if Current.apoiador.e_autorizado?(:gerenciar_visita, visita) %>
                     <%= link_to edit_visita_path(visita), class: "btn btn-sm btn-outline-primary", title: "Editar" do %>
                       <i class="bi bi-pencil"></i>
                     <% end %>

@@ -90,7 +90,7 @@
 <% end %>
 
 <!-- Ações do Evento (se for o organizador) -->
-<% if Current.apoiador == @evento.coordenador || Current.apoiador.pode_coordenar? %>
+<% if Current.apoiador.e_autorizado?(:gerenciar_evento, @evento) %>
   <div class="d-grid gap-2 mt-4 mb-4">
     <%= link_to edit_mobile_evento_path(@evento), class: "btn btn-outline-primary" do %>
       <i class="bi bi-pencil me-2"></i>Editar Evento

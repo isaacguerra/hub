@@ -57,17 +57,13 @@ module Mobile
     end
 
     def authorize_create
-      unless Current.apoiador.pode_coordenar? || Current.apoiador.lider?
+      unless Current.apoiador.e_autorizado?(:criar_comunicado)
         redirect_to mobile_comunicados_path, alert: "Você não tem permissão para criar comunicados."
       end
     end
 
     def authorize_manage
-      can_manage = Current.apoiador.candidato? ||
-                   Current.apoiador.coordenador_geral? ||
-                   @comunicado.lider_id == Current.apoiador.id
-
-      unless can_manage
+      unless Current.apoiador.e_autorizado?(:gerenciar_comunicado, @comunicado)
         redirect_to mobile_comunicados_path, alert: "Você não tem permissão para gerenciar este comunicado."
       end
     end

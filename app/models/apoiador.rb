@@ -17,6 +17,7 @@ Ao Mudar a funcao de um Apoiador devemos gravar uma mensagem no channel mensager
 
 class Apoiador < ApplicationRecord
   include RedeApoiadores
+  include Autorizavel
 
   belongs_to :municipio
   belongs_to :regiao
@@ -91,43 +92,42 @@ class Apoiador < ApplicationRecord
 
   # Verifica se é candidato
   def candidato?
-    funcao&.name == "Candidato"
+    funcao_id == Funcao::CANDIDATO_ID
   end
 
   # Verifica se é coordenador geral
   def coordenador_geral?
-    funcao&.name == "Coordenador Geral"
+    funcao_id == Funcao::COORDENADOR_GERAL_ID
   end
 
   # Verifica se é coordenador de município
   def coordenador_municipal?
-    funcao&.name == "Coordenador de Município"
+    funcao_id == Funcao::COORDENADOR_MUNICIPAL_ID
   end
 
   # Verifica se é coordenador de região
   def coordenador_regional?
-    funcao&.name == "Coordenador de Região"
+    funcao_id == Funcao::COORDENADOR_REGIONAL_ID
   end
 
   # Verifica se é coordenador de bairro
   def coordenador_bairro?
-    funcao&.name == "Coordenador de Bairro"
+    funcao_id == Funcao::COORDENADOR_BAIRRO_ID
   end
 
   # Verifica se é líder
   def lider?
-    funcao&.name == "Líder"
+    funcao_id == Funcao::LIDER_ID
   end
 
   # Verifica se é apoiador (função base)
   def apoiador_base?
-    funcao&.name == "Apoiador"
+    funcao_id == Funcao::APOIADOR_ID
   end
 
   # Verifica se tem permissão para coordenar (qualquer tipo de coordenador ou superior)
   def pode_coordenar?
-    candidato? || coordenador_geral? || coordenador_municipal? ||
-    coordenador_regional? || coordenador_bairro?
+    e_autorizado?(:coordenar)
   end
 
   # Gera um código de 6 dígitos, salva e envia via WhatsApp
@@ -182,17 +182,12 @@ class Apoiador < ApplicationRecord
 
   def verificar_promocao_lider
     # Verifica se deve ser promovido automaticamente a Líder
-    funcao_apoiador_id = Funcao.find_by(name: "Apoiador")&.id
-    funcao_lider_id = Funcao.find_by(name: "Líder")&.id
-
-    return unless funcao_apoiador_id && funcao_lider_id
-    return unless funcao_id == funcao_apoiador_id
+    return unless funcao_id == Funcao::APOIADOR_ID
     return unless total_subordinados_diretos >= 25
 
-    update_column(:funcao_id, funcao_lider_id)
+    update_column(:funcao_id, Funcao::LIDER_ID)
     Rails.logger.info "Apoiador #{id} promovido automaticamente a Líder"
   end
-
   def atualizar_promocao_lider_superior
     # Quando um apoiador ganha/perde subordinados, verifica se o líder deve ser promovido
     return unless lider_id.present?

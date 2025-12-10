@@ -77,17 +77,13 @@ class EventosController < ApplicationController
     end
 
     def authorize_create
-      unless Current.apoiador.pode_coordenar? || Current.apoiador.lider?
+      unless Current.apoiador.e_autorizado?(:criar_evento)
         redirect_to eventos_path, alert: "Você não tem permissão para criar eventos."
       end
     end
 
     def authorize_manage
-      can_manage = Current.apoiador.candidato? ||
-                   Current.apoiador.coordenador_geral? ||
-                   @evento.coordenador_id == Current.apoiador.id
-
-      unless can_manage
+      unless Current.apoiador.e_autorizado?(:gerenciar_evento, @evento)
         redirect_to eventos_path, alert: "Você não tem permissão para gerenciar este evento."
       end
     end

@@ -43,7 +43,7 @@ module Mobile
     private
 
     def scope_convites
-      if Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+      if Current.apoiador.e_autorizado?(:admin)
         Convite.all
       elsif Current.apoiador.coordenador_municipal?
         Convite.joins(:enviado_por).where(apoiadores: { municipio_id: Current.apoiador.municipio_id })
@@ -76,7 +76,7 @@ module Mobile
     # end
 
     def authorize_manage
-      unless Current.apoiador.candidato? || Current.apoiador.coordenador_geral?
+      unless Current.apoiador.e_autorizado?(:admin)
         redirect_to mobile_convites_path, alert: "Sem permissão para gerenciar convites."
       end
     end

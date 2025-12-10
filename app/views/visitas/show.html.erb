@@ -10,7 +10,7 @@
         <h1 class="h3 text-primary-custom fw-bold mb-0">Detalhes da Visita</h1>
       </div>
       
-      <% if Current.apoiador.candidato? || Current.apoiador.coordenador_geral? || @visita.lider_id == Current.apoiador.id %>
+      <% if Current.apoiador.e_autorizado?(:gerenciar_visita, @visita) %>
         <div class="btn-group">
           <%= link_to edit_visita_path(@visita), class: "btn btn-outline-primary" do %>
             <i class="bi bi-pencil me-2"></i>Editar

@@ -22,7 +22,7 @@ class Comunicado < ApplicationRecord
   def lider_pode_criar_comunicado
     return if lider.blank?
 
-    unless lider.pode_coordenar? || lider.lider?
+    unless lider.e_autorizado?(:criar_comunicado)
       errors.add(:lider, "deve ser Coordenador ou Líder para criar comunicados")
     end
   end

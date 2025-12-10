@@ -59,7 +59,7 @@ class Evento < ApplicationRecord
   def coordenador_pode_criar_evento
     return if coordenador.blank?
 
-    unless coordenador.pode_coordenar? || coordenador.lider?
+    unless coordenador.e_autorizado?(:criar_evento)
       errors.add(:coordenador, 'deve ser Coordenador ou Líder para criar eventos')
     end
   end

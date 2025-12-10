@@ -1,18 +1,20 @@
 puts "Iniciando o seed..."
 
 # 1. Criar Funções
-funcoes = [
-  'Candidato',
-  'Coordenador Geral',
-  'Coordenador de Região',
-  'Coordenador de Município',
-  'Coordenador de Bairro',
-  'Líder',
-  'Apoiador'
-]
+funcoes = {
+  Funcao::CANDIDATO_ID => 'Candidato',
+  Funcao::COORDENADOR_GERAL_ID => 'Coordenador Geral',
+  Funcao::COORDENADOR_REGIONAL_ID => 'Coordenador de Região',
+  Funcao::COORDENADOR_MUNICIPAL_ID => 'Coordenador de Município',
+  Funcao::COORDENADOR_BAIRRO_ID => 'Coordenador de Bairro',
+  Funcao::LIDER_ID => 'Líder',
+  Funcao::APOIADOR_ID => 'Apoiador'
+}
 
-funcoes.each do |nome_funcao|
-  Funcao.find_or_create_by!(name: nome_funcao)
+funcoes.each do |id, nome|
+  f = Funcao.find_or_initialize_by(id: id)
+  f.name = nome
+  f.save!
 end
 puts "Funções criadas."
 
@@ -70,7 +72,7 @@ end
 puts "Municípios, Regiões e Bairros criados."
 
 # 3. Criar Apoiador Padrão (Isaac Guerra)
-funcao_candidato = Funcao.find_by(name: 'Candidato')
+funcao_candidato = Funcao.find(Funcao::CANDIDATO_ID)
 municipio_macapa = Municipio.find_by(name: 'Macapá')
 regiao_centro = Regiao.find_by(name: 'Centro', municipio: municipio_macapa)
 bairro_central = Bairro.find_by(name: 'Central', regiao: regiao_centro)
@@ -90,7 +92,7 @@ else
 end
 
 # 3. Criar Apoiador Padrão (Isaac Guerra)
-funcao_candidato = Funcao.find_by(name: 'Coordenador Geral')
+funcao_candidato = Funcao.find(Funcao::COORDENADOR_GERAL_ID)
 municipio_macapa = Municipio.find_by(name: 'Macapá')
 regiao_centro = Regiao.find_by(name: 'Norte', municipio: municipio_macapa)
 bairro_central = Bairro.find_by(name: 'Jesus de Nazaré', regiao: regiao_centro)

@@ -73,7 +73,7 @@
 <% end %>
 
 <!-- Ações (se for o criador) -->
-<% if Current.apoiador == @comunicado.lider || Current.apoiador.pode_coordenar? %>
+<% if Current.apoiador.e_autorizado?(:gerenciar_comunicado, @comunicado) %>
   <div class="d-grid gap-2 mt-4 mb-4">
     <%= link_to edit_mobile_comunicado_path(@comunicado), class: "btn btn-outline-primary" do %>
       <i class="bi bi-pencil me-2"></i>Editar Comunicado

@@ -7,12 +7,12 @@ module RedeApoiadores
     # Coordenadores de Regiao, Coordenadores de Bairro.
     def coordenadores
       # Busca coordenadores globais
-      globais = Apoiador.joins(:funcao).where(funcoes: { name: [ "Candidato", "Coordenador Geral" ] })
+      globais = Apoiador.where(funcao_id: [Funcao::CANDIDATO_ID, Funcao::COORDENADOR_GERAL_ID])
 
       # Busca coordenadores por localidade
-      municipais = municipio_id ? Apoiador.joins(:funcao).where(funcoes: { name: "Coordenador de Município" }, municipio_id: municipio_id) : Apoiador.none
-      regionais = regiao_id ? Apoiador.joins(:funcao).where(funcoes: { name: "Coordenador de Região" }, regiao_id: regiao_id) : Apoiador.none
-      bairros = bairro_id ? Apoiador.joins(:funcao).where(funcoes: { name: "Coordenador de Bairro" }, bairro_id: bairro_id) : Apoiador.none
+      municipais = municipio_id ? Apoiador.where(funcao_id: Funcao::COORDENADOR_MUNICIPAL_ID, municipio_id: municipio_id) : Apoiador.none
+      regionais = regiao_id ? Apoiador.where(funcao_id: Funcao::COORDENADOR_REGIONAL_ID, regiao_id: regiao_id) : Apoiador.none
+      bairros = bairro_id ? Apoiador.where(funcao_id: Funcao::COORDENADOR_BAIRRO_ID, bairro_id: bairro_id) : Apoiador.none
 
       # Une, remove duplicidades e o próprio apoiador
       (globais + municipais + regionais + bairros).uniq.reject { |c| c.id == id }
@@ -20,16 +20,14 @@ module RedeApoiadores
 
     # Retorna os liderados baseados na função do apoiador
     def liderados
-      funcao_nome = funcao&.name
-
-      case funcao_nome
-      when "Candidato", "Coordenador Geral"
+      case funcao_id
+      when Funcao::CANDIDATO_ID, Funcao::COORDENADOR_GERAL_ID
         Apoiador.where.not(id: id)
-      when "Coordenador de Município"
+      when Funcao::COORDENADOR_MUNICIPAL_ID
         municipio_id ? Apoiador.where(municipio_id: municipio_id).where.not(id: id) : Apoiador.none
-      when "Coordenador de Região"
+      when Funcao::COORDENADOR_REGIONAL_ID
         regiao_id ? Apoiador.where(regiao_id: regiao_id).where.not(id: id) : Apoiador.none
-      when "Coordenador de Bairro"
+      when Funcao::COORDENADOR_BAIRRO_ID
         bairro_id ? Apoiador.where(bairro_id: bairro_id).where.not(id: id) : Apoiador.none
       else
         # Para Líder e Apoiador, busca recursivamente

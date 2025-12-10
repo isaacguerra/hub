@@ -8,4 +8,13 @@ class Funcao < ApplicationRecord
   alias_attribute :nome, :name
 
   validates :name, presence: true
+
+  # IDs fixos conforme regra de negócio
+  CANDIDATO_ID = 1
+  COORDENADOR_GERAL_ID = 2
+  COORDENADOR_REGIONAL_ID = 3
+  COORDENADOR_MUNICIPAL_ID = 4
+  COORDENADOR_BAIRRO_ID = 5
+  LIDER_ID = 6
+  APOIADOR_ID = 7
 end
