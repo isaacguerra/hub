@@ -1,143 +1,388 @@
-<div class="d-flex align-items-center mb-4">
-  <%= link_to mobile_dashboard_path, class: "btn btn-link text-dark p-0 me-3" do %>
-    <i class="bi bi-arrow-left fs-4"></i>
-  <% end %>
-  <h5 class="fw-bold mb-0">Meu Perfil</h5>
-</div>
+<style>
+  :root {
+    --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+    --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
 
-<!-- Header Profile -->
-<div class="mobile-card mb-3 text-center py-4">
-  <div class="avatar-circle bg-primary text-white mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px; font-size: 2rem;">
-    <% if @apoiador.foto_perfil_url.present? %>
-      <img src="<%= @apoiador.foto_perfil_url %>" alt="<%= @apoiador.nome %>" class="w-100 h-100 rounded-circle" style="object-fit: cover;">
+  .profile-header {
+    background: var(--primary-gradient) !important;
+    padding-top: 20px;
+    padding-bottom: 80px; /* Space for avatar overlap */
+    border-radius: 0 0 40px 40px;
+    position: relative;
+    color: white;
+    text-align: center;
+    margin-bottom: 60px;
+    box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.6);
+    overflow: visible !important; /* CRITICAL: Allow avatar to overflow */
+  }
+
+  .profile-avatar-wrapper {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+
+  .profile-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 5px solid white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    object-fit: cover;
+    background: white;
+  }
+
+  .level-badge {
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    background: linear-gradient(45deg, #fbbf24, #f59e0b);
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border: 3px solid white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: 20px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: var(--card-shadow);
+    transition: transform 0.2s;
+    border: none;
+    height: 100%;
+  }
+
+  .stat-card:active {
+    transform: scale(0.95);
+  }
+
+  .section-title {
+    font-weight: 800;
+    color: #374151;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+  }
+
+  .section-title i {
+    color: #8b5cf6;
+  }
+
+  .activity-card {
+    background: white;
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f3f4f6;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .icon-box {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .bg-soft-primary { background: #e0e7ff; color: #4f46e5; }
+  .bg-soft-success { background: #dcfce7; color: #16a34a; }
+  .bg-soft-warning { background: #fef3c7; color: #d97706; }
+  .bg-soft-danger { background: #fee2e2; color: #dc2626; }
+  .bg-soft-info { background: #cffafe; color: #0891b2; }
+
+  .nav-btn-back {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(5px);
+    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+  }
+</style>
+
+<!-- Header -->
+<div class="profile-header">
+  <div class="container d-flex justify-content-between align-items-center mb-3">
+    <%= link_to mobile_dashboard_path, class: "nav-btn-back" do %>
+      <i class="bi bi-arrow-left fs-5"></i>
+    <% end %>
+    <div class="dropdown">
+      <button class="nav-btn-back border-0" type="button" data-bs-toggle="dropdown">
+        <i class="bi bi-three-dots-vertical"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end shadow border-0 rounded-4 p-2">
+        <li><%= link_to "Editar Dados", edit_mobile_apoiador_path(@apoiador), class: "dropdown-item rounded-3" %></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><%= button_to "Sair", mobile_logout_path, method: :delete, class: "dropdown-item text-danger rounded-3" %></li>
+      </ul>
+    </div>
+  </div>
+
+  <h4 class="fw-bold mb-1 text-shadow"><%= @apoiador.nome %></h4>
+  <span class="badge bg-white bg-opacity-25 rounded-pill px-3 py-2 backdrop-blur">
+    <%= @apoiador.funcao.nome %>
+  </span>
+  <div class="mt-2 small opacity-75">
+    <i class="bi bi-geo-alt-fill"></i> <%= @apoiador.municipio.nome %>
+  </div>
+
+  <div class="profile-avatar-wrapper">
+    <% avatar_url = Utils::BuscaImagemWhatsapp.buscar(@apoiador.whatsapp) %>
+    <% if avatar_url.present? %>
+      <%= image_tag avatar_url, class: "profile-avatar" %>
     <% else %>
-      <%= @apoiador.nome.first.upcase %>
-    <% end %>
-  </div>
-  <h5 class="fw-bold mb-1"><%= @apoiador.nome %></h5>
-  <span class="badge bg-light text-dark border mb-2"><%= @apoiador.funcao.nome %></span>
-  <p class="text-muted small mb-0">
-    <i class="bi bi-geo-alt me-1"></i> <%= @apoiador.municipio.nome %> - <%= @apoiador.bairro.nome %>
-  </p>
-</div>
-
-<!-- Dados Pessoais -->
-<div class="mobile-card mb-3">
-  <div class="card-body">
-    <h6 class="fw-bold mb-3 border-bottom pb-2">Dados Pessoais</h6>
-    
-    <div class="mb-2">
-      <small class="text-muted d-block">WhatsApp</small>
-      <span class="fw-medium"><%= @apoiador.whatsapp %></span>
-    </div>
-    
-    <div class="mb-2">
-      <small class="text-muted d-block">E-mail</small>
-      <span class="fw-medium"><%= @apoiador.email.presence || "Não informado" %></span>
-    </div>
-
-    <div class="mb-2">
-      <small class="text-muted d-block">Função</small>
-      <span class="fw-medium"><%= @apoiador.funcao.nome %></span>
-    </div>
-
-    <div>
-      <small class="text-muted d-block">Localização</small>
-      <span class="fw-medium">
-        <%= @apoiador.municipio.nome %> / <%= @apoiador.regiao.nome %> / <%= @apoiador.bairro.nome %>
-      </span>
-    </div>
-  </div>
-</div>
-
-<!-- Liderança e Rede -->
-<div class="mobile-card mb-3">
-  <div class="card-body">
-    <h6 class="fw-bold mb-3 border-bottom pb-2">Rede de Apoio</h6>
-    
-    <% if @apoiador.lider %>
-      <div class="d-flex align-items-center mb-3 p-2 bg-light rounded">
-        <div class="me-3">
-          <i class="bi bi-person-badge fs-3 text-primary"></i>
-        </div>
-        <div>
-          <small class="text-muted d-block">Meu Líder</small>
-          <span class="fw-bold"><%= @apoiador.lider.nome %></span>
-        </div>
+      <div class="profile-avatar d-flex align-items-center justify-content-center fs-1 fw-bold text-primary">
+        <%= @apoiador.nome.first.upcase %>
       </div>
     <% end %>
-
-    <div class="row g-2 text-center">
-      <div class="col-6">
-        <div class="border rounded p-2">
-          <span class="d-block h4 fw-bold text-primary mb-0"><%= @apoiador.total_subordinados_diretos %></span>
-          <small class="text-muted">Diretos</small>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="border rounded p-2">
-          <span class="d-block h4 fw-bold text-primary mb-0"><%= @apoiador.todos_subordinados.count %></span>
-          <small class="text-muted">Total Rede</small>
-        </div>
-      </div>
+    <div class="level-badge">
+      <%= @gamification.level %>
     </div>
   </div>
 </div>
 
-<!-- Convites Enviados -->
-<div class="mobile-card mb-3">
-  <div class="card-body">
-    <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2">
-      <h6 class="fw-bold mb-0">Convites Enviados</h6>
-      <%= link_to "Ver todos", mobile_convites_path, class: "small text-decoration-none" %>
+<div class="container pb-5">
+  
+  <!-- XP Progress -->
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-primary mb-0"><%= number_with_delimiter(@xp_current) %> <small class="fs-6 text-muted">XP</small></h2>
+    <div class="progress" style="height: 8px; border-radius: 10px; background-color: #e5e7eb;">
+      <div class="progress-bar" role="progressbar" style="width: <%= @progress_percent %>%; background: var(--primary-gradient);" aria-valuenow="<%= @progress_percent %>" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
+    <small class="text-muted mt-1 d-block">Faltam <%= number_with_delimiter(@xp_next - @xp_current) %> XP para o nível <%= @gamification.level + 1 %></small>
+  </div>
 
-    <% if @apoiador.convites_enviados.any? %>
-      <% @apoiador.convites_enviados.limit(3).each do |convite| %>
-        <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom border-light last-no-border">
-          <div>
-            <span class="d-block fw-medium"><%= convite.nome %></span>
-            <small class="text-muted"><%= convite.created_at.strftime("%d/%m") %></small>
+  <!-- Stats Grid -->
+  <div class="row g-3 mb-4">
+    <div class="col-4">
+      <div class="stat-card">
+        <div class="text-primary fw-bold fs-4 mb-1"><%= @convites_count %></div>
+        <small class="text-muted lh-1 d-block">Convites Enviados</small>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="stat-card">
+        <div class="text-success fw-bold fs-4 mb-1"><%= @apoiador.total_subordinados_diretos %></div>
+        <small class="text-muted lh-1 d-block">Liderados Diretos</small>
+      </div>
+    </div>
+    <div class="col-4">
+      <div class="stat-card">
+        <div class="text-warning fw-bold fs-4 mb-1"><%= @badges.count %></div>
+        <small class="text-muted lh-1 d-block">Conquistas</small>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="d-flex gap-3 overflow-auto pb-3 mb-4 no-scrollbar">
+    <%= link_to new_mobile_convite_path, class: "btn btn-primary rounded-pill px-4 flex-shrink-0 shadow-sm", style: "background: var(--primary-gradient); border: none;" do %>
+      <i class="bi bi-plus-lg me-1"></i> Convidar
+    <% end %>
+    <%= link_to new_mobile_visita_path, class: "btn btn-light text-primary rounded-pill px-4 flex-shrink-0 border shadow-sm" do %>
+      <i class="bi bi-geo-alt me-1"></i> Nova Visita
+    <% end %>
+    <%= link_to mobile_gamification_index_path, class: "btn btn-light text-warning rounded-pill px-4 flex-shrink-0 border shadow-sm" do %>
+      <i class="bi bi-trophy me-1"></i> Missões
+    <% end %>
+  </div>
+
+  <!-- Eventos -->
+  <div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="section-title mb-0"><i class="bi bi-calendar-event-fill"></i> Eventos</h5>
+      <%= link_to "Ver todos", mobile_eventos_path, class: "text-decoration-none small fw-bold" %>
+    </div>
+    <% if @eventos_recentes.any? %>
+      <% @eventos_recentes.each do |evento| %>
+        <div class="activity-card">
+          <div class="icon-box bg-soft-danger">
+            <i class="bi bi-calendar-check"></i>
           </div>
-          <% 
-            status_class = case convite.status
-                           when 'aceito' then 'bg-success'
-                           when 'recusado' then 'bg-danger'
-                           else 'bg-warning text-dark'
-                           end
-          %>
-          <span class="badge <%= status_class %> rounded-pill"><%= convite.status.capitalize %></span>
+          <div class="flex-grow-1">
+            <h6 class="fw-bold mb-0 text-truncate"><%= evento.nome %></h6>
+            <small class="text-muted"><%= l evento.data_hora, format: :short %></small>
+          </div>
+          <i class="bi bi-chevron-right text-muted opacity-50"></i>
         </div>
       <% end %>
     <% else %>
-      <p class="text-muted small text-center mb-0">Nenhum convite enviado.</p>
+      <div class="text-center p-4 bg-light rounded-4 text-muted">
+        <small>Nenhum evento recente.</small>
+      </div>
     <% end %>
   </div>
-</div>
 
-<!-- Visitas Recebidas -->
-<div class="mobile-card mb-3">
-  <div class="card-body">
-    <h6 class="fw-bold mb-3 border-bottom pb-2">Visitas Recebidas</h6>
-    
-    <% if @apoiador.visitas_recebidas.any? %>
-      <% @apoiador.visitas_recebidas.order(created_at: :desc).limit(3).each do |visita| %>
-        <div class="mb-3 pb-2 border-bottom border-light last-no-border">
-          <div class="d-flex justify-content-between mb-1">
-            <span class="fw-medium"><%= visita.lider.nome.split.first %> (Líder)</span>
-            <small class="text-muted"><%= visita.created_at.strftime("%d/%m/%Y") %></small>
+  <!-- Visitas -->
+  <div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="section-title mb-0"><i class="bi bi-geo-fill"></i> Visitas</h5>
+      <%= link_to "Ver todas", mobile_visitas_path, class: "text-decoration-none small fw-bold" %>
+    </div>
+    <% if @visitas_recentes.any? %>
+      <% @visitas_recentes.each do |visita| %>
+        <div class="activity-card">
+          <div class="icon-box bg-soft-warning">
+            <i class="bi bi-geo"></i>
           </div>
-          <p class="text-muted small mb-0 fst-italic">"<%= truncate(visita.relato, length: 60) %>"</p>
+          <div class="flex-grow-1">
+            <h6 class="fw-bold mb-0 text-truncate"><%= visita.eleitor_nome %></h6>
+            <small class="text-muted"><%= l visita.data, format: :short %></small>
+          </div>
         </div>
       <% end %>
     <% else %>
-      <p class="text-muted small text-center mb-0">Nenhuma visita registrada.</p>
+      <div class="text-center p-4 bg-light rounded-4 text-muted">
+        <small>Nenhuma visita recente.</small>
+      </div>
     <% end %>
   </div>
-</div>
 
-<div class="text-center py-3">
-  <%= button_to logout_path, method: :delete, class: "btn btn-outline-danger rounded-pill px-4" do %>
-    <i class="bi bi-box-arrow-right me-2"></i> Sair do App
-  <% end %>
+  <!-- Missões -->
+  <div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="section-title mb-0"><i class="bi bi-trophy-fill"></i> Missões</h5>
+      <%= link_to "Ver todas", mobile_gamification_index_path, class: "text-decoration-none small fw-bold" %>
+    </div>
+    <% if @missoes_recentes.any? %>
+      <% @missoes_recentes.each do |missao| %>
+        <div class="activity-card">
+          <div class="icon-box bg-soft-info">
+            <i class="bi bi-star"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h6 class="fw-bold mb-0 text-truncate"><%= missao.title %></h6>
+            <small class="text-success fw-bold">+<%= missao.reward %> XP</small>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="text-center p-4 bg-light rounded-4 text-muted">
+        <small>Nenhuma missão ativa.</small>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Comunicados -->
+  <div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="section-title mb-0"><i class="bi bi-megaphone-fill"></i> Comunicados</h5>
+      <%= link_to "Ver todos", mobile_comunicados_path, class: "text-decoration-none small fw-bold" %>
+    </div>
+    <% if @comunicados_recentes.any? %>
+      <% @comunicados_recentes.each do |comunicado| %>
+        <div class="activity-card">
+          <div class="icon-box bg-soft-primary">
+            <i class="bi bi-envelope"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h6 class="fw-bold mb-0 text-truncate"><%= comunicado.titulo %></h6>
+            <small class="text-muted"><%= time_ago_in_words(comunicado.created_at) %> atrás</small>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="text-center p-4 bg-light rounded-4 text-muted">
+        <small>Nenhum comunicado recente.</small>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Minha Rede -->
+  <h5 class="section-title mt-5 mb-3"><i class="bi bi-diagram-3-fill"></i> Minha Rede</h5>
+  
+  <div class="accordion shadow-sm rounded-4 overflow-hidden border-0" id="redeAccordion">
+    <!-- Coordenadores -->
+    <% if @rede[:coordenadores].present? %>
+      <div class="accordion-item border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-bold bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCoord">
+            Coordenadores (<%= @rede[:coordenadores].count %>)
+          </button>
+        </h2>
+        <div id="collapseCoord" class="accordion-collapse collapse" data-bs-parent="#redeAccordion">
+          <div class="accordion-body p-0">
+            <div class="list-group list-group-flush">
+              <% @rede[:coordenadores].each do |coord| %>
+                <%= render "rede_item", pessoa: coord %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Líder -->
+    <% if @rede[:lider].present? %>
+      <div class="accordion-item border-0">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed fw-bold bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLider">
+            Líder Direto
+          </button>
+        </h2>
+        <div id="collapseLider" class="accordion-collapse collapse show" data-bs-parent="#redeAccordion">
+          <div class="accordion-body p-0">
+            <div class="list-group list-group-flush">
+              <%= render "rede_item", pessoa: @rede[:lider] %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- Liderados -->
+    <div class="accordion-item border-0">
+      <h2 class="accordion-header">
+        <button class="accordion-button fw-bold bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLiderados">
+          Meus Liderados (<%= @rede[:liderados].count %>)
+        </button>
+      </h2>
+      <div id="collapseLiderados" class="accordion-collapse collapse show" data-bs-parent="#redeAccordion">
+        <div class="accordion-body p-0">
+          <% if @rede[:liderados].present? %>
+            <div class="list-group list-group-flush">
+              <% @rede[:liderados].take(5).each do |liderado| %>
+                <%= render "rede_item", pessoa: liderado %>
+              <% end %>
+            </div>
+            <% if @rede[:liderados].count > 5 %>
+              <div class="p-3 text-center bg-light">
+                <%= link_to "Ver todos", mobile_apoiadores_path, class: "btn btn-sm btn-outline-primary rounded-pill" %>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="text-center p-4 text-muted">
+              <small>Você ainda não tem liderados.</small>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

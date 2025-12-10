@@ -24,10 +24,11 @@
 
 
 class Visita < ApplicationRecord
-  belongs_to :lider, class_name: 'Apoiador'
+  belongs_to :lider, class_name: "Apoiador"
   belongs_to :apoiador
 
-  validates :relato, :status, presence: true
+  validates :status, presence: true
+  validates :relato, presence: true, if: -> { status == "concluida" }
   validates :lider, :apoiador, presence: true
   validates :status, inclusion: { in: %w[pendente concluida cancelada] }
 
@@ -57,7 +58,7 @@ class Visita < ApplicationRecord
   def notificar_atualizacao_visita
     return unless status.in?(%w[concluida cancelada])
 
-    if status == 'concluida'
+    if status == "concluida"
       Mensageria::Notificacoes::Visitas.notificar_visita_realizada(self)
     else
       Mensageria::Notificacoes::Visitas.notificar_visita_cancelada(self)

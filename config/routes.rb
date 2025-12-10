@@ -19,7 +19,9 @@ Rails.application.routes.draw do
     get "dashboard", to: "dashboard#index"
     delete "logout", to: "sessions#destroy"
 
-    resources :apoiadores
+    resources :apoiadores do
+      get :card, on: :member
+    end
     resources :convites
     resources :comunicados
     resources :eventos

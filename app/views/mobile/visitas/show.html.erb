@@ -1,0 +1,82 @@
+<div class="d-flex align-items-center mb-3">
+  <%= link_to mobile_visitas_path, class: "text-decoration-none text-dark me-2" do %>
+    <i class="bi bi-arrow-left fs-4"></i>
+  <% end %>
+  <h5 class="fw-bold mb-0">Detalhes da Visita</h5>
+</div>
+
+<div class="mobile-card">
+  <div class="card-body">
+    <div class="mb-3">
+      <label class="text-muted small">Apoiador</label>
+      <div class="fw-bold"><%= @visita.apoiador.nome %></div>
+    </div>
+
+    <div class="mb-3">
+      <label class="text-muted small">Líder Responsável</label>
+      <div><%= @visita.lider.nome %></div>
+    </div>
+
+    <div class="mb-3">
+      <label class="text-muted small">Data</label>
+      <div><%= @visita.created_at.strftime("%d/%m/%Y às %H:%M") %></div>
+    </div>
+
+    <div class="mb-3">
+      <label class="text-muted small">Status</label>
+      <div>
+        <% 
+          status_class = case @visita.status
+                         when 'concluida' then 'bg-success'
+                         when 'cancelada' then 'bg-danger'
+                         else 'bg-warning text-dark'
+                         end
+        %>
+        <span class="badge <%= status_class %> rounded-pill"><%= @visita.status.capitalize %></span>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="text-muted small">Relatório</label>
+      <div class="p-3 bg-light rounded">
+        <% if @visita.relato.present? %>
+          <%= simple_format(@visita.relato) %>
+        <% else %>
+          <span class="text-muted fst-italic">Nenhum relatório registrado.</span>
+        <% end %>
+      </div>
+    </div>
+
+    <% if Current.apoiador.id == @visita.lider_id %>
+      <div class="d-grid gap-2 mt-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#relatoModal">
+          Escrever relatório da visita
+        </button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="relatoModal" tabindex="-1" aria-labelledby="relatoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="relatoModalLabel">Relatório da Visita</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <%= form_with(model: [:mobile, @visita], local: true) do |f| %>
+        <div class="modal-body">
+          <div class="mb-3">
+            <%= f.label :relato, "Descreva como foi a visita", class: "form-label" %>
+            <%= f.text_area :relato, rows: 5, class: "form-control", placeholder: "Digite aqui os detalhes da visita..." %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <%= f.submit "Salvar Relatório", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

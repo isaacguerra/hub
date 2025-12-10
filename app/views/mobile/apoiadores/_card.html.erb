@@ -1,0 +1,40 @@
+<div class="card border-0 shadow-sm mt-3">
+  <div class="card-body">
+    <div class="d-flex align-items-center mb-3">
+      <% avatar_url = Utils::BuscaImagemWhatsapp.buscar(apoiador.whatsapp) %>
+      <% if avatar_url.present? %>
+        <%= image_tag avatar_url, class: "rounded-circle me-3", style: "width: 60px; height: 60px; object-fit: cover;" %>
+      <% else %>
+        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center text-white me-3" style="width: 60px; height: 60px;">
+          <i class="bi bi-person-fill fs-2"></i>
+        </div>
+      <% end %>
+      <div>
+        <h6 class="fw-bold mb-0"><%= apoiador.nome %></h6>
+        <span class="badge bg-primary rounded-pill"><%= apoiador.funcao.nome %></span>
+      </div>
+    </div>
+
+    <div class="row g-2 small">
+      <div class="col-12">
+        <span class="text-muted d-block">Líder Direto:</span>
+        <span class="fw-bold"><%= apoiador.lider&.nome || "Sem líder" %></span>
+      </div>
+      
+      <div class="col-12 border-top my-2"></div>
+
+      <div class="col-4">
+        <span class="text-muted d-block">Município:</span>
+        <span class="fw-bold"><%= apoiador.municipio&.nome || "-" %></span>
+      </div>
+      <div class="col-4">
+        <span class="text-muted d-block">Região:</span>
+        <span class="fw-bold"><%= apoiador.regiao&.nome || "-" %></span>
+      </div>
+      <div class="col-4">
+        <span class="text-muted d-block">Bairro:</span>
+        <span class="fw-bold"><%= apoiador.bairro&.nome || "-" %></span>
+      </div>
+    </div>
+  </div>
+</div>
