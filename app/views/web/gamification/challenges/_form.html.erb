@@ -37,9 +37,33 @@
   </div>
 
   <div class="mb-4">
-    <%= f.label :rules, "Regras (JSON)", class: "form-label fw-bold" %>
-    <div class="form-text mb-2">Exemplo: {"convite_accepted": 5, "visit_created": 2}</div>
-    <%= f.text_area :rules, value: (challenge.rules.to_json if challenge.rules.present?), rows: 3, class: "form-control font-monospace" %>
+    <label class="form-label fw-bold">Regras da Missão</label>
+    <div class="form-text mb-3">Defina a quantidade necessária para cada ação completar a missão. Deixe em branco ou 0 para ignorar a ação.</div>
+    
+    <div class="card bg-light border-0">
+      <div class="card-body">
+        <div class="row g-3">
+          <% ::Gamification::ActionWeight.order(:action_type).each do |weight| %>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label small text-muted text-uppercase fw-bold mb-1">
+                  <%= weight.description %>
+                </label>
+                <div class="input-group">
+                  <input type="number" 
+                         name="gamification_challenge[rules][<%= weight.action_type %>]" 
+                         value="<%= challenge.rules&.dig(weight.action_type) %>"
+                         class="form-control" 
+                         min="0"
+                         placeholder="Qtd">
+                  <span class="input-group-text text-muted">un</span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="d-flex justify-content-between align-items-center">

@@ -21,13 +21,23 @@ default: &default
 
 
 development:
-  <<: *default
-  database: appivone_development
-  username: postgres
-  password: 8rekXBff
-  host: 212.85.0.223
-  port: 5432
-  sslmode: disable
+  primary:
+    <<: *default
+    database: appivone_development
+    username: postgres
+    password: 8rekXBff
+    host: 212.85.0.223
+    port: 5432
+    sslmode: disable
+  queue:
+    <<: *default
+    database: appivone_development_queue
+    username: postgres
+    password: 8rekXBff
+    host: 212.85.0.223
+    port: 5432
+    sslmode: disable
+    migrations_paths: db/queue_migrate
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public

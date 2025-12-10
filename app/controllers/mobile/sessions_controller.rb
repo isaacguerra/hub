@@ -8,6 +8,13 @@ module Mobile
 
       if apoiador && apoiador.codigo_valido?(codigo)
         session[:apoiador_id] = apoiador.id
+        
+        # Pontuar login diário
+        ::Gamification::PointsService.award_points(
+          apoiador: apoiador,
+          action_type: "daily_login"
+        )
+
         # Não limpamos o código imediatamente para evitar problemas com previewers de link
         # O código irá expirar naturalmente pelo tempo (5 minutos)
         # apoiador.limpar_codigo_acesso!

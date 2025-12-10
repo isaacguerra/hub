@@ -80,4 +80,6 @@ Rails.application.configure do
   if ENV["RAILS_DEVELOPMENT_HOSTS"].present?
     config.hosts.concat ENV["RAILS_DEVELOPMENT_HOSTS"].split(",")
   end
+
+  config.solid_queue.connects_to = { database: { writing: :queue } }
 end

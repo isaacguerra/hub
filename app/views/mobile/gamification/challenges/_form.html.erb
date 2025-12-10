@@ -1,0 +1,70 @@
+<%= form_with(model: [:mobile, challenge], local: true, class: "pb-5") do |f| %>
+  <% if challenge.errors.any? %>
+    <div class="alert alert-danger rounded-3 mb-3 mx-3">
+      <ul class="mb-0 ps-3 small">
+        <% challenge.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="card border-0 shadow-sm rounded-4 mx-3 mb-3">
+    <div class="card-body p-3">
+      <h6 class="fw-bold text-dark mb-3">Informações Básicas</h6>
+      
+      <div class="mb-3">
+        <%= f.label :title, "Título da Missão", class: "form-label small fw-bold text-muted" %>
+        <%= f.text_field :title, class: "form-control form-control-lg bg-light border-0", placeholder: "Ex: Maratona de Convites" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :description, "Descrição", class: "form-label small fw-bold text-muted" %>
+        <%= f.text_area :description, rows: 3, class: "form-control bg-light border-0", placeholder: "Explique o objetivo..." %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :reward, "Prêmio", class: "form-label small fw-bold text-muted" %>
+        <%= f.text_field :reward, class: "form-control bg-light border-0", placeholder: "Ex: 500 XP + Badge" %>
+      </div>
+
+      <div class="row g-2">
+        <div class="col-6">
+          <%= f.label :starts_at, "Início", class: "form-label small fw-bold text-muted" %>
+          <%= f.date_field :starts_at, class: "form-control bg-light border-0" %>
+        </div>
+        <div class="col-6">
+          <%= f.label :ends_at, "Fim", class: "form-label small fw-bold text-muted" %>
+          <%= f.date_field :ends_at, class: "form-control bg-light border-0" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card border-0 shadow-sm rounded-4 mx-3 mb-4">
+    <div class="card-body p-3">
+      <h6 class="fw-bold text-dark mb-3">Regras (Metas)</h6>
+      <p class="small text-muted mb-3">Defina a quantidade necessária para cada ação. Deixe em branco ou 0 para ignorar.</p>
+      
+      <% ::Gamification::ActionWeight.order(:action_type).each do |weight| %>
+        <div class="mb-3 last:mb-0">
+          <label class="form-label small fw-bold text-dark mb-1">
+            <%= weight.description %>
+          </label>
+          <div class="input-group">
+            <span class="input-group-text bg-light border-0 text-muted">Qtd</span>
+            <%= number_field_tag "gamification_challenge[rules][#{weight.action_type}]", 
+                challenge.rules&.dig(weight.action_type), 
+                class: "form-control bg-light border-0", 
+                placeholder: "0",
+                min: 0 %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="fixed-bottom p-3 bg-white border-top shadow-lg">
+    <%= f.submit "Salvar Missão", class: "btn btn-primary w-100 btn-lg rounded-pill fw-bold" %>
+  </div>
+<% end %>

@@ -35,6 +35,18 @@
         </div>
       </div>
     </div>
+
+    <div class="mt-4">
+      <% if @my_participation %>
+        <div class="alert alert-success text-center mb-0 border-0 shadow-sm">
+          <i class="bi bi-check-circle-fill me-2"></i> Você está participando!
+        </div>
+      <% else %>
+        <%= button_to participate_mobile_gamification_path(@challenge), method: :post, class: "btn btn-primary w-100 btn-lg rounded-pill shadow fw-bold py-3" do %>
+          <i class="bi bi-play-fill me-2"></i>Participar da Missão
+        <% end %>
+      <% end %>
+    </div>
   </div>
 
   <!-- Regras e Progresso -->
@@ -48,10 +60,12 @@
         <% rules.each do |action, target| %>
           <% current = (progress[action.to_s] || 0).to_i %>
           <% percent = [(current.to_f / target.to_i * 100), 100].min %>
+          <% weight = ::Gamification::ActionWeight.find_by(action_type: action) %>
+          <% description = weight&.description || action.humanize %>
           
           <div class="mb-3 last:mb-0">
             <div class="d-flex justify-content-between align-items-center mb-1">
-              <span class="text-muted small fw-bold"><%= action.humanize %></span>
+              <span class="text-muted small fw-bold"><%= description %></span>
               <span class="text-primary small fw-bold"><%= current %> / <%= target %></span>
             </div>
             <div class="progress" style="height: 8px;">

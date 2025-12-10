@@ -1,4 +1,4 @@
-class RegioesController < ApplicationController
+class Web::RegioesController < ApplicationController
   before_action :authorize_admin!
   before_action :set_municipio
   before_action :set_regiao, only: %i[ show edit update destroy ]

@@ -1,4 +1,4 @@
-class VisitasController < ApplicationController
+class Web::VisitasController < ApplicationController
   before_action :set_visita, only: %i[show edit update destroy]
   before_action :authorize_create, only: %i[new create]
   before_action :authorize_manage, only: %i[edit update destroy]

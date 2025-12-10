@@ -1,4 +1,4 @@
-class ComunicadosPublicosController < ApplicationController
+class Web::ComunicadosPublicosController < ApplicationController
   skip_before_action :authenticate_apoiador!
   layout "auth"
 

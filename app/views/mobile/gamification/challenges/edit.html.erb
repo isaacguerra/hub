@@ -1,0 +1,10 @@
+<div class="container-fluid p-0 bg-light min-vh-100">
+  <div class="bg-white p-3 shadow-sm mb-3 d-flex align-items-center sticky-top">
+    <%= link_to mobile_gamification_challenges_path, class: "text-decoration-none text-dark me-3" do %>
+      <i class="bi bi-arrow-left fs-4"></i>
+    <% end %>
+    <h5 class="mb-0 fw-bold">Editar Missão</h5>
+  </div>
+
+  <%= render "form", challenge: @challenge %>
+</div>

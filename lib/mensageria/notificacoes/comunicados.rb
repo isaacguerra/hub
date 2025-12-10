@@ -32,6 +32,10 @@ module Mensageria
             mensagem: texto,
             image_url: imagem_whatsapp
           )
+
+          # Marcar como recebido para pontuar
+          comunicado_apoiador = ComunicadoApoiador.find_by(comunicado: comunicado, apoiador: apoiador)
+          comunicado_apoiador&.update(recebido: true)
         rescue StandardError => e
           Rails.logger.error "Erro ao enviar comunicado #{comunicado.id} para apoiador #{apoiador.id}: #{e.message}"
         end

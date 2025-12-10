@@ -122,7 +122,11 @@ weights = {
   "comunicado_received" => { points: 1, description: "Recebimento de comunicado" },
   "comunicado_engaged" => { points: 5, description: "Engajamento em comunicado" },
   "event_participation" => { points: 8, description: "Participação em evento" },
-  "daily_login" => { points: 1, description: "Login diário" }
+  "daily_login" => { points: 1, description: "Login diário" },
+  "chatbot_access" => { points: 1, description: "Acesso ao Chatbot" },
+  "chatbot_view_events" => { points: 2, description: "Ver Agenda no Chatbot" },
+  "chatbot_view_visits" => { points: 2, description: "Ver Visitas no Chatbot" },
+  "chatbot_about" => { points: 5, description: "Ler Sobre o Candidato" }
 }
 
 weights.each do |action_type, data|

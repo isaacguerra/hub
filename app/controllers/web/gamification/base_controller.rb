@@ -1,4 +1,5 @@
-module Gamification
+module Web
+  module Gamification
   class BaseController < ApplicationController
     before_action :authenticate_apoiador!
     before_action :authorize_admin!
@@ -12,4 +13,5 @@ module Gamification
       end
     end
   end
+end
 end

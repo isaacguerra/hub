@@ -10,7 +10,7 @@ module Gamification
       end
 
       # Para ações diárias (ex: login), verificar se já ocorreu hoje
-      if action_type == "daily_login" && Gamification::ActionLog.where(apoiador: apoiador, action_type: action_type).where("created_at >= ?", Time.current.beginning_of_day).exists?
+      if Gamification::ActionWeight::DAILY_ACTIONS.include?(action_type) && Gamification::ActionLog.where(apoiador: apoiador, action_type: action_type).where("created_at >= ?", Time.current.beginning_of_day).exists?
         return { success: false, reason: :daily_limit_reached }
       end
 

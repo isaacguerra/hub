@@ -1,4 +1,4 @@
-class HomeController < ApplicationController
+class Web::HomeController < ApplicationController
   before_action :redirect_mobile_users
 
   def index

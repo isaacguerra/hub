@@ -9,17 +9,27 @@ module Gamification
       # Define a mensagem baseada na ação
       prefixo = action_type.to_s == "created" ? "🚀 Nova Missão Disponível!" : "📝 Missão Atualizada!"
       
-      # Link para a missão (ajuste conforme suas rotas mobile/web)
-      # Assumindo que existe uma rota mobile para ver detalhes da missão
-      # link = Rails.application.routes.url_helpers.mobile_gamification_challenge_url(challenge, host: ENV.fetch("BASE_URL", "app.ivonechagas.com.br"))
-      # Como a rota ainda não existe, vou usar um link genérico para o dashboard
-      link = "#{ENV.fetch('BASE_URL', 'https://app.ivonechagas.com.br')}/mobile/gamification/challenges/#{challenge.id}"
+      # Link para a missão
+      link = "#{ENV.fetch('BASE_URL', 'https://app.ivonechagas.com.br')}/mobile/gamification/#{challenge.id}"
+
+      # Traduzir regras para texto humano
+      regras_texto = ""
+      if challenge.rules.present?
+        regras_texto = "\n📋 *O que fazer:*\n"
+        challenge.rules.each do |action_type, qtd|
+          weight = ::Gamification::ActionWeight.find_by(action_type: action_type)
+          descricao = weight&.description || action_type.humanize
+          regras_texto += "- #{descricao}: #{qtd}x\n"
+        end
+      end
 
       mensagem = <<~MSG
         #{prefixo}
         
-        *#{challenge.title}*
+        🏆 *#{challenge.title}*
         
+        💰 *Prêmio:* #{challenge.reward}
+        #{regras_texto}
         #{challenge.description}
         
         📅 Até: #{challenge.ends_at.strftime('%d/%m/%Y')}

@@ -1,14 +1,15 @@
-module Gamification
+module Web
+  module Gamification
   class ConfigurationsController < BaseController
     # Acesso restrito a Candidatos e Coordenadores Gerais via BaseController
     
     def index
-      @action_weights = Gamification::ActionWeight.order(:action_type)
-      @levels = Gamification::Level.order(:level)
+      @action_weights = ::Gamification::ActionWeight.order(:action_type)
+      @levels = ::Gamification::Level.order(:level)
     end
 
     def update_weight
-      @weight = Gamification::ActionWeight.find(params[:id])
+      @weight = ::Gamification::ActionWeight.find(params[:id])
       if @weight.update(weight_params)
         redirect_to gamification_configurations_path, notice: "Peso atualizado com sucesso."
       else
@@ -17,7 +18,7 @@ module Gamification
     end
 
     def update_level
-      @level = Gamification::Level.find(params[:id])
+      @level = ::Gamification::Level.find(params[:id])
       if @level.update(level_params)
         redirect_to gamification_configurations_path, notice: "Nível atualizado com sucesso."
       else
@@ -35,4 +36,5 @@ module Gamification
       params.require(:gamification_level).permit(:experience_threshold)
     end
   end
+end
 end

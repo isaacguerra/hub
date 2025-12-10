@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Web::SessionsController < ApplicationController
   skip_before_action :authenticate_apoiador!, only: %i[new create verify verify_view]
   layout "auth", only: %i[new create verify verify_view]
 
@@ -44,6 +44,12 @@ class SessionsController < ApplicationController
       @apoiador.limpar_codigo_acesso!
       session[:apoiador_id] = @apoiador.id
       session.delete(:auth_apoiador_id)
+
+      # Pontuar login diário
+      Gamification::PointsService.award_points(
+        apoiador: @apoiador,
+        action_type: "daily_login"
+      )
 
       if mobile_device?
         redirect_to mobile_root_path, notice: "Bem-vindo, #{@apoiador.name}!"

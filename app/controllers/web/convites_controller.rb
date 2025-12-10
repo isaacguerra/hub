@@ -1,4 +1,4 @@
-class ConvitesController < ApplicationController
+class Web::ConvitesController < ApplicationController
   before_action :set_convite, only: %i[ show edit update destroy ]
   before_action :authorize_manage, only: %i[ edit update destroy ]
 
