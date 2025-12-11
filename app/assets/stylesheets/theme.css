@@ -1,19 +1,20 @@
 /* 
  * APPIVONE UNIFIED THEME SYSTEM
  * Single Source of Truth for Web & Mobile Design
+ * Based on "Conectando a Campanha" Visual Identity
  */
 
 :root {
-  /* --- PALETA DE CORES & DEGRADÊS --- */
-  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  /* --- PALETA DE CORES & DEGRADÊS (Network Theme) --- */
+  --primary-gradient: linear-gradient(135deg, #4e54c8 0%, #8f94fb 100%);
   --secondary-gradient: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
   --success-gradient: linear-gradient(135deg, #10b981 0%, #34d399 100%);
   --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
   --danger-gradient: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
-  --info-gradient: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
   
-  /* Cores Sólidas (Fallback & Textos) */
-  --primary-solid: #6366f1;
+  /* Cores Sólidas */
+  --primary-solid: #4e54c8;
+  --primary-light: #8f94fb;
   --text-dark: #1e293b;
   --text-muted: #64748b;
   --text-light: #94a3b8;
@@ -21,20 +22,31 @@
   /* Backgrounds */
   --bg-body: #f8fafc;
   --bg-surface: #ffffff;
-  --bg-soft: #f1f5f9;
+  --bg-glass: rgba(255, 255, 255, 0.1);
   
-  /* --- SOMBRAS & EFEITOS (ELEVATION) --- */
+  /* --- SOMBRAS & EFEITOS --- */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-glow-primary: 0 4px 15px rgba(78, 84, 200, 0.3);
   
-  --shadow-glow-primary: 0 4px 15px rgba(99, 102, 241, 0.35);
-  
-  /* --- COMPATIBILIDADE LEGADA (Mapeando variáveis antigas) --- */
+  --card-radius: 1rem;
+  --btn-radius: 0.75rem;
+
+  /* --- BOOTSTRAP OVERRIDES --- */
+  --bs-primary: var(--primary-solid);
+  --bs-primary-rgb: 78, 84, 200;
+  --bs-body-bg: var(--bg-body);
+
+  /* --- COMPATIBILIDADE LEGADA (Mapeamento) --- */
   --primary-color: var(--primary-solid);
+  --secondary-color: var(--text-muted);
+  --accent-color: var(--primary-light);
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --light-bg: var(--bg-body);
   --card-shadow: var(--shadow-lg);
-  --card-radius: 1.25rem;
 }
 
 /* --- BASE --- */
@@ -57,9 +69,30 @@ a {
   transition: all 0.2s;
 }
 
-/* --- COMPONENTES UNIVERSAIS --- */
+a:hover {
+  color: var(--primary-light);
+}
 
-/* 1. CARDS (Vibrant Card) */
+/* --- COMPONENTES VISUAIS (Network Identity) --- */
+
+/* 1. Backgrounds & Patterns */
+.bg-network-gradient {
+  background: var(--primary-gradient);
+  position: relative;
+}
+
+.network-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+
+/* 2. Cards */
 .card, .vibrant-card, .mobile-card, .card-custom {
   background: var(--bg-surface);
   border: none;
@@ -70,255 +103,198 @@ a {
   margin-bottom: 1.5rem;
 }
 
-.card:hover, .vibrant-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-xl);
+.glass-card {
+  background: var(--bg-glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--card-radius);
+  color: white;
 }
 
-/* Padding interno para cards */
-.vibrant-card .card-body, .mobile-card .card-body {
-  padding: 1.5rem;
-}
-
-/* 2. BOTÕES (Vibrant Buttons) */
-.btn-primary, .btn-vibrant, .btn-primary-custom {
+/* 3. Botões */
+.btn-gradient, .btn-primary, .btn-primary-custom, .btn-vibrant {
   background: var(--primary-gradient) !important;
   border: none !important;
   color: white !important;
-  border-radius: 50rem !important; /* Pill shape */
-  padding: 0.6rem 1.5rem;
+  border-radius: var(--btn-radius) !important;
+  padding: 0.8rem 1.5rem;
   font-weight: 600;
+  letter-spacing: 0.5px;
   box-shadow: var(--shadow-glow-primary);
-  transition: all 0.2s ease;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.btn-primary:hover, .btn-vibrant:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-}
-
-/* Botões Secundários/Outline */
-.btn-outline-primary {
-  border: 2px solid var(--primary-solid) !important;
-  color: var(--primary-solid) !important;
-  border-radius: 50rem !important;
-  background: transparent;
-  font-weight: 600;
-}
-
-.btn-outline-primary:hover {
-  background: var(--primary-solid) !important;
+.btn-gradient:hover, .btn-primary:hover, .btn-primary-custom:hover, .btn-vibrant:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(78, 84, 200, 0.4);
   color: white !important;
 }
 
-/* 3. ÍCONES & BOXES */
-.icon-box {
-  width: 48px;
-  height: 48px;
-  border-radius: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  flex-shrink: 0;
-  transition: transform 0.2s;
+.btn-gradient:active, .btn-primary:active {
+  transform: translateY(0);
 }
 
-.icon-box:hover {
-  transform: scale(1.1) rotate(5deg);
+.btn-outline-primary {
+  color: var(--primary-solid);
+  border-color: var(--primary-solid);
 }
 
-/* Cores Suaves para Ícones */
-.bg-soft-primary { background: #e0e7ff; color: #4f46e5; }
-.bg-soft-success { background: #dcfce7; color: #16a34a; }
-.bg-soft-warning { background: #fef3c7; color: #d97706; }
-.bg-soft-danger { background: #fee2e2; color: #dc2626; }
-.bg-soft-info { background: #cffafe; color: #0891b2; }
-.bg-soft-purple { background: #f3e8ff; color: #9333ea; }
+.btn-outline-primary:hover {
+  background: var(--primary-solid);
+  color: white;
+}
 
-/* 4. AVATARES */
+/* 4. Inputs Customizados */
+.form-floating-custom {
+  position: relative;
+}
+
+.form-floating-custom > .form-control {
+  border: 2px solid #e9ecef;
+  border-radius: var(--btn-radius);
+  height: 3.5rem;
+  padding-left: 3rem;
+  transition: all 0.3s ease;
+}
+
+.form-floating-custom > .form-control:focus {
+  border-color: var(--primary-solid);
+  box-shadow: 0 0 0 0.25rem rgba(78, 84, 200, 0.15);
+}
+
+.form-floating-custom > label {
+  padding-left: 3rem;
+}
+
+.input-icon {
+  position: absolute;
+  top: 1.1rem;
+  left: 1rem;
+  z-index: 4;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+}
+
+/* 5. Avatares & Imagens */
+.avatar-img {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-sm);
+}
+
 .avatar-wrapper {
   position: relative;
   display: inline-block;
 }
 
-.avatar-img, .user-avatar-nav {
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid white;
+/* 6. Animações & Ícones Flutuantes */
+.floating-icon {
+  position: absolute;
+  opacity: 0.15;
+  color: white;
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.icon-1 { top: 15%; left: 10%; font-size: 4rem; animation-delay: 0s; }
+.icon-2 { top: 60%; left: 80%; font-size: 6rem; animation-delay: 2s; }
+.icon-3 { top: 80%; left: 20%; font-size: 3rem; animation-delay: 4s; }
+.icon-4 { top: 20%; right: 15%; font-size: 5rem; animation-delay: 1s; }
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+/* 6. Utilitários de Layout */
+.login-split-screen {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.login-content {
+  width: 100%;
+  max-width: 420px;
+}
+
+@media (min-width: 992px) {
+  .login-content {
+    max-width: 600px;
+  }
+}
+
+/* 7. Navbar & Navigation */
+.navbar-vibrant {
+  background: var(--primary-gradient);
   box-shadow: var(--shadow-md);
+  padding: 0.75rem 1rem;
 }
 
-.user-avatar-nav {
-  width: 40px;
-  height: 40px;
-}
-
-.avatar-circle {
-  width: 48px;
-  height: 48px;
-  border-radius: 50% !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  flex-shrink: 0;
-}
-
-/* --- LAYOUT WEB (Desktop) --- */
-
-/* Navbar Vibrante */
-.navbar-custom, .navbar-vibrant {
-  background: var(--primary-gradient) !important;
-  box-shadow: var(--shadow-lg);
-  padding: 1rem 0;
-}
-
-.navbar-brand {
+.navbar-vibrant .navbar-brand {
   color: white !important;
-  font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  font-weight: 600;
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.navbar-brand img {
+.navbar-vibrant .navbar-brand img {
   height: 40px;
   width: auto;
 }
 
-.navbar-subtitle {
+.navbar-vibrant .navbar-subtitle {
   font-size: 0.75rem;
-  font-weight: 400;
   opacity: 0.9;
+  font-weight: 400;
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-/* Sidebar Vibrante */
-.sidebar-menu .nav-link {
-  color: var(--text-muted);
-  padding: 0.8rem 1.2rem;
-  border-radius: 0.75rem;
-  margin-bottom: 0.25rem;
-  font-weight: 500;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
+.navbar-vibrant .nav-link {
+  color: rgba(255, 255, 255, 0.9) !important;
 }
 
-.sidebar-menu .nav-link:hover {
-  background-color: var(--bg-soft);
-  color: var(--primary-solid);
-  transform: translateX(5px);
-}
-
-.sidebar-menu .nav-link.active {
-  background: var(--primary-gradient);
-  color: white;
-  box-shadow: var(--shadow-glow-primary);
-}
-
-.sidebar-menu .nav-link.active i {
+.navbar-vibrant .nav-link:hover {
   color: white !important;
 }
 
-/* Tabelas Vibrantes (Floating Rows) */
-.table-vibrant {
-  border-collapse: separate;
-  border-spacing: 0 0.5rem; /* Espaço entre linhas */
+.user-avatar-nav {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
-.table-vibrant thead th {
-  border: none;
-  color: var(--text-muted);
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  padding: 1rem;
-}
+/* 8. Utilities & Overrides */
+.text-primary { color: var(--primary-solid) !important; }
+.text-secondary { color: var(--text-muted) !important; }
+.text-success { color: #10b981 !important; }
+.text-danger { color: #ef4444 !important; }
+.text-warning { color: #f59e0b !important; }
+.text-info { color: #0ea5e9 !important; }
+.text-dark { color: var(--text-dark) !important; }
 
-.table-vibrant tbody tr {
-  background: white;
-  box-shadow: var(--shadow-sm);
-  border-radius: 1rem;
-  transition: transform 0.2s;
-}
+.bg-soft-primary { background-color: rgba(78, 84, 200, 0.1) !important; color: var(--primary-solid); }
+.bg-soft-success { background-color: rgba(16, 185, 129, 0.1) !important; color: #10b981; }
+.bg-soft-danger { background-color: rgba(239, 68, 68, 0.1) !important; color: #ef4444; }
+.bg-soft-warning { background-color: rgba(245, 158, 11, 0.1) !important; color: #f59e0b; }
+.bg-soft-info { background-color: rgba(14, 165, 233, 0.1) !important; color: #0ea5e9; }
 
-.table-vibrant tbody tr:hover {
-  transform: scale(1.01);
-  box-shadow: var(--shadow-md);
-  z-index: 1;
-  position: relative;
-}
+/* 9. Compatibilidade Legada (Helpers) */
+.text-primary-custom { color: var(--primary-solid) !important; }
+.bg-primary-custom { background-color: var(--primary-solid) !important; }
 
-.table-vibrant td {
-  border: none;
-  padding: 1rem;
-  vertical-align: middle;
-}
-
-.table-vibrant td:first-child {
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
-
-.table-vibrant td:last-child {
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
-}
-
-/* --- LAYOUT MOBILE --- */
-
-.mobile-header {
-  background: var(--primary-gradient);
-  color: white;
-  padding: 20px 20px 30px 20px;
-  border-bottom-left-radius: 2.5rem;
-  border-bottom-right-radius: 2.5rem;
-  box-shadow: var(--shadow-lg);
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
 
-/* --- UTILITÁRIOS --- */
-.text-gradient {
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: bold;
-}
-
-.section-title {
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-/* Cards de Estatísticas (Pequenos) */
-.stat-card {
-  background: white;
-  border-radius: 1.25rem;
-  padding: 1rem;
-  text-align: center;
-  box-shadow: var(--shadow-lg);
-  transition: transform 0.2s;
-  border: none;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.stat-card:active {
-  transform: scale(0.95);
+.section-title i {
+  color: var(--primary-solid);
 }

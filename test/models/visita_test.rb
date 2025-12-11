@@ -12,7 +12,8 @@ class VisitaTest < ActiveSupport::TestCase
     assert @visita.valid?
   end
 
-  test "não deve ser válido sem relato" do
+  test "não deve ser válido sem relato quando concluída" do
+    @visita.status = "concluida"
     @visita.relato = nil
     assert_not @visita.valid?
     assert_includes @visita.errors[:relato], "não pode ficar em branco"

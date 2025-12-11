@@ -16,35 +16,30 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "theme", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-light d-flex align-items-center justify-content-center min-vh-100">
-    <div class="card card-custom shadow-lg border-0" style="max-width: 400px; width: 100%;">
-      <div class="card-body p-5">
-        <div class="text-center mb-4">
-          <h1 class="h3 fw-bold text-primary-custom mb-1">App Ivone</h1>
-          <p class="text-muted">Acesso Restrito</p>
+  <body class="min-vh-100">
+    <% if flash[:alert] %>
+      <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+          <%= flash[:alert] %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-
-        <% if flash[:alert] %>
-          <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <%= flash[:alert] %>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        <% end %>
-
-        <% if flash[:notice] %>
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <%= flash[:notice] %>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        <% end %>
-
-        <%= yield %>
       </div>
-    </div>
+    <% end %>
+
+    <% if flash[:notice] %>
+      <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+          <%= flash[:notice] %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    <% end %>
+
+    <%= yield %>
 
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

@@ -79,7 +79,7 @@ class Mobile::EventosFlowTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
     assert_select "div.alert.alert-danger"
-    assert_select "div", text: "Titulo não pode ficar em branco"
+    assert_select "li", text: "Titulo não pode ficar em branco"
 
     # Verifica se o formulário foi renderizado novamente com os campos
     assert_select "input[name='evento[local]'][value='Local Teste']"

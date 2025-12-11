@@ -10,9 +10,14 @@
 <% @comunicados.each do |comunicado| %>
   <%= link_to mobile_comunicado_path(comunicado), class: "text-decoration-none text-dark" do %>
     <div class="mobile-card mb-3">
-      <div class="card-body">
+      <div class="p-3">
         <div class="d-flex justify-content-between align-items-start mb-2">
-          <h6 class="fw-bold mb-0 text-primary"><%= comunicado.titulo %></h6>
+          <div class="d-flex align-items-center">
+            <div class="icon-box bg-soft-primary rounded-circle me-3" style="width: 40px; height: 40px;">
+              <i class="bi bi-megaphone-fill"></i>
+            </div>
+            <h6 class="fw-bold mb-0 text-primary"><%= comunicado.titulo %></h6>
+          </div>
           <small class="text-muted"><%= comunicado.data.strftime("%d/%m") %></small>
         </div>
         

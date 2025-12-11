@@ -59,7 +59,12 @@ module Mobile
     end
 
     def load_apoiadores
-      @apoiadores = Current.apoiador.liderados.order(:nome)
+      liderados = Current.apoiador.liderados
+      if liderados.is_a?(ActiveRecord::Relation)
+        @apoiadores = liderados.order(:nome)
+      else
+        @apoiadores = liderados.sort_by(&:nome)
+      end
     end
 
     def visita_params

@@ -1,16 +1,31 @@
 <div class="d-flex align-items-center mb-4">
-  <%= link_to mobile_convites_path, class: "text-decoration-none text-muted me-3" do %>
-    <i class="bi bi-arrow-left fs-4"></i>
+  <%= link_to mobile_convites_path, class: "text-decoration-none text-dark me-3" do %>
+    <div class="icon-box bg-white shadow-sm rounded-circle" style="width: 40px; height: 40px;">
+       <i class="bi bi-arrow-left fs-5"></i>
+    </div>
   <% end %>
   <h5 class="fw-bold mb-0">Novo Convite</h5>
 </div>
 
-<div class="mobile-card">
-  <div class="card-body">
+<div class="mobile-card shadow-lg overflow-hidden border-0">
+  <div class="bg-soft-primary p-4 text-center position-relative overflow-hidden">
+     <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10" style="background: radial-gradient(circle, var(--primary-solid) 1px, transparent 1px); background-size: 20px 20px;"></div>
+     <div class="icon-box bg-white text-primary rounded-circle mx-auto mb-3 shadow-sm" style="width: 60px; height: 60px; font-size: 1.5rem;">
+       <i class="bi bi-envelope-paper-heart-fill"></i>
+     </div>
+     <h6 class="fw-bold text-primary mb-1">Enviar Convite</h6>
+     <p class="small text-muted mb-0">Convide novos apoiadores para sua rede</p>
+  </div>
+
+  <div class="p-4">
     <%= form_with(model: [:mobile, @convite], local: true) do |f| %>
       <% if @convite.errors.any? %>
-        <div class="alert alert-danger rounded-3 border-0 mb-3">
-          <ul class="mb-0 ps-3">
+        <div class="alert alert-danger rounded-3 border-0 mb-3 shadow-sm">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
+            <span class="fw-bold">Atenção</span>
+          </div>
+          <ul class="mb-0 ps-3 small">
             <% @convite.errors.full_messages.each do |msg| %>
               <li><%= msg %></li>
             <% end %>
@@ -18,18 +33,20 @@
         </div>
       <% end %>
 
-      <div class="mb-3">
-        <%= f.label :nome, "Nome do Convidado", class: "form-label fw-bold text-muted small" %>
-        <%= f.text_field :nome, class: "form-control form-control-lg rounded-3 bg-light border-0", placeholder: "Ex: João Silva" %>
+      <div class="form-floating-custom mb-3">
+        <i class="bi bi-person input-icon"></i>
+        <%= f.text_field :nome, class: "form-control", placeholder: "Nome do Convidado" %>
+        <%= f.label :nome, "Nome do Convidado" %>
       </div>
 
-      <div class="mb-4">
-        <%= f.label :whatsapp, "WhatsApp", class: "form-label fw-bold text-muted small" %>
-        <%= f.telephone_field :whatsapp, class: "form-control form-control-lg rounded-3 bg-light border-0", placeholder: "Ex: 96991234567" %>
-        <div class="form-text">Enviaremos o convite para este número.</div>
+      <div class="form-floating-custom mb-4">
+        <i class="bi bi-whatsapp input-icon"></i>
+        <%= f.telephone_field :whatsapp, class: "form-control", placeholder: "WhatsApp" %>
+        <%= f.label :whatsapp, "WhatsApp" %>
+        <div class="form-text ms-1 mt-2 text-muted small"><i class="bi bi-info-circle me-1"></i> Digite apenas números com DDD (Ex: 11999999999).</div>
       </div>
 
-      <%= f.submit "Enviar Convite", class: "btn btn-mobile-primary w-100" %>
+      <%= f.submit "Enviar Convite", class: "btn btn-gradient w-100 py-3 shadow-glow-primary fw-bold" %>
     <% end %>
   </div>
 </div>

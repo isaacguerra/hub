@@ -1,16 +1,30 @@
 <div class="d-flex align-items-center mb-4">
-  <%= link_to mobile_municipios_path, class: "btn btn-link text-dark p-0 me-3" do %>
-    <i class="bi bi-arrow-left fs-4"></i>
+  <%= link_to mobile_municipios_path, class: "text-decoration-none text-dark me-3" do %>
+    <div class="icon-box bg-white shadow-sm rounded-circle" style="width: 40px; height: 40px;">
+       <i class="bi bi-arrow-left fs-5"></i>
+    </div>
   <% end %>
   <h5 class="fw-bold mb-0">Novo Município</h5>
 </div>
 
-<div class="mobile-card">
-  <div class="card-body">
+<div class="mobile-card shadow-lg overflow-hidden border-0">
+  <div class="bg-soft-primary p-4 text-center">
+     <div class="icon-box bg-white text-primary rounded-circle mx-auto mb-3 shadow-sm" style="width: 60px; height: 60px; font-size: 1.5rem;">
+       <i class="bi bi-building" style="color: #0d6efd;"></i>
+     </div>
+     <h6 class="fw-bold mb-1" style="color: #0d6efd;">Cadastrar Município</h6>
+     <p class="small text-muted mb-0">Adicione uma nova cidade à sua base</p>
+  </div>
+
+  <div class="p-4">
     <%= form_with(model: [:mobile, @municipio], local: true) do |f| %>
       <% if @municipio.errors.any? %>
-        <div class="alert alert-danger">
-          <ul class="mb-0 small">
+        <div class="alert alert-danger rounded-3 border-0 mb-3 shadow-sm">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
+            <span class="fw-bold">Atenção</span>
+          </div>
+          <ul class="mb-0 ps-3 small">
             <% @municipio.errors.full_messages.each do |msg| %>
               <li><%= msg %></li>
             <% end %>
@@ -18,13 +32,16 @@
         </div>
       <% end %>
 
-      <div class="mb-3">
-        <%= f.label :name, "Nome do Município", class: "form-label fw-bold" %>
-        <%= f.text_field :name, class: "form-control", placeholder: "Ex: São Paulo" %>
+      <div class="mb-4">
+        <%= f.label :name, "Nome do Município", class: "form-label fw-bold text-dark small" %>
+        <div class="position-relative">
+          <i class="bi bi-geo-alt position-absolute top-50 start-0 translate-middle-y ms-3 text-muted fs-5"></i>
+          <%= f.text_field :name, class: "form-control form-control-lg ps-5 bg-light border-0", placeholder: "Ex: São Paulo" %>
+        </div>
       </div>
 
       <div class="d-grid">
-        <%= f.submit "Salvar", class: "btn btn-primary btn-lg" %>
+        <%= f.submit "Salvar Município", class: "btn btn-gradient btn-lg shadow-glow-primary fw-bold py-3" %>
       </div>
     <% end %>
   </div>

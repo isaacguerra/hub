@@ -9,12 +9,17 @@
 
 <% @visitas.each do |visita| %>
   <%= link_to mobile_visita_path(visita), class: "text-decoration-none text-dark" do %>
-    <div class="mobile-card">
-      <div class="card-body">
+    <div class="mobile-card mb-3">
+      <div class="p-3">
         <div class="d-flex justify-content-between align-items-start mb-2">
-          <div>
-            <h6 class="fw-bold mb-0"><%= visita.apoiador.nome %></h6>
-            <small class="text-muted">Líder: <%= visita.lider.nome.split.first %></small>
+          <div class="d-flex align-items-center">
+            <div class="icon-box bg-soft-purple rounded-circle me-3" style="width: 40px; height: 40px;">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <div>
+              <h6 class="fw-bold mb-0"><%= visita.apoiador.nome %></h6>
+              <small class="text-muted">Líder: <%= visita.lider.nome.split.first %></small>
+            </div>
           </div>
           <% 
             status_class = case visita.status

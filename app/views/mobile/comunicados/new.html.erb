@@ -1,16 +1,30 @@
 <div class="d-flex align-items-center mb-4">
-  <%= link_to mobile_comunicados_path, class: "btn btn-link text-dark p-0 me-3" do %>
-    <i class="bi bi-arrow-left fs-4"></i>
+  <%= link_to mobile_comunicados_path, class: "text-decoration-none text-dark me-3" do %>
+    <div class="icon-box bg-white shadow-sm rounded-circle" style="width: 40px; height: 40px;">
+       <i class="bi bi-arrow-left fs-5"></i>
+    </div>
   <% end %>
   <h5 class="fw-bold mb-0">Novo Comunicado</h5>
 </div>
 
-<div class="mobile-card">
-  <div class="card-body">
+<div class="mobile-card shadow-lg overflow-hidden border-0">
+  <div class="bg-soft-primary p-4 text-center">
+     <div class="icon-box bg-white text-primary rounded-circle mx-auto mb-3 shadow-sm" style="width: 60px; height: 60px; font-size: 1.5rem;">
+       <i class="bi bi-megaphone-fill" style="color: #0d6efd;"></i>
+     </div>
+     <h6 class="fw-bold mb-1" style="color: #0d6efd;">Criar Comunicado</h6>
+     <p class="small text-muted mb-0">Mantenha todos informados sobre as novidades</p>
+  </div>
+
+  <div class="p-4">
     <%= form_with(model: [:mobile, @comunicado], local: true) do |f| %>
       <% if @comunicado.errors.any? %>
-        <div class="alert alert-danger">
-          <ul class="mb-0">
+        <div class="alert alert-danger rounded-3 border-0 mb-3 shadow-sm">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
+            <span class="fw-bold">Atenção</span>
+          </div>
+          <ul class="mb-0 ps-3 small">
             <% @comunicado.errors.full_messages.each do |msg| %>
               <li><%= msg %></li>
             <% end %>
@@ -19,22 +33,31 @@
       <% end %>
 
       <div class="mb-3">
-        <%= f.label :titulo, "Título", class: "form-label fw-bold" %>
-        <%= f.text_field :titulo, class: "form-control mobile-input", placeholder: "Ex: Reunião Geral" %>
+        <%= f.label :titulo, "Título", class: "form-label fw-bold text-dark small" %>
+        <div class="position-relative">
+          <i class="bi bi-type-h1 position-absolute top-50 start-0 translate-middle-y ms-3 text-muted fs-5"></i>
+          <%= f.text_field :titulo, class: "form-control form-control-lg ps-5 bg-light border-0", placeholder: "Ex: Reunião Geral" %>
+        </div>
       </div>
 
       <div class="mb-3">
-        <%= f.label :data, "Data", class: "form-label fw-bold" %>
-        <%= f.date_field :data, class: "form-control mobile-input" %>
+        <%= f.label :data, "Data", class: "form-label fw-bold text-dark small" %>
+        <div class="position-relative">
+          <i class="bi bi-calendar-event position-absolute top-50 start-0 translate-middle-y ms-3 text-muted fs-5"></i>
+          <%= f.date_field :data, class: "form-control form-control-lg ps-5 bg-light border-0" %>
+        </div>
       </div>
 
       <div class="mb-4">
-        <%= f.label :mensagem, "Mensagem", class: "form-label fw-bold" %>
-        <%= f.text_area :mensagem, rows: 5, class: "form-control mobile-input", placeholder: "Digite o conteúdo do comunicado..." %>
+        <%= f.label :mensagem, "Mensagem", class: "form-label fw-bold text-dark small" %>
+        <div class="position-relative">
+          <i class="bi bi-card-text position-absolute top-0 start-0 mt-3 ms-3 text-muted fs-5"></i>
+          <%= f.text_area :mensagem, rows: 5, class: "form-control form-control-lg ps-5 pt-3 bg-light border-0", placeholder: "Digite o conteúdo do comunicado..." %>
+        </div>
       </div>
 
       <div class="d-grid">
-        <%= f.submit "Criar Comunicado", class: "btn btn-primary rounded-pill py-2 fw-bold" %>
+        <%= f.submit "Criar Comunicado", class: "btn btn-gradient btn-lg shadow-glow-primary fw-bold py-3" %>
       </div>
     <% end %>
   </div>

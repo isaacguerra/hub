@@ -1,33 +1,45 @@
 <div class="d-flex align-items-center mb-4">
-  <%= link_to mobile_visitas_path, class: "btn btn-link text-dark p-0 me-3" do %>
-    <i class="bi bi-arrow-left fs-4"></i>
+  <%= link_to mobile_visitas_path, class: "text-decoration-none text-dark me-3" do %>
+    <div class="icon-box bg-white shadow-sm rounded-circle" style="width: 40px; height: 40px;">
+       <i class="bi bi-arrow-left fs-5"></i>
+    </div>
   <% end %>
   <h5 class="fw-bold mb-0">Nova Visita</h5>
 </div>
 
-<div class="card bg-info bg-opacity-10 border-info border-opacity-25 mb-4">
-  <div class="card-body">
-    <div class="d-flex">
-      <div class="me-3">
-        <i class="bi bi-info-circle-fill fs-3 text-info"></i>
-      </div>
-      <div>
-        <h6 class="fw-bold text-info mb-2">Sobre as Visitas</h6>
+<div class="mobile-card shadow-lg overflow-hidden border-0">
+  <div class="bg-soft-purple p-4 text-center">
+     <div class="icon-box bg-white text-purple rounded-circle mx-auto mb-3 shadow-sm" style="width: 60px; height: 60px; font-size: 1.5rem;">
+       <i class="bi bi-geo-alt-fill" style="color: #a855f7;"></i>
+     </div>
+     <h6 class="fw-bold mb-1" style="color: #a855f7;">Agendar Visita</h6>
+     <p class="small text-muted mb-0">Fortaleça laços visitando seus apoiadores</p>
+  </div>
+
+  <div class="p-4">
+    <div class="alert alert-light border-0 bg-light rounded-3 mb-4 shadow-sm">
+      <div class="d-flex">
+        <i class="bi bi-info-circle-fill me-3 fs-4" style="color: #a855f7;"></i>
         <p class="small text-muted mb-0" style="text-align: justify;">
-          Ao criar uma visita será enviado ao Apoiador selecionado uma mensagem informando que você deseja fazer uma visita. 
-          As Visitas são importantes pois após a realização você poderá fazer um relatório sobre o apoiador visitado que será visto somente pelo Candidato, pelo Coordenador Geral e claro, por você mesmo.
+          Ao criar uma visita, você sinaliza a <strong class="text-dark">intenção de encontrar o apoiador</strong>.<br>
+          Enviaremos a ele uma <span class="text-primary fw-bold">mensagem informando</span> que você quer visitá-lo, juntamente com seu contato.<br><br>
+          
+          Após realizar a visita, você poderá registrar um <strong class="text-dark">relatório confidencial</strong> onde somente o <span class="text-purple fw-bold">Coordenador Geral</span> e você terão acesso.<br><br>
+          
+          Lembre-se de sempre agir com <strong class="text-dark">respeito e empatia</strong> durante suas visitas.<br>
+          A visita é muito importante para que o apoiador se sinta <span class="text-success fw-bold">valorizado</span> e parte da nossa comunidade, e também para que os Líderes conheçam mais sobre o Apoiador.
         </p>
       </div>
     </div>
-  </div>
-</div>
 
-<div class="mobile-card">
-  <div class="card-body">
     <%= form_with(model: [:mobile, @visita], local: true) do |f| %>
       <% if @visita.errors.any? %>
-        <div class="alert alert-danger">
-          <ul class="mb-0">
+        <div class="alert alert-danger rounded-3 border-0 mb-3 shadow-sm">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
+            <span class="fw-bold">Atenção</span>
+          </div>
+          <ul class="mb-0 ps-3 small">
             <% @visita.errors.full_messages.each do |msg| %>
               <li><%= msg %></li>
             <% end %>
@@ -35,22 +47,27 @@
         </div>
       <% end %>
 
-      <div class="mb-3" data-controller="apoiador-card">
-        <%= f.label :apoiador_id, "Apoiador Visitado", class: "form-label fw-bold" %>
-        <%= f.collection_select :apoiador_id, @apoiadores, :id, :nome, 
-            { prompt: "Selecione um apoiador" }, 
-            { class: "form-select mobile-input", 
-              data: { 
-                apoiador_card_target: "select", 
-                action: "change->apoiador-card#loadCard" 
-              } 
-            } %>
+      <div class="mb-4" data-controller="apoiador-card">
+        <%= f.label :apoiador_id, "Selecione o Apoiador", class: "form-label fw-bold text-dark small" %>
+        <div class="input-group shadow-sm rounded-3">
+          <span class="input-group-text bg-white border-end-0 ps-3"><i class="bi bi-search text-muted"></i></span>
+          <%= f.collection_select :apoiador_id, @apoiadores, :id, :nome, 
+              { prompt: "Buscar apoiador..." }, 
+              { class: "form-select form-control-lg border-start-0 ps-2", 
+                style: "min-height: 50px;",
+                data: { 
+                  apoiador_card_target: "select", 
+                  action: "change->apoiador-card#loadCard" 
+                } 
+              } %>
+        </div>
+        <div class="form-text ms-1 mt-1 text-muted small">Escolha quem você irá visitar.</div>
         
-        <div data-apoiador-card-target="container"></div>
+        <div data-apoiador-card-target="container" class="mt-3"></div>
       </div>
 
       <div class="d-grid">
-        <%= f.submit "Registrar Visita", class: "btn btn-primary rounded-pill py-2 fw-bold" %>
+        <%= f.submit "Registrar Visita", class: "btn btn-gradient btn-lg shadow-glow-primary fw-bold py-3" %>
       </div>
     <% end %>
   </div>

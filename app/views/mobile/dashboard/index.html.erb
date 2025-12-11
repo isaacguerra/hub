@@ -4,104 +4,109 @@
     <i class="bi bi-star-fill text-warning"></i> Destaques do Período
   </div>
   
-  <div class="row g-3 mb-4">
-    <!-- Campeão do Dia -->
-    <div class="col-4">
-      <% if @daily_winner %>
-        <%= link_to mobile_gamification_profile_path(@daily_winner[:apoiador]), class: "text-decoration-none" do %>
-          <div class="stat-card">
-            <div class="position-relative d-inline-block mb-2">
-              <div class="avatar-wrapper">
-                <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@daily_winner[:apoiador].whatsapp) %>" 
-                     class="avatar-img" 
-                     style="width: 50px; height: 50px;"
-                     onerror="this.src='https://ui-avatars.com/api/?name=<%= @daily_winner[:apoiador].name %>&background=random'">
-              </div>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info shadow-sm" style="font-size: 0.6rem;">Dia</span>
-            </div>
-            <div class="mt-1">
-              <h6 class="fw-bold text-dark mb-0 small text-truncate" style="font-size: 0.8rem;"><%= @daily_winner[:apoiador].name.split.first %></h6>
-              <small class="text-muted fw-bold" style="font-size: 0.7rem;"><%= "#{@daily_winner[:points]} XP" %></small>
-            </div>
-          </div>
-        <% end %>
-      <% else %>
-        <div class="stat-card opacity-75">
-          <div class="icon-box bg-soft-info rounded-circle mx-auto mb-2" style="width: 50px; height: 50px; font-size: 1.2rem;">
-            <i class="bi bi-person"></i>
-          </div>
-          <div>
-            <h6 class="fw-bold text-muted mb-0 small">---</h6>
-            <small class="text-muted" style="font-size: 0.65rem;">Sem dados</small>
-          </div>
-        </div>
-      <% end %>
+  <div class="mobile-card bg-soft-primary border-0 shadow-sm mb-4 p-3 position-relative">
+    <div class="position-absolute top-0 end-0 opacity-10 p-2">
+      <i class="bi bi-trophy-fill text-primary" style="font-size: 4rem;"></i>
     </div>
-
-    <!-- Campeão da Semana -->
-    <div class="col-4">
-      <% if @weekly_winner %>
-        <%= link_to mobile_gamification_profile_path(@weekly_winner[:apoiador]), class: "text-decoration-none" do %>
-          <div class="stat-card transform-scale-105 border-warning border border-opacity-25" style="transform: scale(1.08); z-index: 10;">
-            <div class="position-relative d-inline-block mb-2">
-              <div class="avatar-wrapper">
-                <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@weekly_winner[:apoiador].whatsapp) %>" 
-                     class="avatar-img border-warning" 
-                     style="width: 60px; height: 60px; border-width: 3px;"
-                     onerror="this.src='https://ui-avatars.com/api/?name=<%= @weekly_winner[:apoiador].name %>&background=random'">
+    <div class="row g-3 align-items-end position-relative z-1">
+      <!-- Campeão do Dia -->
+      <div class="col-4">
+        <% if @daily_winner %>
+          <%= link_to mobile_gamification_profile_path(@daily_winner[:apoiador]), class: "text-decoration-none" do %>
+            <div class="stat-card bg-white shadow-sm">
+              <div class="position-relative d-inline-block mb-2">
+                <div class="avatar-wrapper">
+                  <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@daily_winner[:apoiador].whatsapp) %>" 
+                       class="avatar-img" 
+                       style="width: 50px; height: 50px;"
+                       onerror="this.src='https://ui-avatars.com/api/?name=<%= @daily_winner[:apoiador].name %>&background=random'">
+                </div>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info shadow-sm" style="font-size: 0.6rem;">Dia</span>
               </div>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark shadow-sm">Semana</span>
+              <div class="mt-1">
+                <h6 class="fw-bold text-dark mb-0 small text-truncate" style="font-size: 0.8rem;"><%= @daily_winner[:apoiador].name.split.first %></h6>
+                <small class="text-muted fw-bold" style="font-size: 0.7rem;"><%= "#{@daily_winner[:points]} XP" %></small>
+              </div>
             </div>
-            <div class="mt-1">
-              <h6 class="fw-bold text-dark mb-0 small text-truncate"><%= @weekly_winner[:apoiador].name.split.first %></h6>
-              <small class="text-warning fw-bold" style="font-size: 0.75rem;"><%= "#{@weekly_winner[:points]} XP" %></small>
+          <% end %>
+        <% else %>
+          <div class="stat-card bg-white shadow-sm opacity-75">
+            <div class="icon-box bg-soft-info rounded-circle mx-auto mb-2" style="width: 50px; height: 50px; font-size: 1.2rem;">
+              <i class="bi bi-person"></i>
+            </div>
+            <div>
+              <h6 class="fw-bold text-muted mb-0 small">---</h6>
+              <small class="text-muted" style="font-size: 0.65rem;">Sem dados</small>
             </div>
           </div>
         <% end %>
-      <% else %>
-        <div class="stat-card opacity-75" style="transform: scale(1.05);">
-          <div class="icon-box bg-soft-warning rounded-circle mx-auto mb-2" style="width: 60px; height: 60px;">
-            <i class="bi bi-trophy"></i>
-          </div>
-          <div>
-            <h6 class="fw-bold text-muted mb-0 small">---</h6>
-            <small class="text-muted" style="font-size: 0.65rem;">Sem dados</small>
-          </div>
-        </div>
-      <% end %>
-    </div>
+      </div>
 
-    <!-- Campeão do Mês -->
-    <div class="col-4">
-      <% if @monthly_winner %>
-        <%= link_to mobile_gamification_profile_path(@monthly_winner[:apoiador]), class: "text-decoration-none" do %>
-          <div class="stat-card">
-            <div class="position-relative d-inline-block mb-2">
-              <div class="avatar-wrapper">
-                <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@monthly_winner[:apoiador].whatsapp) %>" 
-                     class="avatar-img" 
-                     style="width: 50px; height: 50px;"
-                     onerror="this.src='https://ui-avatars.com/api/?name=<%= @monthly_winner[:apoiador].name %>&background=random'">
+      <!-- Campeão da Semana -->
+      <div class="col-4">
+        <% if @weekly_winner %>
+          <%= link_to mobile_gamification_profile_path(@weekly_winner[:apoiador]), class: "text-decoration-none" do %>
+            <div class="stat-card bg-white shadow transform-scale-105 border-warning border border-opacity-25" style="transform: scale(1.15); z-index: 10;">
+              <div class="position-relative d-inline-block mb-2">
+                <div class="avatar-wrapper">
+                  <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@weekly_winner[:apoiador].whatsapp) %>" 
+                       class="avatar-img border-warning" 
+                       style="width: 60px; height: 60px; border-width: 3px;"
+                       onerror="this.src='https://ui-avatars.com/api/?name=<%= @weekly_winner[:apoiador].name %>&background=random'">
+                </div>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark shadow-sm">Semana</span>
               </div>
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary shadow-sm" style="font-size: 0.6rem;">Mês</span>
+              <div class="mt-1">
+                <h6 class="fw-bold text-dark mb-0 small text-truncate"><%= @weekly_winner[:apoiador].name.split.first %></h6>
+                <small class="text-warning fw-bold" style="font-size: 0.75rem;"><%= "#{@weekly_winner[:points]} XP" %></small>
+              </div>
             </div>
-            <div class="mt-1">
-              <h6 class="fw-bold text-dark mb-0 small text-truncate" style="font-size: 0.8rem;"><%= @monthly_winner[:apoiador].name.split.first %></h6>
-              <small class="text-primary fw-bold" style="font-size: 0.7rem;"><%= "#{@monthly_winner[:points]} XP" %></small>
+          <% end %>
+        <% else %>
+          <div class="stat-card bg-white shadow-sm opacity-75" style="transform: scale(1.05);">
+            <div class="icon-box bg-soft-warning rounded-circle mx-auto mb-2" style="width: 60px; height: 60px;">
+              <i class="bi bi-trophy"></i>
+            </div>
+            <div>
+              <h6 class="fw-bold text-muted mb-0 small">---</h6>
+              <small class="text-muted" style="font-size: 0.65rem;">Sem dados</small>
             </div>
           </div>
         <% end %>
-      <% else %>
-        <div class="stat-card opacity-75">
-          <div class="icon-box bg-soft-primary rounded-circle mx-auto mb-2" style="width: 50px; height: 50px; font-size: 1.2rem;">
-            <i class="bi bi-calendar-check"></i>
+      </div>
+
+      <!-- Campeão do Mês -->
+      <div class="col-4">
+        <% if @monthly_winner %>
+          <%= link_to mobile_gamification_profile_path(@monthly_winner[:apoiador]), class: "text-decoration-none" do %>
+            <div class="stat-card bg-white shadow-sm">
+              <div class="position-relative d-inline-block mb-2">
+                <div class="avatar-wrapper">
+                  <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@monthly_winner[:apoiador].whatsapp) %>" 
+                       class="avatar-img" 
+                       style="width: 50px; height: 50px;"
+                       onerror="this.src='https://ui-avatars.com/api/?name=<%= @monthly_winner[:apoiador].name %>&background=random'">
+                </div>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary shadow-sm" style="font-size: 0.6rem;">Mês</span>
+              </div>
+              <div class="mt-1">
+                <h6 class="fw-bold text-dark mb-0 small text-truncate" style="font-size: 0.8rem;"><%= @monthly_winner[:apoiador].name.split.first %></h6>
+                <small class="text-primary fw-bold" style="font-size: 0.7rem;"><%= "#{@monthly_winner[:points]} XP" %></small>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="stat-card bg-white shadow-sm opacity-75">
+            <div class="icon-box bg-soft-primary rounded-circle mx-auto mb-2" style="width: 50px; height: 50px; font-size: 1.2rem;">
+              <i class="bi bi-calendar-check"></i>
+            </div>
+            <div>
+              <h6 class="fw-bold text-muted mb-0 small">---</h6>
+              <small class="text-muted" style="font-size: 0.65rem;">Sem dados</small>
+            </div>
           </div>
-          <div>
-            <h6 class="fw-bold text-muted mb-0 small">---</h6>
-            <small class="text-muted" style="font-size: 0.65rem;">Sem dados</small>
-          </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 
@@ -110,7 +115,7 @@
     <i class="bi bi-award-fill text-warning"></i> Hall da Fama
   </div>
   
-  <div class="vibrant-card mb-4">
+  <div class="vibrant-card gold-card mb-4">
     <div class="list-group list-group-flush">
       <% if @gold_champions.any? %>
         <% @gold_champions.each_with_index do |point, index| %>
@@ -276,6 +281,216 @@
           <div class="ms-2 text-muted"><i class="bi bi-chevron-right"></i></div>
         <% end %>
       <% end %>
+    </div>
+  </div>
+
+  <!-- Guia do Apoiador -->
+  <div class="section-title px-1 mt-4">
+    <i class="bi bi-info-circle-fill text-info"></i> Guia do Apoiador
+  </div>
+
+  <div class="row g-3 mb-5">
+    <!-- Como Ganhar XP -->
+    <div class="col-12">
+      <div class="mobile-card shadow-sm border-0 overflow-hidden">
+        <div class="bg-soft-warning p-3 d-flex align-items-center">
+          <div class="icon-box bg-white text-warning rounded-circle me-3 shadow-sm" style="width: 40px; height: 40px;">
+            <i class="bi bi-lightning-charge-fill"></i>
+          </div>
+          <h6 class="fw-bold text-dark mb-0">Como Ganhar XP?</h6>
+        </div>
+        <div class="p-3">
+          <p class="small text-muted mb-3">
+            Acumule pontos realizando ações estratégicas. Quanto mais ativo você for, maior será seu nível e prestígio na rede!
+          </p>
+          <div class="d-flex align-items-center mb-2">
+            <span class="badge bg-success rounded-pill me-2">+50 XP</span>
+            <small class="text-dark fw-bold">Convidar novo apoiador</small>
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <span class="badge bg-primary rounded-pill me-2">+30 XP</span>
+            <small class="text-dark fw-bold">Registrar uma visita</small>
+          </div>
+          <div class="d-flex align-items-center mb-3">
+            <span class="badge bg-info rounded-pill me-2">+20 XP</span>
+            <small class="text-dark fw-bold">Participar de eventos</small>
+          </div>
+
+          <div class="bg-light rounded p-2 border border-warning border-opacity-25">
+            <h6 class="fw-bold text-dark mb-2" style="font-size: 0.85rem;"><i class="bi bi-star-fill text-warning me-1"></i> Como ser Destaque?</h6>
+            <ul class="list-unstyled small mb-0 text-muted">
+              <li class="mb-1"><i class="bi bi-check-circle-fill text-success me-1" style="font-size: 0.7rem;"></i> <strong>Dia/Semana/Mês:</strong> Quem somar mais XP no período.</li>
+              <li><i class="bi bi-check-circle-fill text-success me-1" style="font-size: 0.7rem;"></i> <strong>Hall da Fama:</strong> Os 3 maiores pontuadores gerais da campanha.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Missões e Prêmios -->
+    <div class="col-12">
+      <div class="mobile-card shadow-sm border-0 overflow-hidden">
+        <div class="bg-soft-danger p-3 d-flex align-items-center">
+          <div class="icon-box bg-white text-danger rounded-circle me-3 shadow-sm" style="width: 40px; height: 40px;">
+            <i class="bi bi-gift-fill"></i>
+          </div>
+          <h6 class="fw-bold text-dark mb-0">Missões e Prêmios</h6>
+        </div>
+        <div class="p-3">
+          <p class="small text-muted mb-0">
+            Complete missões diárias e semanais para desbloquear conquistas Prêmios. Fique de olho no menu <strong class="text-danger">Missões</strong> para não perder nenhum desafio!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dica de Ouro -->
+    <div class="col-12">
+      <div class="mobile-card shadow-sm border-0 overflow-hidden">
+        <div class="bg-primary p-3 text-white position-relative overflow-hidden">
+           <div class="position-absolute top-0 end-0 opacity-25" style="transform: translate(30%, -30%);">
+             <i class="bi bi-lightbulb-fill" style="font-size: 5rem;"></i>
+           </div>
+           <div class="position-relative z-1">
+             <h6 class="fw-bold mb-2"><i class="bi bi-stars me-2"></i>Dica de Sucesso</h6>
+             <p class="small mb-0 opacity-90">
+               Mantenha seus dados atualizados e interaja com sua rede. Um bom líder conhece sua comunidade e está sempre presente!
+             </p>
+           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Funcionalidades do Menu -->
+    <div class="col-12 mt-4">
+      <div class="section-title px-1 mb-3">
+        <i class="bi bi-grid-1x2-fill text-primary"></i> Para que serve cada menu?
+      </div>
+      
+      <div class="mobile-card shadow-sm border-0 p-0 overflow-hidden">
+        <div class="list-group list-group-flush">
+          <!-- Perfil -->
+          <div class="list-group-item p-3 border-bottom-0 border-top-0 border-bottom bg-light">
+            <div class="d-flex">
+              <div class="icon-box bg-white text-primary rounded-circle me-3 shadow-sm flex-shrink-0" style="width: 35px; height: 35px;">
+                <i class="bi bi-person-circle small"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-dark mb-1">Meu Perfil</h6>
+                <p class="small text-muted mb-0" style="text-align: justify;">
+                  Seu cartão de visitas. Mantenha foto e dados atualizados para ser reconhecido pela coordenação.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Minha Rede -->
+          <div class="list-group-item p-3 border-bottom-0 border-top-0 border-bottom">
+            <div class="d-flex">
+              <div class="icon-box bg-white text-success rounded-circle me-3 shadow-sm flex-shrink-0" style="width: 35px; height: 35px;">
+                <i class="bi bi-people-fill small"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-dark mb-1">Minha Rede</h6>
+                <p class="small text-muted mb-0" style="text-align: justify;">
+                  O coração do seu trabalho. Aqui você vê todos que entraram através do seu convite. Acompanhe o crescimento do seu time.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Missões -->
+          <div class="list-group-item p-3 border-bottom-0 border-top-0 border-bottom bg-light">
+            <div class="d-flex">
+              <div class="icon-box bg-white text-warning rounded-circle me-3 shadow-sm flex-shrink-0" style="width: 35px; height: 35px;">
+                <i class="bi bi-trophy-fill small"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-dark mb-1">Missões e Desafios</h6>
+                <p class="small text-muted mb-0" style="text-align: justify;">
+                  Sua central de tarefas. Cumpra metas diárias para ganhar XP, subir de nível e ganhar destaque no ranking.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Convites -->
+          <div class="list-group-item p-3 border-bottom-0 border-top-0 border-bottom">
+            <div class="d-flex">
+              <div class="icon-box bg-white text-info rounded-circle me-3 shadow-sm flex-shrink-0" style="width: 35px; height: 35px;">
+                <i class="bi bi-envelope-paper-fill small"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-dark mb-1">Convites</h6>
+                <p class="small text-muted mb-0" style="text-align: justify;">
+                  Ferramenta de expansão. Gere links exclusivos para trazer novos apoiadores. Cada cadastro conta pontos para você.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Eventos -->
+          <div class="list-group-item p-3 border-bottom-0 border-top-0 border-bottom bg-light">
+            <div class="d-flex">
+              <div class="icon-box bg-white text-danger rounded-circle me-3 shadow-sm flex-shrink-0" style="width: 35px; height: 35px;">
+                <i class="bi bi-calendar-event-fill small"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-dark mb-1">Eventos</h6>
+                <p class="small text-muted mb-0" style="text-align: justify;">
+                  Agenda oficial. Saiba onde e quando ocorrerão as ações de campanha e confirme sua presença para garantir XP.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visitas -->
+          <div class="list-group-item p-3 border-bottom-0 border-top-0 border-bottom">
+            <div class="d-flex">
+              <div class="icon-box bg-white text-purple rounded-circle me-3 shadow-sm flex-shrink-0" style="width: 35px; height: 35px;">
+                <i class="bi bi-geo-alt-fill small"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-dark mb-1">Visitas</h6>
+                <p class="small text-muted mb-0" style="text-align: justify;">
+                  Registro de campo. Marque visitas presenciais aos eleitores. É fundamental para fidelizar votos e mostrar serviço.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comunicados -->
+          <div class="list-group-item p-3 border-bottom-0 border-top-0 border-bottom bg-light">
+            <div class="d-flex">
+              <div class="icon-box bg-white text-primary rounded-circle me-3 shadow-sm flex-shrink-0" style="width: 35px; height: 35px;">
+                <i class="bi bi-megaphone-fill small"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-dark mb-1">Comunicados</h6>
+                <p class="small text-muted mb-0" style="text-align: justify;">
+                  Mural oficial. Receba orientações, notícias urgentes e materiais de campanha diretamente da coordenação.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Estatísticas -->
+          <div class="list-group-item p-3 border-bottom-0 border-top-0 border-bottom">
+            <div class="d-flex">
+              <div class="icon-box bg-white text-success rounded-circle me-3 shadow-sm flex-shrink-0" style="width: 35px; height: 35px;">
+                <i class="bi bi-bar-chart-fill small"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-dark mb-1">Estatísticas</h6>
+                <p class="small text-muted mb-0" style="text-align: justify;">
+                  Painel de controle. Analise gráficos do seu desempenho e entenda onde você pode melhorar seus resultados.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
 </div>

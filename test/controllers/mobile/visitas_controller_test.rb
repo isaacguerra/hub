@@ -34,7 +34,7 @@ module Mobile
 
     test "should update visita" do
       patch mobile_visita_url(@visita), params: { visita: { relato: "Relato atualizado mobile" } }
-      assert_redirected_to mobile_visitas_url
+      assert_redirected_to mobile_visita_url(@visita)
     end
 
     test "should destroy visita" do

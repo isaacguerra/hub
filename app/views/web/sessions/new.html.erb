@@ -1,18 +1,133 @@
-<%= form_with url: sessions_path, local: true, class: "d-grid gap-3" do |f| %>
-  <div>
-    <%= f.label :whatsapp, "WhatsApp", class: "form-label fw-bold text-secondary" %>
-    <div class="input-group">
-      <span class="input-group-text bg-light"><i class="bi bi-whatsapp"></i></span>
-      <%= f.text_field :whatsapp, 
-          placeholder: "(96) 99999-9999", 
-          class: "form-control",
-          required: true,
-          autofocus: true %>
+<div class="row g-0 login-split-screen">
+  <!-- Left Side: Visual & Brand -->
+  <div class="col-lg-6 d-none d-lg-flex flex-column justify-content-center align-items-center bg-network-gradient text-white p-5">
+    <div class="network-pattern"></div>
+    
+    <!-- Floating Icons representing Network -->
+    <i class="bi bi-chat-dots-fill floating-icon icon-1"></i>
+    <i class="bi bi-people-fill floating-icon icon-2"></i>
+    <i class="bi bi-megaphone-fill floating-icon icon-3"></i>
+    <i class="bi bi-diagram-3-fill floating-icon icon-4"></i>
+
+    <div class="position-relative z-2 text-center" style="max-width: 600px;">
+      <div class="mb-4 glass-card p-4 d-inline-block">
+        <i class="bi bi-grid-3x3-gap-fill fs-1"></i>
+      </div>
+      <h1 class="display-4 fw-bold mb-3">Conectando a Campanha</h1>
+      <p class="lead opacity-75 mb-4">
+        Gerencie sua rede de apoiadores, envie comunicados e acompanhe o engajamento em tempo real. 
+        Tudo integrado, tudo em um só lugar.
+      </p>
+      
+      <div class="d-flex justify-content-center gap-4 mt-4">
+        <div class="text-center">
+          <div class="glass-card p-3 mb-2">
+            <i class="bi bi-whatsapp fs-4"></i>
+          </div>
+          <small>Mensageria</small>
+        </div>
+        <div class="text-center">
+          <div class="glass-card p-3 mb-2">
+            <i class="bi bi-trophy fs-4"></i>
+          </div>
+          <small>Gamificação</small>
+        </div>
+        <div class="text-center">
+          <div class="glass-card p-3 mb-2">
+            <i class="bi bi-geo-alt fs-4"></i>
+          </div>
+          <small>Gestão Territorial</small>
+        </div>
+      </div>
     </div>
-    <div class="form-text">Informe seu número cadastrado para receber o código de acesso.</div>
   </div>
 
-  <div>
-    <%= f.submit "Enviar Código", class: "btn btn-primary-custom w-100" %>
+  <!-- Right Side: Login Form -->
+  <div class="col-lg-6 d-flex flex-column align-items-center bg-white position-relative min-vh-100">
+    
+    <!-- Mobile Header (Visible only on < lg) -->
+    <div class="d-lg-none w-100 bg-network-gradient text-white p-4 text-center position-relative overflow-hidden flex-shrink-0" style="border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem;">
+        <div class="network-pattern"></div>
+        
+        <div class="position-relative z-2">
+          <div class="mb-3 glass-card p-3 d-inline-block">
+            <i class="bi bi-grid-3x3-gap-fill fs-2"></i>
+          </div>
+          <h2 class="fw-bold mb-2">Conectando a Campanha</h2>
+          <p class="small opacity-75 mb-3 px-2">
+            Gerencie sua rede de apoiadores, envie comunicados e acompanhe o engajamento em tempo real. 
+            Tudo integrado, tudo em um só lugar.
+          </p>
+
+          <div class="d-flex justify-content-center gap-3 mt-3">
+            <div class="text-center">
+              <div class="glass-card p-2 mb-1">
+                <i class="bi bi-whatsapp fs-5"></i>
+              </div>
+              <small style="font-size: 0.7rem;">Mensageria</small>
+            </div>
+            <div class="text-center">
+              <div class="glass-card p-2 mb-1">
+                <i class="bi bi-trophy fs-5"></i>
+              </div>
+              <small style="font-size: 0.7rem;">Gamificação</small>
+            </div>
+            <div class="text-center">
+              <div class="glass-card p-2 mb-1">
+                <i class="bi bi-geo-alt fs-5"></i>
+              </div>
+              <small style="font-size: 0.7rem;">Território</small>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Decorative icons for mobile -->
+        <i class="bi bi-chat-dots-fill position-absolute" style="top: 10%; left: 5%; opacity: 0.1; font-size: 2rem;"></i>
+        <i class="bi bi-people-fill position-absolute" style="bottom: 10%; right: 5%; opacity: 0.1; font-size: 3rem;"></i>
+    </div>
+
+    <div class="login-content p-4 p-lg-5 flex-grow-1 d-flex flex-column justify-content-center">
+      
+      <div class="text-center mb-5">
+        <div class="d-inline-flex align-items-center justify-content-center bg-light rounded-circle mb-3 shadow-sm" style="width: 80px; height: 80px;">
+          <i class="bi bi-person-badge fs-1 text-primary"></i>
+        </div>
+        <h2 class="fw-bold text-dark">Bem-vindo de volta!</h2>
+        <p class="text-muted">Acesse sua conta para gerenciar sua rede.</p>
+      </div>
+
+      <%= form_with url: sessions_path, local: true, class: "d-grid gap-4" do |f| %>
+        
+        <div class="position-relative form-floating-custom">
+          <i class="bi bi-whatsapp input-icon"></i>
+          <%= f.text_field :whatsapp, 
+              placeholder: "(96) 99999-9999", 
+              class: "form-control shadow-sm",
+              required: true,
+              autofocus: true,
+              id: "whatsapp_input" %>
+          <%= f.label :whatsapp, "Seu WhatsApp", for: "whatsapp_input" %>
+        </div>
+
+        <div class="alert alert-light border-0 bg-light rounded-3 d-flex align-items-start gap-3 p-3">
+          <i class="bi bi-shield-check text-success fs-4 mt-1"></i>
+          <div class="small text-muted">
+            Enviaremos um código de verificação seguro para o seu WhatsApp. Não compartilhamos seus dados.
+          </div>
+        </div>
+
+        <%= f.button class: "btn btn-gradient btn-lg w-100 d-flex align-items-center justify-content-center gap-2" do %>
+          <span>Receber Código de Acesso</span>
+          <i class="bi bi-arrow-right"></i>
+        <% end %>
+
+      <% end %>
+
+      <div class="mt-5 text-center">
+        <p class="text-muted small">
+          Precisa de ajuda? <a href="#" class="text-decoration-none fw-bold" style="color: #4e54c8;">Fale com o Suporte</a>
+        </p>
+      </div>
+    </div>
   </div>
-<% end %>
+</div>
