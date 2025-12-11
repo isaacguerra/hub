@@ -3,6 +3,12 @@
   <div class="bg-primary text-white p-4 rounded-bottom-4 shadow-sm mb-4 position-relative overflow-hidden">
     <div class="position-absolute top-0 start-0 w-100 h-100 opacity-10" style="background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);"></div>
     
+    <div class="position-absolute top-0 end-0 p-3 z-2">
+      <button type="button" class="btn btn-link text-white p-0" data-bs-toggle="modal" data-bs-target="#helpModal">
+        <i class="bi bi-question-circle-fill fs-5"></i>
+      </button>
+    </div>
+
     <div class="d-flex align-items-center position-relative z-1">
       <div class="me-3">
         <div class="bg-white text-primary rounded-circle d-flex align-items-center justify-content-center shadow" style="width: 64px; height: 64px; font-size: 1.5rem; font-weight: bold;">
@@ -81,6 +87,10 @@
     <% end %>
   </div>
 </div>
+
+<%= render "shared/mobile_help_modal", title: t("mensagens.ajuda.gamification.titulo") do %>
+  <%= t("mensagens.ajuda.gamification.conteudo_html").html_safe %>
+<% end %>
 
 <style>
   .line-clamp-2 {

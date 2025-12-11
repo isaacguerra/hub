@@ -1,11 +1,20 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <h5 class="fw-bold mb-0">Eventos</h5>
+  <div class="d-flex align-items-center gap-2">
+    <h5 class="fw-bold mb-0">Eventos</h5>
+    <button type="button" class="btn btn-link text-muted p-0" data-bs-toggle="modal" data-bs-target="#helpModal">
+      <i class="bi bi-question-circle-fill"></i>
+    </button>
+  </div>
   <% if Current.apoiador.e_autorizado?(:criar_evento) %>
     <%= link_to new_mobile_evento_path, class: "btn btn-sm btn-primary rounded-pill px-3" do %>
       <i class="bi bi-plus-lg me-1"></i> Novo
     <% end %>
   <% end %>
 </div>
+
+<%= render "shared/mobile_help_modal", title: t("mensagens.ajuda.eventos.titulo") do %>
+  <%= t("mensagens.ajuda.eventos.conteudo_html").html_safe %>
+<% end %>
 
 <% @eventos.each do |evento| %>
   <%= link_to mobile_evento_path(evento), class: "text-decoration-none text-dark" do %>

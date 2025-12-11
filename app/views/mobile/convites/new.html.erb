@@ -33,17 +33,21 @@
         </div>
       <% end %>
 
-      <div class="form-floating-custom mb-3">
-        <i class="bi bi-person input-icon"></i>
-        <%= f.text_field :nome, class: "form-control", placeholder: "Nome do Convidado" %>
-        <%= f.label :nome, "Nome do Convidado" %>
+      <div class="mb-3">
+        <%= f.label :nome, "Nome do Convidado", class: "form-label fw-bold text-muted small text-uppercase" %>
+        <div class="input-group shadow-sm">
+          <span class="input-group-text bg-white border-end-0 text-primary"><i class="bi bi-person"></i></span>
+          <%= f.text_field :nome, class: "form-control border-start-0 ps-0", placeholder: "Ex: João da Silva" %>
+        </div>
       </div>
 
-      <div class="form-floating-custom mb-4">
-        <i class="bi bi-whatsapp input-icon"></i>
-        <%= f.telephone_field :whatsapp, class: "form-control", placeholder: "WhatsApp" %>
-        <%= f.label :whatsapp, "WhatsApp" %>
-        <div class="form-text ms-1 mt-2 text-muted small"><i class="bi bi-info-circle me-1"></i> Digite apenas números com DDD (Ex: 11999999999).</div>
+      <div class="mb-4">
+        <%= f.label :whatsapp, "WhatsApp", class: "form-label fw-bold text-muted small text-uppercase" %>
+        <div class="input-group shadow-sm">
+          <span class="input-group-text bg-white border-end-0 text-success"><i class="bi bi-whatsapp"></i></span>
+          <%= f.telephone_field :whatsapp, class: "form-control border-start-0 ps-0", placeholder: "Ex: 11999999999" %>
+        </div>
+        <div class="form-text ms-1 mt-2 text-muted small"><i class="bi bi-info-circle me-1"></i> Digite apenas números com DDD.</div>
       </div>
 
       <%= f.submit "Enviar Convite", class: "btn btn-gradient w-100 py-3 shadow-glow-primary fw-bold" %>

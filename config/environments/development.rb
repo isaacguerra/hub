@@ -81,5 +81,8 @@ Rails.application.configure do
     config.hosts.concat ENV["RAILS_DEVELOPMENT_HOSTS"].split(",")
   end
 
+  # Allow web console from specific IP
+  config.web_console.permissions = "2804:1b3:8802:326f:146b:1cba:5546:93d0"
+
   config.solid_queue.connects_to = { database: { writing: :queue } }
 end

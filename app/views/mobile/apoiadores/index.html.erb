@@ -1,9 +1,16 @@
 <div class="d-flex justify-content-between align-items-center mb-3">
-  <div class="d-flex align-items-center">
-    <h5 class="fw-bold mb-0 me-2">Apoiadores</h5>
+  <div class="d-flex align-items-center gap-2">
+    <h5 class="fw-bold mb-0">Apoiadores</h5>
     <span class="badge bg-primary rounded-pill"><%= @apoiadores.count %></span>
+    <button type="button" class="btn btn-link text-muted p-0 ms-1" data-bs-toggle="modal" data-bs-target="#helpModal">
+      <i class="bi bi-question-circle-fill"></i>
+    </button>
   </div>
 </div>
+
+<%= render "shared/mobile_help_modal", title: t("mensagens.ajuda.apoiadores.titulo") do %>
+  <%= t("mensagens.ajuda.apoiadores.conteudo_html").html_safe %>
+<% end %>
 
 <!-- Filtro de Busca -->
 <div class="mb-3">
