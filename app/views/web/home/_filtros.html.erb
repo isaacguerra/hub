@@ -1,49 +1,49 @@
-<div class="card card-custom mb-4">
+<div class="vibrant-card mb-4">
   <div class="card-body">
     <%= form_with url: root_path, method: :get, class: "row g-3 align-items-end", data: { controller: "location-select", turbo_action: "advance" } do |f| %>
       <div class="col-md-3">
-        <%= f.label :nome, "Nome", class: "form-label small fw-bold text-muted" %>
-        <%= f.text_field :nome, value: params[:nome], class: "form-control", placeholder: "Buscar por nome..." %>
+        <%= f.label :nome, "Nome", class: "form-label small fw-bold text-muted text-uppercase" %>
+        <%= f.text_field :nome, value: params[:nome], class: "form-control rounded-pill", placeholder: "Buscar por nome..." %>
       </div>
       
       <div class="col-md-2">
-        <%= f.label :funcao_id, "Função", class: "form-label small fw-bold text-muted" %>
-        <%= f.collection_select :funcao_id, Funcao.all, :id, :nome, { include_blank: "Todas" }, { class: "form-select", selected: params[:funcao_id] } %>
+        <%= f.label :funcao_id, "Função", class: "form-label small fw-bold text-muted text-uppercase" %>
+        <%= f.collection_select :funcao_id, Funcao.all, :id, :nome, { include_blank: "Todas" }, { class: "form-select rounded-pill", selected: params[:funcao_id] } %>
       </div>
       
       <div class="col-md-2">
-        <%= f.label :municipio_id, "Município", class: "form-label small fw-bold text-muted" %>
-        <%= f.collection_select :municipio_id, Municipio.all, :id, :nome, { include_blank: "Todos" }, { class: "form-select", selected: params[:municipio_id], data: { location_select_target: "municipio", action: "change->location-select#filterRegioes" } } %>
+        <%= f.label :municipio_id, "Município", class: "form-label small fw-bold text-muted text-uppercase" %>
+        <%= f.collection_select :municipio_id, Municipio.all, :id, :nome, { include_blank: "Todos" }, { class: "form-select rounded-pill", selected: params[:municipio_id], data: { location_select_target: "municipio", action: "change->location-select#filterRegioes" } } %>
       </div>
 
       <div class="col-md-2">
-        <%= f.label :regiao_id, "Região", class: "form-label small fw-bold text-muted" %>
+        <%= f.label :regiao_id, "Região", class: "form-label small fw-bold text-muted text-uppercase" %>
         <%= f.select :regiao_id, 
             options_for_select(Regiao.order(:nome).map { |r| [r.nome, r.id, { 'data-municipio-id' => r.municipio_id }] }, params[:regiao_id]),
             { include_blank: "Todas" }, 
-            { class: "form-select", data: { location_select_target: "regiao", action: "change->location-select#filterBairros" } } 
+            { class: "form-select rounded-pill", data: { location_select_target: "regiao", action: "change->location-select#filterBairros" } } 
         %>
       </div>
 
       <div class="col-md-2">
-        <%= f.label :bairro_id, "Bairro", class: "form-label small fw-bold text-muted" %>
+        <%= f.label :bairro_id, "Bairro", class: "form-label small fw-bold text-muted text-uppercase" %>
         <%= f.select :bairro_id, 
             options_for_select(Bairro.order(:nome).map { |b| [b.nome, b.id, { 'data-regiao-id' => b.regiao_id }] }, params[:bairro_id]),
             { include_blank: "Todos" }, 
-            { class: "form-select", data: { location_select_target: "bairro" } } 
+            { class: "form-select rounded-pill", data: { location_select_target: "bairro" } } 
         %>
       </div>
 
       <div class="col-md-1 d-grid">
-        <%= f.button type: "submit", class: "btn btn-primary-custom" do %>
+        <%= f.button type: "submit", class: "btn btn-vibrant rounded-circle p-0 d-flex align-items-center justify-content-center mx-auto", style: "width: 38px; height: 38px;" do %>
           <i class="bi bi-search"></i>
         <% end %>
       </div>
       
       <% if params[:nome].present? || params[:funcao_id].present? || params[:municipio_id].present? || params[:regiao_id].present? || params[:bairro_id].present? %>
-        <div class="col-12 mt-2">
-          <%= link_to root_path, class: "text-decoration-none small text-muted" do %>
-            <i class="bi bi-x-circle"></i> Limpar filtros
+        <div class="col-12 mt-2 text-end">
+          <%= link_to root_path, class: "text-decoration-none small text-danger fw-bold" do %>
+            <i class="bi bi-x-circle-fill"></i> Limpar filtros
           <% end %>
         </div>
       <% end %>

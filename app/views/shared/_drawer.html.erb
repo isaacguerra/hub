@@ -1,39 +1,43 @@
 <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
-  <div class="sidebar-header d-flex align-items-center justify-content-between">
-    <h5 class="offcanvas-title" id="sidebarMenuLabel">Menu Principal</h5>
+  <div class="sidebar-header d-flex align-items-center justify-content-between p-3 bg-primary text-white">
+    <h5 class="offcanvas-title fw-bold" id="sidebarMenuLabel">Menu Principal</h5>
     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   
   <div class="offcanvas-body p-0">
     <nav class="sidebar-menu mt-3">
       <div class="nav flex-column">
-        <a href="<%= root_path %>" class="nav-link <%= 'active' if current_page?(root_path) %>">
+        <%= link_to root_path, class: "nav-link #{'active' if current_page?(root_path)}" do %>
           <i class="bi bi-speedometer2"></i> Dashboard
-        </a>
+        <% end %>
 
         <div class="text-uppercase text-muted small fw-bold px-4 mt-4 mb-2">Gestão</div>
         
-        <a href="<%= apoiadores_path %>" class="nav-link <%= 'active' if controller_name == 'apoiadores' %>">
+        <%= link_to apoiadores_path, class: "nav-link #{'active' if controller_name == 'apoiadores'}" do %>
           <i class="bi bi-people"></i> Apoiadores
-        </a>
-        <a href="<%= funcoes_path %>" class="nav-link <%= 'active' if controller_name == 'funcoes' %>">
+        <% end %>
+        
+        <%= link_to funcoes_path, class: "nav-link #{'active' if controller_name == 'funcoes'}" do %>
           <i class="bi bi-briefcase"></i> Funções
-        </a>
+        <% end %>
 
         <div class="text-uppercase text-muted small fw-bold px-4 mt-4 mb-2">Campanha</div>
 
-        <a href="<%= eventos_path %>" class="nav-link <%= 'active' if controller_name == 'eventos' %>">
+        <%= link_to eventos_path, class: "nav-link #{'active' if controller_name == 'eventos'}" do %>
           <i class="bi bi-calendar-event"></i> Eventos
-        </a>
-        <a href="<%= visitas_path %>" class="nav-link <%= 'active' if controller_name == 'visitas' %>">
+        <% end %>
+        
+        <%= link_to visitas_path, class: "nav-link #{'active' if controller_name == 'visitas'}" do %>
           <i class="bi bi-calendar-check"></i> Visitas
-        </a>
-        <a href="<%= convites_path %>" class="nav-link <%= 'active' if controller_name == 'convites' %>">
+        <% end %>
+        
+        <%= link_to convites_path, class: "nav-link #{'active' if controller_name == 'convites'}" do %>
           <i class="bi bi-envelope-paper"></i> Convites
-        </a>
-        <a href="<%= comunicados_path %>" class="nav-link <%= 'active' if controller_name == 'comunicados' %>">
+        <% end %>
+        
+        <%= link_to comunicados_path, class: "nav-link #{'active' if controller_name == 'comunicados'}" do %>
           <i class="bi bi-megaphone"></i> Comunicados
-        </a>
+        <% end %>
 
         <div class="text-uppercase text-muted small fw-bold px-4 mt-4 mb-2">Engajamento</div>
 
@@ -49,20 +53,21 @@
 
         <div class="collapse <%= 'show' if controller_path.start_with?('gamification/') %>" id="gamificationMenu">
           <div class="nav flex-column ms-3 border-start border-2 ps-2">
-            <a href="<%= gamification_challenges_path %>" class="nav-link <%= 'active' if controller_name == 'challenges' %>">
+            <%= link_to gamification_challenges_path, class: "nav-link #{'active' if controller_name == 'challenges'}" do %>
               <i class="bi bi-list-check"></i> Missões
-            </a>
-            <a href="<%= gamification_configurations_path %>" class="nav-link <%= 'active' if controller_name == 'configurations' %>">
+            <% end %>
+            
+            <%= link_to gamification_configurations_path, class: "nav-link #{'active' if controller_name == 'configurations'}" do %>
               <i class="bi bi-gear"></i> Configurações
-            </a>
+            <% end %>
           </div>
         </div>
 
         <div class="text-uppercase text-muted small fw-bold px-4 mt-4 mb-2">Configurações</div>
 
-        <a href="<%= municipios_path %>" class="nav-link <%= 'active' if controller_name.in?(['municipios', 'regioes', 'bairros']) %>">
+        <%= link_to municipios_path, class: "nav-link #{'active' if controller_name.in?(['municipios', 'regioes', 'bairros'])}" do %>
           <i class="bi bi-map"></i> Localidades
-        </a>
+        <% end %>
       </div>
     </nav>
   </div>

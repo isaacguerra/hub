@@ -10,6 +10,26 @@ class Web::ApoiadoresController < ApplicationController
   def show
   end
 
+  # GET /apoiadores/new
+  def new
+    @apoiador = Apoiador.new
+  end
+
+  # POST /apoiadores or /apoiadores.json
+  def create
+    @apoiador = Apoiador.new(apoiador_params)
+
+    respond_to do |format|
+      if @apoiador.save
+        format.html { redirect_to apoiador_path(@apoiador), notice: "Apoiador criado com sucesso." }
+        format.json { render :show, status: :created, location: @apoiador }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @apoiador.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # GET /apoiadores/1/edit
   def edit
   end

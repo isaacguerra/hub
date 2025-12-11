@@ -79,7 +79,7 @@ Rails.application.routes.draw do
     resources :visitas
     resources :comunicados
     resources :convites
-    resources :apoiadores, except: [ :new, :create ]
+    resources :apoiadores
 
     resources :municipios do
       resources :regioes do

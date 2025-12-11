@@ -1,291 +1,281 @@
 <div class="col-12">
-    <!-- Seção de Campeões Temporais -->
-    <h6 class="fw-bold mt-4 mb-3 px-2 d-flex align-items-center">
-      <i class="bi bi-star-fill text-warning me-2"></i> Destaques do Período
-    </h6>
-    
-    <div class="row g-3 mb-4">
-      <!-- Campeão do Dia -->
-      <div class="col-4">
-        <% if @daily_winner %>
-          <%= link_to mobile_gamification_profile_path(@daily_winner[:apoiador]), class: "text-decoration-none" do %>
-            <div class="card border-0 shadow-sm h-100 text-center py-3 rounded-4 bg-white">
-              <div class="position-relative d-inline-block mb-2">
+  <!-- Seção de Campeões Temporais -->
+  <div class="section-title mt-2 px-1">
+    <i class="bi bi-star-fill text-warning"></i> Destaques do Período
+  </div>
+  
+  <div class="row g-3 mb-4">
+    <!-- Campeão do Dia -->
+    <div class="col-4">
+      <% if @daily_winner %>
+        <%= link_to mobile_gamification_profile_path(@daily_winner[:apoiador]), class: "text-decoration-none" do %>
+          <div class="stat-card">
+            <div class="position-relative d-inline-block mb-2">
+              <div class="avatar-wrapper">
                 <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@daily_winner[:apoiador].whatsapp) %>" 
-                     class="rounded-circle border border-3 border-info p-1" 
-                     style="width: 60px; height: 60px; object-fit: cover;"
+                     class="avatar-img" 
+                     style="width: 50px; height: 50px;"
                      onerror="this.src='https://ui-avatars.com/api/?name=<%= @daily_winner[:apoiador].name %>&background=random'">
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">Dia</span>
               </div>
-              <div class="px-1">
-                <h6 class="fw-bold text-dark mb-0 small text-truncate"><%= @daily_winner[:apoiador].name.split.first %></h6>
-                <small class="text-muted" style="font-size: 0.7rem;"><%= "#{@daily_winner[:points]} XP" %></small>
-              </div>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info shadow-sm" style="font-size: 0.6rem;">Dia</span>
             </div>
-          <% end %>
-        <% else %>
-          <div class="card border-0 shadow-sm h-100 text-center py-3 rounded-4 bg-white">
-            <div class="position-relative d-inline-block mb-2">
-              <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto" style="width: 60px; height: 60px;">
-                <i class="bi bi-person text-muted fs-3"></i>
-              </div>
-            </div>
-            <div class="px-1">
-              <h6 class="fw-bold text-dark mb-0 small text-truncate">---</h6>
-              <small class="text-muted" style="font-size: 0.7rem;">Sem dados</small>
+            <div class="mt-1">
+              <h6 class="fw-bold text-dark mb-0 small text-truncate" style="font-size: 0.8rem;"><%= @daily_winner[:apoiador].name.split.first %></h6>
+              <small class="text-muted fw-bold" style="font-size: 0.7rem;"><%= "#{@daily_winner[:points]} XP" %></small>
             </div>
           </div>
         <% end %>
-      </div>
+      <% else %>
+        <div class="stat-card opacity-75">
+          <div class="icon-box bg-soft-info rounded-circle mx-auto mb-2" style="width: 50px; height: 50px; font-size: 1.2rem;">
+            <i class="bi bi-person"></i>
+          </div>
+          <div>
+            <h6 class="fw-bold text-muted mb-0 small">---</h6>
+            <small class="text-muted" style="font-size: 0.65rem;">Sem dados</small>
+          </div>
+        </div>
+      <% end %>
+    </div>
 
-      <!-- Campeão da Semana -->
-      <div class="col-4">
-        <% if @weekly_winner %>
-          <%= link_to mobile_gamification_profile_path(@weekly_winner[:apoiador]), class: "text-decoration-none" do %>
-            <div class="card border-0 shadow-sm h-100 text-center py-3 rounded-4 bg-white transform-scale-105" style="transform: scale(1.05); z-index: 1;">
-              <div class="position-relative d-inline-block mb-2">
+    <!-- Campeão da Semana -->
+    <div class="col-4">
+      <% if @weekly_winner %>
+        <%= link_to mobile_gamification_profile_path(@weekly_winner[:apoiador]), class: "text-decoration-none" do %>
+          <div class="stat-card transform-scale-105 border-warning border border-opacity-25" style="transform: scale(1.08); z-index: 10;">
+            <div class="position-relative d-inline-block mb-2">
+              <div class="avatar-wrapper">
                 <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@weekly_winner[:apoiador].whatsapp) %>" 
-                     class="rounded-circle border border-3 border-warning p-1" 
-                     style="width: 70px; height: 70px; object-fit: cover;"
+                     class="avatar-img border-warning" 
+                     style="width: 60px; height: 60px; border-width: 3px;"
                      onerror="this.src='https://ui-avatars.com/api/?name=<%= @weekly_winner[:apoiador].name %>&background=random'">
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark">Semana</span>
               </div>
-              <div class="px-1">
-                <h6 class="fw-bold text-dark mb-0 small text-truncate"><%= @weekly_winner[:apoiador].name.split.first %></h6>
-                <small class="text-muted fw-bold text-warning" style="font-size: 0.75rem;"><%= "#{@weekly_winner[:points]} XP" %></small>
-              </div>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark shadow-sm">Semana</span>
             </div>
-          <% end %>
-        <% else %>
-          <div class="card border-0 shadow-sm h-100 text-center py-3 rounded-4 bg-white transform-scale-105" style="transform: scale(1.05); z-index: 1;">
-            <div class="position-relative d-inline-block mb-2">
-              <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto" style="width: 70px; height: 70px;">
-                <i class="bi bi-trophy text-warning fs-2"></i>
-              </div>
-            </div>
-            <div class="px-1">
-              <h6 class="fw-bold text-dark mb-0 small text-truncate">---</h6>
-              <small class="text-muted fw-bold text-warning" style="font-size: 0.75rem;">Sem dados</small>
+            <div class="mt-1">
+              <h6 class="fw-bold text-dark mb-0 small text-truncate"><%= @weekly_winner[:apoiador].name.split.first %></h6>
+              <small class="text-warning fw-bold" style="font-size: 0.75rem;"><%= "#{@weekly_winner[:points]} XP" %></small>
             </div>
           </div>
         <% end %>
-      </div>
+      <% else %>
+        <div class="stat-card opacity-75" style="transform: scale(1.05);">
+          <div class="icon-box bg-soft-warning rounded-circle mx-auto mb-2" style="width: 60px; height: 60px;">
+            <i class="bi bi-trophy"></i>
+          </div>
+          <div>
+            <h6 class="fw-bold text-muted mb-0 small">---</h6>
+            <small class="text-muted" style="font-size: 0.65rem;">Sem dados</small>
+          </div>
+        </div>
+      <% end %>
+    </div>
 
-      <!-- Campeão do Mês -->
-      <div class="col-4">
-        <% if @monthly_winner %>
-          <%= link_to mobile_gamification_profile_path(@monthly_winner[:apoiador]), class: "text-decoration-none" do %>
-            <div class="card border-0 shadow-sm h-100 text-center py-3 rounded-4 bg-white">
-              <div class="position-relative d-inline-block mb-2">
+    <!-- Campeão do Mês -->
+    <div class="col-4">
+      <% if @monthly_winner %>
+        <%= link_to mobile_gamification_profile_path(@monthly_winner[:apoiador]), class: "text-decoration-none" do %>
+          <div class="stat-card">
+            <div class="position-relative d-inline-block mb-2">
+              <div class="avatar-wrapper">
                 <img src="<%= Utils::BuscaImagemWhatsapp.buscar(@monthly_winner[:apoiador].whatsapp) %>" 
-                     class="rounded-circle border border-3 border-primary p-1" 
-                     style="width: 60px; height: 60px; object-fit: cover;"
+                     class="avatar-img" 
+                     style="width: 50px; height: 50px;"
                      onerror="this.src='https://ui-avatars.com/api/?name=<%= @monthly_winner[:apoiador].name %>&background=random'">
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">Mês</span>
               </div>
-              <div class="px-1">
-                <h6 class="fw-bold text-dark mb-0 small text-truncate"><%= @monthly_winner[:apoiador].name.split.first %></h6>
-                <small class="text-muted" style="font-size: 0.7rem;"><%= "#{@monthly_winner[:points]} XP" %></small>
-              </div>
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary shadow-sm" style="font-size: 0.6rem;">Mês</span>
             </div>
-          <% end %>
-        <% else %>
-          <div class="card border-0 shadow-sm h-100 text-center py-3 rounded-4 bg-white">
-            <div class="position-relative d-inline-block mb-2">
-              <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto" style="width: 60px; height: 60px;">
-                <i class="bi bi-calendar-check text-muted fs-3"></i>
-              </div>
-            </div>
-            <div class="px-1">
-              <h6 class="fw-bold text-dark mb-0 small text-truncate">---</h6>
-              <small class="text-muted" style="font-size: 0.7rem;">Sem dados</small>
+            <div class="mt-1">
+              <h6 class="fw-bold text-dark mb-0 small text-truncate" style="font-size: 0.8rem;"><%= @monthly_winner[:apoiador].name.split.first %></h6>
+              <small class="text-primary fw-bold" style="font-size: 0.7rem;"><%= "#{@monthly_winner[:points]} XP" %></small>
             </div>
           </div>
         <% end %>
-      </div>
+      <% else %>
+        <div class="stat-card opacity-75">
+          <div class="icon-box bg-soft-primary rounded-circle mx-auto mb-2" style="width: 50px; height: 50px; font-size: 1.2rem;">
+            <i class="bi bi-calendar-check"></i>
+          </div>
+          <div>
+            <h6 class="fw-bold text-muted mb-0 small">---</h6>
+            <small class="text-muted" style="font-size: 0.65rem;">Sem dados</small>
+          </div>
+        </div>
+      <% end %>
     </div>
+  </div>
 
-    <!-- Seção Hall da Fama (Ouro) -->
-    <h6 class="fw-bold mb-3 px-2 d-flex align-items-center">
-      <i class="bi bi-award-fill text-warning me-2"></i> Hall da Fama
-    </h6>
-    
-    <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
-      <div class="list-group list-group-flush">
-        <% if @gold_champions.any? %>
-          <% @gold_champions.each_with_index do |point, index| %>
-            <%= link_to mobile_gamification_profile_path(point.apoiador), class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top" do %>
-              <div class="me-3 position-relative">
+  <!-- Seção Hall da Fama (Ouro) -->
+  <div class="section-title px-1">
+    <i class="bi bi-award-fill text-warning"></i> Hall da Fama
+  </div>
+  
+  <div class="vibrant-card mb-4">
+    <div class="list-group list-group-flush">
+      <% if @gold_champions.any? %>
+        <% @gold_champions.each_with_index do |point, index| %>
+          <%= link_to mobile_gamification_profile_path(point.apoiador), class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top-0 border-bottom" do %>
+            <div class="me-3 position-relative">
+              <div class="avatar-wrapper">
                 <img src="<%= Utils::BuscaImagemWhatsapp.buscar(point.apoiador.whatsapp) %>" 
-                     class="rounded-circle" 
-                     style="width: 45px; height: 45px; object-fit: cover;"
+                     class="avatar-img" 
+                     style="width: 48px; height: 48px;"
                      onerror="this.src='https://ui-avatars.com/api/?name=<%= point.apoiador.name %>&background=random'">
-                <div class="position-absolute bottom-0 end-0 bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 20px; height: 20px;">
-                  <% color = index == 0 ? 'text-warning' : (index == 1 ? 'text-secondary' : 'text-danger') %>
-                  <i class="bi bi-trophy-fill <%= color %>" style="font-size: 0.7rem;"></i>
-                </div>
               </div>
-              
-              <div class="flex-grow-1">
-                <div class="d-flex justify-content-between align-items-center">
-                  <h6 class="fw-bold text-dark mb-0"><%= point.apoiador.name %></h6>
-                  <span class="badge bg-light text-dark border">Lvl <%= point.level %></span>
-                </div>
-                <div class="d-flex justify-content-between align-items-center mt-1">
-                  <small class="text-muted"><%= point.points %> XP Totais</small>
-                  <% if index == 0 %>
-                    <span class="badge bg-warning text-dark rounded-pill" style="font-size: 0.6rem;">LÍDER</span>
-                  <% end %>
-                </div>
+              <div class="position-absolute bottom-0 end-0 bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 22px; height: 22px; border: 2px solid white;">
+                <% color = index == 0 ? 'text-warning' : (index == 1 ? 'text-secondary' : 'text-danger') %>
+                <i class="bi bi-trophy-fill <%= color %>" style="font-size: 0.7rem;"></i>
               </div>
-            <% end %>
+            </div>
+            
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="fw-bold text-dark mb-0"><%= point.apoiador.name %></h6>
+                <span class="badge bg-soft-purple text-dark border-0">Lvl <%= point.level %></span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-1">
+                <small class="text-muted fw-medium"><%= point.points %> XP Totais</small>
+                <% if index == 0 %>
+                  <span class="badge bg-warning text-dark rounded-pill shadow-sm" style="font-size: 0.6rem;">LÍDER</span>
+                <% end %>
+              </div>
+            </div>
+            <div class="ms-2 text-muted">
+              <i class="bi bi-chevron-right"></i>
+            </div>
           <% end %>
-        <% else %>
-          <div class="text-center py-4">
-            <p class="text-muted small mb-0">Ainda não há campeões registrados.</p>
-          </div>
         <% end %>
-      </div>
+      <% else %>
+        <div class="text-center py-5">
+          <div class="icon-box bg-soft-warning rounded-circle mx-auto mb-3">
+            <i class="bi bi-trophy"></i>
+          </div>
+          <p class="text-muted fw-medium mb-0">Ainda não há campeões registrados.</p>
+        </div>
+      <% end %>
     </div>
+  </div>
 
-    <h6 class="fw-bold mt-3 mb-3 px-2">Menu Principal</h6>
-    <div class="mobile-card p-0">
-      <div class="list-group list-group-flush">
-        
-        <!-- Perfil -->
-        <a href="<%= mobile_perfil_path %>" class="list-group-item list-group-item-action d-flex align-items-center p-3 border-0">
-          <div class="icon-box primary mb-0 me-3" style="width: 40px; height: 40px; font-size: 1.2rem;">
-            <i class="bi bi-person-circle"></i>
-          </div>
-          <div>
-            <div class="fw-bold text-dark">Meu Perfil</div>
-            <div class="small text-muted">Meus dados e QR Code</div>
-          </div>
-          <i class="bi bi-chevron-right ms-auto text-muted"></i>
-        </a>
-        <div class="border-top mx-3 opacity-25"></div>
+  <!-- Menu Principal (Lista) -->
+  <div class="section-title px-1">
+    <i class="bi bi-grid-fill text-primary"></i> Menu Principal
+  </div>
 
-        <!-- Convites -->
-        <a href="<%= mobile_convites_path %>" class="list-group-item list-group-item-action d-flex align-items-center p-3 border-0">
-          <div class="icon-box success mb-0 me-3" style="width: 40px; height: 40px; font-size: 1.2rem;">
-            <i class="bi bi-envelope-paper-fill"></i>
-          </div>
-          <div>
-            <div class="fw-bold text-dark">Convites</div>
-            <div class="small text-muted">Gerenciar convites</div>
-          </div>
-          <i class="bi bi-chevron-right ms-auto text-muted"></i>
-        </a>
-        <div class="border-top mx-3 opacity-25"></div>
+  <div class="vibrant-card mb-4">
+    <div class="list-group list-group-flush">
+      <%= link_to mobile_perfil_path, class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top-0 border-bottom" do %>
+        <div class="icon-box bg-soft-primary rounded-circle me-3" style="width: 40px; height: 40px; font-size: 1.1rem;">
+          <i class="bi bi-person-circle"></i>
+        </div>
+        <div class="flex-grow-1">
+          <h6 class="fw-bold text-dark mb-0">Meu Perfil</h6>
+          <small class="text-muted">Gerencie seus dados e preferências</small>
+        </div>
+        <div class="ms-2 text-muted"><i class="bi bi-chevron-right"></i></div>
+      <% end %>
 
-        <!-- Apoiadores -->
-        <a href="<%= mobile_apoiadores_path %>" class="list-group-item list-group-item-action d-flex align-items-center p-3 border-0">
-          <div class="icon-box primary mb-0 me-3" style="width: 40px; height: 40px; font-size: 1.2rem;">
-            <i class="bi bi-people-fill"></i>
-          </div>
-          <div>
-            <div class="fw-bold text-dark">Apoiadores</div>
-            <div class="small text-muted">Minha rede de apoio</div>
-          </div>
-          <i class="bi bi-chevron-right ms-auto text-muted"></i>
-        </a>
-        <div class="border-top mx-3 opacity-25"></div>
+      <%= link_to mobile_apoiadores_path, class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top-0 border-bottom" do %>
+        <div class="icon-box bg-soft-success rounded-circle me-3" style="width: 40px; height: 40px; font-size: 1.1rem;">
+          <i class="bi bi-people-fill"></i>
+        </div>
+        <div class="flex-grow-1">
+          <h6 class="fw-bold text-dark mb-0">Minha Rede</h6>
+          <small class="text-muted">Visualize seus apoiadores e conexões</small>
+        </div>
+        <div class="ms-2 text-muted"><i class="bi bi-chevron-right"></i></div>
+      <% end %>
 
-        <!-- Comunicados -->
-        <a href="<%= mobile_comunicados_path %>" class="list-group-item list-group-item-action d-flex align-items-center p-3 border-0">
-          <div class="icon-box warning mb-0 me-3" style="width: 40px; height: 40px; font-size: 1.2rem;">
-            <i class="bi bi-megaphone-fill"></i>
-          </div>
-          <div>
-            <div class="fw-bold text-dark">Comunicados</div>
-            <div class="small text-muted">Avisos e notícias</div>
-          </div>
-          <i class="bi bi-chevron-right ms-auto text-muted"></i>
-        </a>
-        <div class="border-top mx-3 opacity-25"></div>
+      <%= link_to mobile_gamification_index_path, class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top-0 border-bottom" do %>
+        <div class="icon-box bg-soft-warning rounded-circle me-3" style="width: 40px; height: 40px; font-size: 1.1rem;">
+          <i class="bi bi-trophy-fill"></i>
+        </div>
+        <div class="flex-grow-1">
+          <h6 class="fw-bold text-dark mb-0">Missões e Desafios</h6>
+          <small class="text-muted">Complete tarefas e ganhe recompensas</small>
+        </div>
+        <div class="ms-2 text-muted"><i class="bi bi-chevron-right"></i></div>
+      <% end %>
 
-        <!-- Eventos -->
-        <a href="<%= mobile_eventos_path %>" class="list-group-item list-group-item-action d-flex align-items-center p-3 border-0">
-          <div class="icon-box primary mb-0 me-3" style="width: 40px; height: 40px; font-size: 1.2rem;">
-            <i class="bi bi-calendar-event-fill"></i>
-          </div>
-          <div>
-            <div class="fw-bold text-dark">Eventos</div>
-            <div class="small text-muted">Agenda de campanha</div>
-          </div>
-          <i class="bi bi-chevron-right ms-auto text-muted"></i>
-        </a>
-        <div class="border-top mx-3 opacity-25"></div>
+      <%= link_to mobile_convites_path, class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top-0 border-bottom" do %>
+        <div class="icon-box bg-soft-info rounded-circle me-3" style="width: 40px; height: 40px; font-size: 1.1rem;">
+          <i class="bi bi-envelope-paper-fill"></i>
+        </div>
+        <div class="flex-grow-1">
+          <h6 class="fw-bold text-dark mb-0">Convites</h6>
+          <small class="text-muted">Envie e gerencie convites</small>
+        </div>
+        <div class="ms-2 text-muted"><i class="bi bi-chevron-right"></i></div>
+      <% end %>
 
-        <!-- Visitas -->
-        <a href="<%= mobile_visitas_path %>" class="list-group-item list-group-item-action d-flex align-items-center p-3 border-0">
-          <div class="icon-box warning mb-0 me-3" style="width: 40px; height: 40px; font-size: 1.2rem;">
-            <i class="bi bi-geo-alt-fill"></i>
-          </div>
-          <div>
-            <div class="fw-bold text-dark">Visitas</div>
-            <div class="small text-muted">Registro de visitas</div>
-          </div>
-          <i class="bi bi-chevron-right ms-auto text-muted"></i>
-        </a>
-        <div class="border-top mx-3 opacity-25"></div>
+      <%= link_to mobile_eventos_path, class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top-0 border-bottom" do %>
+        <div class="icon-box bg-soft-danger rounded-circle me-3" style="width: 40px; height: 40px; font-size: 1.1rem;">
+          <i class="bi bi-calendar-event-fill"></i>
+        </div>
+        <div class="flex-grow-1">
+          <h6 class="fw-bold text-dark mb-0">Eventos</h6>
+          <small class="text-muted">Confira a agenda e participe</small>
+        </div>
+        <div class="ms-2 text-muted"><i class="bi bi-chevron-right"></i></div>
+      <% end %>
 
-        <!-- Estatísticas -->
-        <a href="<%= mobile_estatisticas_path %>" class="list-group-item list-group-item-action d-flex align-items-center p-3 border-0">
-          <div class="icon-box success mb-0 me-3" style="width: 40px; height: 40px; font-size: 1.2rem;">
-            <i class="bi bi-graph-up-arrow"></i>
-          </div>
-          <div>
-            <div class="fw-bold text-dark">Estatísticas</div>
-            <div class="small text-muted">Desempenho e métricas</div>
-          </div>
-          <i class="bi bi-chevron-right ms-auto text-muted"></i>
-        </a>
-        <div class="border-top mx-3 opacity-25"></div>
+      <%= link_to mobile_visitas_path, class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top-0 border-bottom" do %>
+        <div class="icon-box bg-soft-purple rounded-circle me-3" style="width: 40px; height: 40px; font-size: 1.1rem;">
+          <i class="bi bi-geo-alt-fill"></i>
+        </div>
+        <div class="flex-grow-1">
+          <h6 class="fw-bold text-dark mb-0">Visitas</h6>
+          <small class="text-muted">Registre e acompanhe visitas</small>
+        </div>
+        <div class="ms-2 text-muted"><i class="bi bi-chevron-right"></i></div>
+      <% end %>
 
-        <!-- Missões e Ranking -->
-        <a href="<%= mobile_gamification_index_path %>" class="list-group-item list-group-item-action d-flex align-items-center p-3 border-0">
-          <div class="icon-box warning mb-0 me-3" style="width: 40px; height: 40px; font-size: 1.2rem;">
-            <i class="bi bi-trophy-fill"></i>
-          </div>
-          <div>
-            <div class="fw-bold text-dark">Missões</div>
-            <div class="small text-muted">Desafios e Prêmios</div>
-          </div>
-          <i class="bi bi-chevron-right ms-auto text-muted"></i>
-        </a>
+      <%= link_to mobile_comunicados_path, class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top-0 border-bottom" do %>
+        <div class="icon-box bg-soft-primary rounded-circle me-3" style="width: 40px; height: 40px; font-size: 1.1rem;">
+          <i class="bi bi-megaphone-fill"></i>
+        </div>
+        <div class="flex-grow-1">
+          <h6 class="fw-bold text-dark mb-0">Comunicados</h6>
+          <small class="text-muted">Fique por dentro das novidades</small>
+        </div>
+        <div class="ms-2 text-muted"><i class="bi bi-chevron-right"></i></div>
+      <% end %>
 
-        <% if Current.apoiador.candidato? || Current.apoiador.coordenador_geral? %>
-          <div class="border-top mx-3 opacity-25"></div>
-          <!-- Gerenciar Missões -->
-          <a href="<%= mobile_gamification_challenges_path %>" class="list-group-item list-group-item-action d-flex align-items-center p-3 border-0">
-            <div class="icon-box primary mb-0 me-3" style="width: 40px; height: 40px; font-size: 1.2rem;">
-              <i class="bi bi-trophy"></i>
-            </div>
-            <div>
-              <div class="fw-bold text-dark">Gerenciar Missões</div>
-              <div class="small text-muted">Criar e editar missões</div>
-            </div>
-            <i class="bi bi-chevron-right ms-auto text-muted"></i>
-          </a>
+      <%= link_to mobile_estatisticas_path, class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top-0 border-bottom" do %>
+        <div class="icon-box bg-soft-success rounded-circle me-3" style="width: 40px; height: 40px; font-size: 1.1rem;">
+          <i class="bi bi-bar-chart-fill"></i>
+        </div>
+        <div class="flex-grow-1">
+          <h6 class="fw-bold text-dark mb-0">Estatísticas</h6>
+          <small class="text-muted">Acompanhe o desempenho geral</small>
+        </div>
+        <div class="ms-2 text-muted"><i class="bi bi-chevron-right"></i></div>
+      <% end %>
+
+      <% if Current.apoiador.candidato? || Current.apoiador.coordenador_geral? %>
+        <%= link_to mobile_gamification_challenges_path, class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top-0 border-bottom" do %>
+          <div class="icon-box bg-soft-primary rounded-circle me-3" style="width: 40px; height: 40px; font-size: 1.1rem;">
+            <i class="bi bi-trophy"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h6 class="fw-bold text-dark mb-0">Gerenciar Missões</h6>
+            <small class="text-muted">Criar e editar missões</small>
+          </div>
+          <div class="ms-2 text-muted"><i class="bi bi-chevron-right"></i></div>
         <% end %>
+      <% end %>
 
-        <% if Current.apoiador.e_autorizado?(:admin) %>
-          <div class="border-top mx-3 opacity-25"></div>
-          <!-- Regiões e Bairros -->
-          <a href="<%= mobile_municipios_path %>" class="list-group-item list-group-item-action d-flex align-items-center p-3 border-0">
-            <div class="icon-box primary mb-0 me-3" style="width: 40px; height: 40px; font-size: 1.2rem;">
-              <i class="bi bi-map-fill"></i>
-            </div>
-            <div>
-              <div class="fw-bold text-dark">Regiões e Bairros</div>
-              <div class="small text-muted">Gerenciar territórios</div>
-            </div>
-            <i class="bi bi-chevron-right ms-auto text-muted"></i>
-          </a>
+      <% if Current.apoiador.e_autorizado?(:admin) %>
+        <%= link_to mobile_municipios_path, class: "list-group-item list-group-item-action p-3 d-flex align-items-center border-bottom-0 border-top-0 border-bottom" do %>
+          <div class="icon-box bg-soft-primary rounded-circle me-3" style="width: 40px; height: 40px; font-size: 1.1rem;">
+            <i class="bi bi-map-fill"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h6 class="fw-bold text-dark mb-0">Regiões e Bairros</h6>
+            <small class="text-muted">Gerenciar territórios</small>
+          </div>
+          <div class="ms-2 text-muted"><i class="bi bi-chevron-right"></i></div>
         <% end %>
-
-      </div>
+      <% end %>
     </div>
   </div>
 </div>

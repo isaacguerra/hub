@@ -1,49 +1,55 @@
 <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
-  <div class="card h-100 card-custom border-0 shadow-sm hover-shadow transition-all">
+  <div class="vibrant-card h-100 position-relative">
     <div class="card-body text-center p-4">
       <div class="mb-3 position-relative d-inline-block">
-        <% if apoiador.foto_perfil_url.present? %>
-          <%= image_tag apoiador.foto_perfil_url, class: "rounded-circle border border-3 border-white shadow-sm", style: "width: 100px; height: 100px; object-fit: cover;" %>
-        <% else %>
-          <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mx-auto border border-3 border-white shadow-sm" style="width: 100px; height: 100px;">
-            <span class="display-6 text-muted"><%= apoiador.nome.first.upcase %></span>
-          </div>
-        <% end %>
-        <span class="position-absolute bottom-0 end-0 p-2 bg-success border border-light rounded-circle">
+        <div class="avatar-wrapper">
+          <% if apoiador.foto_perfil_url.present? %>
+            <%= image_tag apoiador.foto_perfil_url, class: "avatar-img", style: "width: 100px; height: 100px;" %>
+          <% else %>
+            <div class="avatar-img bg-soft-primary d-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+              <span class="display-6 text-primary fw-bold"><%= apoiador.nome.first.upcase %></span>
+            </div>
+          <% end %>
+        </div>
+        <span class="position-absolute bottom-0 end-0 p-2 bg-success border border-2 border-white rounded-circle shadow-sm">
           <span class="visually-hidden">Ativo</span>
         </span>
       </div>
 
-      <h5 class="card-title mb-1 fw-bold text-dark"><%= link_to apoiador.nome, apoiador_path(apoiador), class: "text-decoration-none text-dark stretched-link" %></h5>
-      <p class="text-muted small mb-3"><%= apoiador.funcao&.nome || "Sem função" %></p>
+      <h5 class="card-title mb-1 fw-bold text-dark text-truncate px-2">
+        <%= link_to apoiador.nome, apoiador_path(apoiador), class: "text-decoration-none text-dark stretched-link" %>
+      </h5>
+      <p class="badge bg-soft-info text-dark rounded-pill mb-3 px-3 py-2 fw-normal">
+        <%= apoiador.funcao&.nome || "Sem função" %>
+      </p>
 
-      <div class="d-flex justify-content-center gap-2 mb-4">
+      <div class="d-flex justify-content-center gap-2 mb-4 position-relative z-2">
         <% if apoiador.whatsapp.present? %>
-          <a href="https://wa.me/55<%= apoiador.whatsapp.gsub(/\D/, '') %>" target="_blank" class="btn btn-sm btn-outline-success rounded-circle position-relative z-2" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;">
+          <a href="https://wa.me/55<%= apoiador.whatsapp.gsub(/\D/, '') %>" target="_blank" class="btn btn-sm btn-outline-success rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px;">
             <i class="bi bi-whatsapp"></i>
           </a>
         <% end %>
         <% if apoiador.email.present? %>
-          <a href="mailto:<%= apoiador.email %>" class="btn btn-sm btn-outline-secondary rounded-circle position-relative z-2" style="width: 32px; height: 32px; padding: 0; display: flex; align-items: center; justify-content: center;">
+          <a href="mailto:<%= apoiador.email %>" class="btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px;">
             <i class="bi bi-envelope"></i>
           </a>
         <% end %>
       </div>
 
-      <div class="border-top pt-3 text-start">
+      <div class="border-top pt-3 text-start bg-soft-light mx-n4 px-4 pb-4 mb-n4 mt-auto">
         <div class="d-flex align-items-center mb-2 text-muted small">
-          <i class="bi bi-geo-alt me-2 text-primary"></i>
+          <i class="bi bi-geo-alt-fill me-2 text-danger opacity-75"></i>
           <span class="text-truncate"><%= apoiador.bairro&.nome || "Bairro N/A" %>, <%= apoiador.municipio&.nome || "Município N/A" %></span>
         </div>
         <div class="d-flex align-items-center text-muted small">
-          <i class="bi bi-people me-2 text-warning"></i>
+          <i class="bi bi-people-fill me-2 text-primary opacity-75"></i>
           <span>Rede: <strong><%= apoiador.apoiadores_rede.count %></strong> indicados</span>
         </div>
       </div>
     </div>
-    <div class="card-footer bg-transparent border-0 pb-3 pt-0">
+    <div class="card-footer bg-white border-0 pb-3 pt-3 px-4">
       <div class="d-grid gap-2">
-        <%= link_to "Ver Perfil", apoiador_path(apoiador), class: "btn btn-light btn-sm text-primary fw-bold position-relative z-2" %>
+        <%= link_to "Ver Perfil", apoiador_path(apoiador), class: "btn btn-vibrant btn-sm fw-bold position-relative z-2" %>
       </div>
     </div>
   </div>
