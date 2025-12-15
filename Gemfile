@@ -66,7 +66,7 @@ group :test do
   gem "sqlite3"
 end
 
-gem "dotenv-rails", "~> 3.1", groups: [ :development, :test ]
+gem "dotenv-rails", "~> 3.2", groups: [ :development, :test ]
 # gem "tzinfo-data"
 
 gem "prawn", "~> 2.5", group: :development
