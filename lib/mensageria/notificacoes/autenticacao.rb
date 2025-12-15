@@ -13,7 +13,8 @@ module Mensageria
           SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
             mensagem: texto,
-            image_url: imagem_whatsapp
+            image_url: imagem_whatsapp,
+            projeto_id: apoiador.projeto_id
           )
         rescue StandardError => e
           Rails.logger.error "Erro ao enviar código de autenticação para apoiador #{apoiador.id}: #{e.message}"
@@ -35,7 +36,8 @@ module Mensageria
           SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
             mensagem: texto,
-            image_url: imagem_whatsapp
+            image_url: imagem_whatsapp,
+            projeto_id: apoiador.projeto_id
           )
         rescue StandardError => e
           Rails.logger.error "Erro ao enviar link mágico para apoiador #{apoiador.id}: #{e.message}"

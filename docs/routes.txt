@@ -1,0 +1,230 @@
+                                  Prefix Verb   URI Pattern                                                                                       Controller#Action
+                              api_painel GET    /api/painel(.:format)                                                                             api/paineis#show
+                   api_mobile_auth_login POST   /api/mobile/auth/login(.:format)                                                                  api/mobile/auths#login
+                     api_chatbot_webhook POST   /api/chatbot/webhook(.:format)                                                                    api/chatbot/webhook#receive
+                              magic_link GET    /m/:codigo(.:format)                                                                              mobile/sessions#create
+                             mobile_root GET    /mobile(.:format)                                                                                 mobile/dashboard#index
+                        mobile_dashboard GET    /mobile/dashboard(.:format)                                                                       mobile/dashboard#index
+                           mobile_logout DELETE /mobile/logout(.:format)                                                                          mobile/sessions#destroy
+                    card_mobile_apoiador GET    /mobile/apoiadores/:id/card(.:format)                                                             mobile/apoiadores#card
+                       mobile_apoiadores GET    /mobile/apoiadores(.:format)                                                                      mobile/apoiadores#index
+                                         POST   /mobile/apoiadores(.:format)                                                                      mobile/apoiadores#create
+                     new_mobile_apoiador GET    /mobile/apoiadores/new(.:format)                                                                  mobile/apoiadores#new
+                    edit_mobile_apoiador GET    /mobile/apoiadores/:id/edit(.:format)                                                             mobile/apoiadores#edit
+                         mobile_apoiador GET    /mobile/apoiadores/:id(.:format)                                                                  mobile/apoiadores#show
+                                         PATCH  /mobile/apoiadores/:id(.:format)                                                                  mobile/apoiadores#update
+                                         PUT    /mobile/apoiadores/:id(.:format)                                                                  mobile/apoiadores#update
+                                         DELETE /mobile/apoiadores/:id(.:format)                                                                  mobile/apoiadores#destroy
+                         mobile_convites GET    /mobile/convites(.:format)                                                                        mobile/convites#index
+                                         POST   /mobile/convites(.:format)                                                                        mobile/convites#create
+                      new_mobile_convite GET    /mobile/convites/new(.:format)                                                                    mobile/convites#new
+                     edit_mobile_convite GET    /mobile/convites/:id/edit(.:format)                                                               mobile/convites#edit
+                          mobile_convite GET    /mobile/convites/:id(.:format)                                                                    mobile/convites#show
+                                         PATCH  /mobile/convites/:id(.:format)                                                                    mobile/convites#update
+                                         PUT    /mobile/convites/:id(.:format)                                                                    mobile/convites#update
+                                         DELETE /mobile/convites/:id(.:format)                                                                    mobile/convites#destroy
+                      mobile_comunicados GET    /mobile/comunicados(.:format)                                                                     mobile/comunicados#index
+                                         POST   /mobile/comunicados(.:format)                                                                     mobile/comunicados#create
+                   new_mobile_comunicado GET    /mobile/comunicados/new(.:format)                                                                 mobile/comunicados#new
+                  edit_mobile_comunicado GET    /mobile/comunicados/:id/edit(.:format)                                                            mobile/comunicados#edit
+                       mobile_comunicado GET    /mobile/comunicados/:id(.:format)                                                                 mobile/comunicados#show
+                                         PATCH  /mobile/comunicados/:id(.:format)                                                                 mobile/comunicados#update
+                                         PUT    /mobile/comunicados/:id(.:format)                                                                 mobile/comunicados#update
+                                         DELETE /mobile/comunicados/:id(.:format)                                                                 mobile/comunicados#destroy
+                          mobile_eventos GET    /mobile/eventos(.:format)                                                                         mobile/eventos#index
+                                         POST   /mobile/eventos(.:format)                                                                         mobile/eventos#create
+                       new_mobile_evento GET    /mobile/eventos/new(.:format)                                                                     mobile/eventos#new
+                      edit_mobile_evento GET    /mobile/eventos/:id/edit(.:format)                                                                mobile/eventos#edit
+                           mobile_evento GET    /mobile/eventos/:id(.:format)                                                                     mobile/eventos#show
+                                         PATCH  /mobile/eventos/:id(.:format)                                                                     mobile/eventos#update
+                                         PUT    /mobile/eventos/:id(.:format)                                                                     mobile/eventos#update
+                                         DELETE /mobile/eventos/:id(.:format)                                                                     mobile/eventos#destroy
+                          mobile_visitas GET    /mobile/visitas(.:format)                                                                         mobile/visitas#index
+                                         POST   /mobile/visitas(.:format)                                                                         mobile/visitas#create
+                       new_mobile_visita GET    /mobile/visitas/new(.:format)                                                                     mobile/visitas#new
+                      edit_mobile_visita GET    /mobile/visitas/:id/edit(.:format)                                                                mobile/visitas#edit
+                           mobile_visita GET    /mobile/visitas/:id(.:format)                                                                     mobile/visitas#show
+                                         PATCH  /mobile/visitas/:id(.:format)                                                                     mobile/visitas#update
+                                         PUT    /mobile/visitas/:id(.:format)                                                                     mobile/visitas#update
+                                         DELETE /mobile/visitas/:id(.:format)                                                                     mobile/visitas#destroy
+                           mobile_perfil GET    /mobile/perfil(.:format)                                                                          mobile/perfil#show
+                     mobile_estatisticas GET    /mobile/estatisticas(.:format)                                                                    mobile/estatisticas#index
+          mobile_gamification_challenges GET    /mobile/gamification/challenges(.:format)                                                         mobile/gamification/challenges#index
+                                         POST   /mobile/gamification/challenges(.:format)                                                         mobile/gamification/challenges#create
+       new_mobile_gamification_challenge GET    /mobile/gamification/challenges/new(.:format)                                                     mobile/gamification/challenges#new
+      edit_mobile_gamification_challenge GET    /mobile/gamification/challenges/:id/edit(.:format)                                                mobile/gamification/challenges#edit
+           mobile_gamification_challenge GET    /mobile/gamification/challenges/:id(.:format)                                                     mobile/gamification/challenges#show
+                                         PATCH  /mobile/gamification/challenges/:id(.:format)                                                     mobile/gamification/challenges#update
+                                         PUT    /mobile/gamification/challenges/:id(.:format)                                                     mobile/gamification/challenges#update
+                                         DELETE /mobile/gamification/challenges/:id(.:format)                                                     mobile/gamification/challenges#destroy
+       edit_mobile_gamification_strategy GET    /mobile/gamification/strategy/edit(.:format)                                                      mobile/gamification/strategies#edit
+            mobile_gamification_strategy PATCH  /mobile/gamification/strategy(.:format)                                                           mobile/gamification/strategies#update
+                                         PUT    /mobile/gamification/strategy(.:format)                                                           mobile/gamification/strategies#update
+             mobile_gamification_profile GET    /mobile/gamification/perfil/:id(.:format)                                                         mobile/gamification#profile
+         participate_mobile_gamification POST   /mobile/gamification/:id/participate(.:format)                                                    mobile/gamification#participate
+               mobile_gamification_index GET    /mobile/gamification(.:format)                                                                    mobile/gamification#index
+                     mobile_gamification GET    /mobile/gamification/:id(.:format)                                                                mobile/gamification#show
+                                  mobile GET    /mobile/gamification/challenges/:id(.:format)                                                     redirect(301, /mobile/gamification/%{id})
+         mobile_municipio_regiao_bairros GET    /mobile/municipios/:municipio_id/regioes/:regiao_id/bairros(.:format)                             mobile/bairros#index
+                                         POST   /mobile/municipios/:municipio_id/regioes/:regiao_id/bairros(.:format)                             mobile/bairros#create
+      new_mobile_municipio_regiao_bairro GET    /mobile/municipios/:municipio_id/regioes/:regiao_id/bairros/new(.:format)                         mobile/bairros#new
+     edit_mobile_municipio_regiao_bairro GET    /mobile/municipios/:municipio_id/regioes/:regiao_id/bairros/:id/edit(.:format)                    mobile/bairros#edit
+          mobile_municipio_regiao_bairro GET    /mobile/municipios/:municipio_id/regioes/:regiao_id/bairros/:id(.:format)                         mobile/bairros#show
+                                         PATCH  /mobile/municipios/:municipio_id/regioes/:regiao_id/bairros/:id(.:format)                         mobile/bairros#update
+                                         PUT    /mobile/municipios/:municipio_id/regioes/:regiao_id/bairros/:id(.:format)                         mobile/bairros#update
+                                         DELETE /mobile/municipios/:municipio_id/regioes/:regiao_id/bairros/:id(.:format)                         mobile/bairros#destroy
+                mobile_municipio_regioes GET    /mobile/municipios/:municipio_id/regioes(.:format)                                                mobile/regioes#index
+                                         POST   /mobile/municipios/:municipio_id/regioes(.:format)                                                mobile/regioes#create
+             new_mobile_municipio_regiao GET    /mobile/municipios/:municipio_id/regioes/new(.:format)                                            mobile/regioes#new
+            edit_mobile_municipio_regiao GET    /mobile/municipios/:municipio_id/regioes/:id/edit(.:format)                                       mobile/regioes#edit
+                 mobile_municipio_regiao GET    /mobile/municipios/:municipio_id/regioes/:id(.:format)                                            mobile/regioes#show
+                                         PATCH  /mobile/municipios/:municipio_id/regioes/:id(.:format)                                            mobile/regioes#update
+                                         PUT    /mobile/municipios/:municipio_id/regioes/:id(.:format)                                            mobile/regioes#update
+                                         DELETE /mobile/municipios/:municipio_id/regioes/:id(.:format)                                            mobile/regioes#destroy
+                       mobile_municipios GET    /mobile/municipios(.:format)                                                                      mobile/municipios#index
+                                         POST   /mobile/municipios(.:format)                                                                      mobile/municipios#create
+                    new_mobile_municipio GET    /mobile/municipios/new(.:format)                                                                  mobile/municipios#new
+                   edit_mobile_municipio GET    /mobile/municipios/:id/edit(.:format)                                                             mobile/municipios#edit
+                        mobile_municipio GET    /mobile/municipios/:id(.:format)                                                                  mobile/municipios#show
+                                         PATCH  /mobile/municipios/:id(.:format)                                                                  mobile/municipios#update
+                                         PUT    /mobile/municipios/:id(.:format)                                                                  mobile/municipios#update
+                                         DELETE /mobile/municipios/:id(.:format)                                                                  mobile/municipios#destroy
+                                 regioes GET    /regioes(.:format)                                                                                web/regioes#index
+                                         POST   /regioes(.:format)                                                                                web/regioes#create
+                              new_regiao GET    /regioes/new(.:format)                                                                            web/regioes#new
+                             edit_regiao GET    /regioes/:id/edit(.:format)                                                                       web/regioes#edit
+                                  regiao GET    /regioes/:id(.:format)                                                                            web/regioes#show
+                                         PATCH  /regioes/:id(.:format)                                                                            web/regioes#update
+                                         PUT    /regioes/:id(.:format)                                                                            web/regioes#update
+                                         DELETE /regioes/:id(.:format)                                                                            web/regioes#destroy
+                              municipios GET    /municipios(.:format)                                                                             web/municipios#index
+                                         POST   /municipios(.:format)                                                                             web/municipios#create
+                           new_municipio GET    /municipios/new(.:format)                                                                         web/municipios#new
+                          edit_municipio GET    /municipios/:id/edit(.:format)                                                                    web/municipios#edit
+                               municipio GET    /municipios/:id(.:format)                                                                         web/municipios#show
+                                         PATCH  /municipios/:id(.:format)                                                                         web/municipios#update
+                                         PUT    /municipios/:id(.:format)                                                                         web/municipios#update
+                                         DELETE /municipios/:id(.:format)                                                                         web/municipios#destroy
+                                   login GET    /login(.:format)                                                                                  web/sessions#new
+                                sessions POST   /sessions(.:format)                                                                               web/sessions#create
+                         sessions_verify GET    /sessions/verify(.:format)                                                                        web/sessions#verify_view
+                                         POST   /sessions/verify(.:format)                                                                        web/sessions#verify
+                                  logout DELETE /logout(.:format)                                                                                 web/sessions#destroy
+                         aceitar_convite GET    /convite/aceitar/:id(.:format)                                                                    web/convites_publicos#show
+                                         POST   /convite/aceitar/:id(.:format)                                                                    web/convites_publicos#accept
+                         sucesso_convite GET    /convite/sucesso(.:format)                                                                        web/convites_publicos#success
+                          ler_comunicado GET    /comunicado/:comunicado_id/ler/:apoiador_id(.:format)                                             web/comunicados_publicos#ler
+                       participar_evento GET    /evento/:evento_id/participar/:apoiador_id(.:format)                                              web/eventos_publicos#participar
+                                 funcoes GET    /funcoes(.:format)                                                                                web/funcoes#index
+                                         POST   /funcoes(.:format)                                                                                web/funcoes#create
+                              new_funcao GET    /funcoes/new(.:format)                                                                            web/funcoes#new
+                             edit_funcao GET    /funcoes/:id/edit(.:format)                                                                       web/funcoes#edit
+                                  funcao GET    /funcoes/:id(.:format)                                                                            web/funcoes#show
+                                         PATCH  /funcoes/:id(.:format)                                                                            web/funcoes#update
+                                         PUT    /funcoes/:id(.:format)                                                                            web/funcoes#update
+                                         DELETE /funcoes/:id(.:format)                                                                            web/funcoes#destroy
+                                 eventos GET    /eventos(.:format)                                                                                web/eventos#index
+                                         POST   /eventos(.:format)                                                                                web/eventos#create
+                              new_evento GET    /eventos/new(.:format)                                                                            web/eventos#new
+                             edit_evento GET    /eventos/:id/edit(.:format)                                                                       web/eventos#edit
+                                  evento GET    /eventos/:id(.:format)                                                                            web/eventos#show
+                                         PATCH  /eventos/:id(.:format)                                                                            web/eventos#update
+                                         PUT    /eventos/:id(.:format)                                                                            web/eventos#update
+                                         DELETE /eventos/:id(.:format)                                                                            web/eventos#destroy
+                                 visitas GET    /visitas(.:format)                                                                                web/visitas#index
+                                         POST   /visitas(.:format)                                                                                web/visitas#create
+                              new_visita GET    /visitas/new(.:format)                                                                            web/visitas#new
+                             edit_visita GET    /visitas/:id/edit(.:format)                                                                       web/visitas#edit
+                                  visita GET    /visitas/:id(.:format)                                                                            web/visitas#show
+                                         PATCH  /visitas/:id(.:format)                                                                            web/visitas#update
+                                         PUT    /visitas/:id(.:format)                                                                            web/visitas#update
+                                         DELETE /visitas/:id(.:format)                                                                            web/visitas#destroy
+                             comunicados GET    /comunicados(.:format)                                                                            web/comunicados#index
+                                         POST   /comunicados(.:format)                                                                            web/comunicados#create
+                          new_comunicado GET    /comunicados/new(.:format)                                                                        web/comunicados#new
+                         edit_comunicado GET    /comunicados/:id/edit(.:format)                                                                   web/comunicados#edit
+                              comunicado GET    /comunicados/:id(.:format)                                                                        web/comunicados#show
+                                         PATCH  /comunicados/:id(.:format)                                                                        web/comunicados#update
+                                         PUT    /comunicados/:id(.:format)                                                                        web/comunicados#update
+                                         DELETE /comunicados/:id(.:format)                                                                        web/comunicados#destroy
+                                convites GET    /convites(.:format)                                                                               web/convites#index
+                                         POST   /convites(.:format)                                                                               web/convites#create
+                             new_convite GET    /convites/new(.:format)                                                                           web/convites#new
+                            edit_convite GET    /convites/:id/edit(.:format)                                                                      web/convites#edit
+                                 convite GET    /convites/:id(.:format)                                                                           web/convites#show
+                                         PATCH  /convites/:id(.:format)                                                                           web/convites#update
+                                         PUT    /convites/:id(.:format)                                                                           web/convites#update
+                                         DELETE /convites/:id(.:format)                                                                           web/convites#destroy
+                              apoiadores GET    /apoiadores(.:format)                                                                             web/apoiadores#index
+                                         POST   /apoiadores(.:format)                                                                             web/apoiadores#create
+                            new_apoiador GET    /apoiadores/new(.:format)                                                                         web/apoiadores#new
+                           edit_apoiador GET    /apoiadores/:id/edit(.:format)                                                                    web/apoiadores#edit
+                                apoiador GET    /apoiadores/:id(.:format)                                                                         web/apoiadores#show
+                                         PATCH  /apoiadores/:id(.:format)                                                                         web/apoiadores#update
+                                         PUT    /apoiadores/:id(.:format)                                                                         web/apoiadores#update
+                                         DELETE /apoiadores/:id(.:format)                                                                         web/apoiadores#destroy
+                municipio_regiao_bairros GET    /municipios/:municipio_id/regioes/:regiao_id/bairros(.:format)                                    web/bairros#index
+                                         POST   /municipios/:municipio_id/regioes/:regiao_id/bairros(.:format)                                    web/bairros#create
+             new_municipio_regiao_bairro GET    /municipios/:municipio_id/regioes/:regiao_id/bairros/new(.:format)                                web/bairros#new
+            edit_municipio_regiao_bairro GET    /municipios/:municipio_id/regioes/:regiao_id/bairros/:id/edit(.:format)                           web/bairros#edit
+                 municipio_regiao_bairro GET    /municipios/:municipio_id/regioes/:regiao_id/bairros/:id(.:format)                                web/bairros#show
+                                         PATCH  /municipios/:municipio_id/regioes/:regiao_id/bairros/:id(.:format)                                web/bairros#update
+                                         PUT    /municipios/:municipio_id/regioes/:regiao_id/bairros/:id(.:format)                                web/bairros#update
+                                         DELETE /municipios/:municipio_id/regioes/:regiao_id/bairros/:id(.:format)                                web/bairros#destroy
+                       municipio_regioes GET    /municipios/:municipio_id/regioes(.:format)                                                       web/regioes#index
+                                         POST   /municipios/:municipio_id/regioes(.:format)                                                       web/regioes#create
+                    new_municipio_regiao GET    /municipios/:municipio_id/regioes/new(.:format)                                                   web/regioes#new
+                   edit_municipio_regiao GET    /municipios/:municipio_id/regioes/:id/edit(.:format)                                              web/regioes#edit
+                        municipio_regiao GET    /municipios/:municipio_id/regioes/:id(.:format)                                                   web/regioes#show
+                                         PATCH  /municipios/:municipio_id/regioes/:id(.:format)                                                   web/regioes#update
+                                         PUT    /municipios/:municipio_id/regioes/:id(.:format)                                                   web/regioes#update
+                                         DELETE /municipios/:municipio_id/regioes/:id(.:format)                                                   web/regioes#destroy
+                                         GET    /municipios(.:format)                                                                             web/municipios#index
+                                         POST   /municipios(.:format)                                                                             web/municipios#create
+                                         GET    /municipios/new(.:format)                                                                         web/municipios#new
+                                         GET    /municipios/:id/edit(.:format)                                                                    web/municipios#edit
+                                         GET    /municipios/:id(.:format)                                                                         web/municipios#show
+                                         PATCH  /municipios/:id(.:format)                                                                         web/municipios#update
+                                         PUT    /municipios/:id(.:format)                                                                         web/municipios#update
+                                         DELETE /municipios/:id(.:format)                                                                         web/municipios#destroy
+                 gamification_challenges GET    /gamification/challenges(.:format)                                                                web/gamification/challenges#index
+                                         POST   /gamification/challenges(.:format)                                                                web/gamification/challenges#create
+              new_gamification_challenge GET    /gamification/challenges/new(.:format)                                                            web/gamification/challenges#new
+             edit_gamification_challenge GET    /gamification/challenges/:id/edit(.:format)                                                       web/gamification/challenges#edit
+                  gamification_challenge GET    /gamification/challenges/:id(.:format)                                                            web/gamification/challenges#show
+                                         PATCH  /gamification/challenges/:id(.:format)                                                            web/gamification/challenges#update
+                                         PUT    /gamification/challenges/:id(.:format)                                                            web/gamification/challenges#update
+                                         DELETE /gamification/challenges/:id(.:format)                                                            web/gamification/challenges#destroy
+update_weight_gamification_configuration PATCH  /gamification/configurations/:id/update_weight(.:format)                                          web/gamification/configurations#update_weight
+ update_level_gamification_configuration PATCH  /gamification/configurations/:id/update_level(.:format)                                           web/gamification/configurations#update_level
+             gamification_configurations GET    /gamification/configurations(.:format)                                                            web/gamification/configurations#index
+                                    root GET    /                                                                                                 web/home#index
+                      rails_health_check GET    /up(.:format)                                                                                     rails/health#show
+                            pwa_manifest GET    /manifest(.:format)                                                                               rails/pwa#manifest
+                      pwa_service_worker GET    /service-worker(.:format)                                                                         rails/pwa#service_worker
+        turbo_recede_historical_location GET    /recede_historical_location(.:format)                                                             turbo/native/navigation#recede
+        turbo_resume_historical_location GET    /resume_historical_location(.:format)                                                             turbo/native/navigation#resume
+       turbo_refresh_historical_location GET    /refresh_historical_location(.:format)                                                            turbo/native/navigation#refresh
+           rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                           action_mailbox/ingresses/postmark/inbound_emails#create
+              rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                              action_mailbox/ingresses/relay/inbound_emails#create
+           rails_sendgrid_inbound_emails POST   /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                           action_mailbox/ingresses/sendgrid/inbound_emails#create
+     rails_mandrill_inbound_health_check GET    /rails/action_mailbox/mandrill/inbound_emails(.:format)                                           action_mailbox/ingresses/mandrill/inbound_emails#health_check
+           rails_mandrill_inbound_emails POST   /rails/action_mailbox/mandrill/inbound_emails(.:format)                                           action_mailbox/ingresses/mandrill/inbound_emails#create
+            rails_mailgun_inbound_emails POST   /rails/action_mailbox/mailgun/inbound_emails/mime(.:format)                                       action_mailbox/ingresses/mailgun/inbound_emails#create
+          rails_conductor_inbound_emails GET    /rails/conductor/action_mailbox/inbound_emails(.:format)                                          rails/conductor/action_mailbox/inbound_emails#index
+                                         POST   /rails/conductor/action_mailbox/inbound_emails(.:format)                                          rails/conductor/action_mailbox/inbound_emails#create
+       new_rails_conductor_inbound_email GET    /rails/conductor/action_mailbox/inbound_emails/new(.:format)                                      rails/conductor/action_mailbox/inbound_emails#new
+           rails_conductor_inbound_email GET    /rails/conductor/action_mailbox/inbound_emails/:id(.:format)                                      rails/conductor/action_mailbox/inbound_emails#show
+new_rails_conductor_inbound_email_source GET    /rails/conductor/action_mailbox/inbound_emails/sources/new(.:format)                              rails/conductor/action_mailbox/inbound_emails/sources#new
+   rails_conductor_inbound_email_sources POST   /rails/conductor/action_mailbox/inbound_emails/sources(.:format)                                  rails/conductor/action_mailbox/inbound_emails/sources#create
+   rails_conductor_inbound_email_reroute POST   /rails/conductor/action_mailbox/:inbound_email_id/reroute(.:format)                               rails/conductor/action_mailbox/reroutes#create
+rails_conductor_inbound_email_incinerate POST   /rails/conductor/action_mailbox/:inbound_email_id/incinerate(.:format)                            rails/conductor/action_mailbox/incinerates#create
+                      rails_service_blob GET    /rails/active_storage/blobs/redirect/:signed_id/*filename(.:format)                               active_storage/blobs/redirect#show
+                rails_service_blob_proxy GET    /rails/active_storage/blobs/proxy/:signed_id/*filename(.:format)                                  active_storage/blobs/proxy#show
+                                         GET    /rails/active_storage/blobs/:signed_id/*filename(.:format)                                        active_storage/blobs/redirect#show
+               rails_blob_representation GET    /rails/active_storage/representations/redirect/:signed_blob_id/:variation_key/*filename(.:format) active_storage/representations/redirect#show
+         rails_blob_representation_proxy GET    /rails/active_storage/representations/proxy/:signed_blob_id/:variation_key/*filename(.:format)    active_storage/representations/proxy#show
+                                         GET    /rails/active_storage/representations/:signed_blob_id/:variation_key/*filename(.:format)          active_storage/representations/redirect#show
+                      rails_disk_service GET    /rails/active_storage/disk/:encoded_key/*filename(.:format)                                       active_storage/disk#show
+               update_rails_disk_service PUT    /rails/active_storage/disk/:encoded_token(.:format)                                               active_storage/disk#update
+                    rails_direct_uploads POST   /rails/active_storage/direct_uploads(.:format)                                                    active_storage/direct_uploads#create

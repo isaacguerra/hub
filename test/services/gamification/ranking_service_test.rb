@@ -39,14 +39,15 @@ class Gamification::RankingServiceTest < ActiveSupport::TestCase
       apoiador: @apoiador1,
       action_type: "test",
       points_awarded: 100,
-      created_at: 1.day.ago
+      created_at: 1.day.ago,
+      projeto: Projeto.first
     )
 
     ranking = Gamification::RankingService.top_apoiadores(period: :daily)
     assert_empty ranking
     
     # Mas deve aparecer no weekly
-    ranking_weekly = Gamification::RankingService.top_apoiadores(period: :weekly)
+    ranking_weekly = Gamification::RankingService.top_apoiadores(period: :weekly, date: 1.day.ago)
     assert_not_empty ranking_weekly
   end
 end

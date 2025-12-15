@@ -22,11 +22,12 @@ module Mensageria
         lideres = buscar_hierarquia(apoiador)
 
         lideres.each do |lider|
-          SendWhatsappJob.perform_later(
-            whatsapp: Helpers.format_phone_number(lider.whatsapp),
-            mensagem: mensagem,
-            image_url: image_whatsapp
-          )
+            SendWhatsappJob.perform_later(
+              whatsapp: Helpers.format_phone_number(lider.whatsapp),
+              mensagem: mensagem,
+              image_url: image_whatsapp,
+              projeto_id: lider.projeto_id
+            )
         rescue StandardError => e
           Rails.logger.error "Erro ao notificar líder #{lider.name}: #{e.message}"
         end

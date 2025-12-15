@@ -68,7 +68,7 @@ module Api
         end
 
         def enviar_resposta(apoiador, texto, image_url: nil)
-          SendWhatsappJob.perform_later(whatsapp: apoiador.whatsapp, mensagem: texto, image_url: image_url)
+          SendWhatsappJob.perform_later(whatsapp: apoiador.whatsapp, mensagem: texto, image_url: image_url, projeto_id: apoiador.projeto_id)
         end
       end
     end

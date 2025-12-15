@@ -30,7 +30,8 @@ module Mensageria
           SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
             mensagem: texto,
-            image_url: imagem_whatsapp
+            image_url: imagem_whatsapp,
+            projeto_id: apoiador.projeto_id
           )
 
           # Marcar como recebido para pontuar
@@ -52,7 +53,8 @@ module Mensageria
           SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
             mensagem: texto_apoiador,
-            image_url: imagem_apoiador
+            image_url: imagem_apoiador,
+            projeto_id: apoiador.projeto_id
           )
 
           # 2. Notificar criador do comunicado
@@ -63,7 +65,8 @@ module Mensageria
              SendWhatsappJob.perform_later(
                whatsapp: Helpers.format_phone_number(criador.whatsapp),
                mensagem: texto_criador,
-               image_url: imagem_criador
+               image_url: imagem_criador,
+               projeto_id: criador.projeto_id
              )
           end
 

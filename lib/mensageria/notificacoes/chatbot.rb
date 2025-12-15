@@ -15,12 +15,12 @@ module Mensageria
     module Chatbot
       class << self
         def enviar_mensagem(apoiador, mensagem, imagem: nil)
-          SendWhatsappJob.perform_later(whatsapp: apoiador.whatsapp, mensagem: mensagem, image_url: imagem)
+          SendWhatsappJob.perform_later(whatsapp: apoiador.whatsapp, mensagem: mensagem, image_url: imagem, projeto_id: apoiador.projeto_id)
         end
 
         def notificar_numero_nao_cadastrado(whatsapp, nome)
           mensagem = Mensageria::Mensagens::Chatbot.notificar_numero_nao_cadastrado(nome)
-          SendWhatsappJob.perform_later(whatsapp: whatsapp, mensagem: mensagem)
+          SendWhatsappJob.perform_later(whatsapp: whatsapp, mensagem: mensagem, projeto_id: Current.projeto&.id)
         end
       end
     end

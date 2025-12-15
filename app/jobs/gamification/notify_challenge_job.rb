@@ -8,7 +8,7 @@ module Gamification
 
       # Define a mensagem baseada na ação
       prefixo = action_type.to_s == "created" ? "🚀 Nova Missão Disponível!" : "📝 Missão Atualizada!"
-      
+
       # Link para a missão
       link = "#{ENV.fetch('BASE_URL', 'https://app.ivonechagas.com.br')}/mobile/gamification/#{challenge.id}"
 
@@ -25,15 +25,15 @@ module Gamification
 
       mensagem = <<~MSG
         #{prefixo}
-        
+
         🏆 *#{challenge.title}*
-        
+
         💰 *Prêmio:* #{challenge.reward}
         #{regras_texto}
         #{challenge.description}
-        
+
         📅 Até: #{challenge.ends_at.strftime('%d/%m/%Y')}
-        
+
         Participe agora e ganhe pontos!
         Acesse: #{link}
       MSG
@@ -45,7 +45,8 @@ module Gamification
 
         SendWhatsappJob.perform_later(
           whatsapp: apoiador.whatsapp,
-          mensagem: mensagem
+          mensagem: mensagem,
+          projeto_id: apoiador.projeto_id
         )
       end
     end

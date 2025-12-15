@@ -25,7 +25,7 @@ module Api
 
         # Mock SendWhatsappJob to avoid real calls
         called = false
-        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil) {
+        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil, projeto_id: nil) {
           called = true if whatsapp == @apoiador.whatsapp && image_url == "http://example.com/pic.jpg"
         } do
           Utils::BuscaPerfilWhatsapp.stub :buscar, mock_perfil do
@@ -69,7 +69,7 @@ module Api
 
         # Mock SendWhatsappJob
         called = false
-        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil) {
+        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil, projeto_id: nil) {
           called = true if whatsapp == @apoiador.whatsapp && mensagem.include?("Já existe um convite ativo para esse contato (Status: pendente)")
         } do
           assert_no_difference "Convite.count" do

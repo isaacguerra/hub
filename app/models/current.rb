@@ -1,6 +1,7 @@
 class Current < ActiveSupport::CurrentAttributes
   attribute :apoiador
   attribute :avatar
+  attribute :projeto
   attribute :user_agent, :ip_address
 
   resets { Time.zone = nil }

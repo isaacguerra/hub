@@ -24,14 +24,14 @@ module Gamification
       )
 
       # 4. Enviar notificação solicitando a estratégia
-      link = Rails.application.routes.url_helpers.edit_mobile_gamification_strategy_url(protocol: 'https')
-      message = I18n.t('mensagens.gamification.vencedor_semanal', 
-        nome: apoiador.name, 
-        pontos: points, 
+      link = Rails.application.routes.url_helpers.edit_mobile_gamification_strategy_url(protocol: "https")
+      message = I18n.t("mensagens.gamification.vencedor_semanal",
+        nome: apoiador.name,
+        pontos: points,
         link: link
       )
 
-      SendWhatsappJob.perform_later(apoiador.whatsapp, message)
+        SendWhatsappJob.perform_later(whatsapp: apoiador.whatsapp, mensagem: message, projeto_id: apoiador.projeto_id)
     end
   end
 end

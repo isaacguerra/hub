@@ -1,5 +1,8 @@
 module Gamification
   class WeeklyWinner < ApplicationRecord
+    include ProjectScoped
+
+    belongs_to :projeto, optional: true
     belongs_to :apoiador
 
     validates :week_start_date, presence: true
