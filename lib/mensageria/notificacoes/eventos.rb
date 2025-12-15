@@ -34,7 +34,8 @@ module Mensageria
             SendWhatsappJob.perform_later(
               whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
               mensagem: texto,
-              image_url: imagem_whatsapp
+              image_url: imagem_whatsapp,
+              projeto_id: apoiador.projeto_id
             )
           end
         rescue StandardError => e
@@ -56,7 +57,8 @@ module Mensageria
           SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
             mensagem: texto_apoiador,
-            image_url: imagem_apoiador
+            image_url: imagem_apoiador,
+            projeto_id: apoiador.projeto_id
           )
 
           # 2. Notificar organizador
@@ -67,7 +69,8 @@ module Mensageria
              SendWhatsappJob.perform_later(
                whatsapp: Helpers.format_phone_number(organizador.whatsapp),
                mensagem: texto_organizador,
-               image_url: imagem_organizador
+               image_url: imagem_organizador,
+               projeto_id: organizador.projeto_id
              )
           end
 
@@ -98,7 +101,8 @@ module Mensageria
           SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(coordenador.whatsapp),
             mensagem: mensagem,
-            image_url: imagem_whatsapp
+            image_url: imagem_whatsapp,
+            projeto_id: coordenador.projeto_id
           )
         rescue StandardError => e
           Rails.logger.error "Erro em notificar_atualizacao_evento: #{e.message}"
@@ -111,7 +115,8 @@ module Mensageria
           SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
             mensagem: mensagem,
-            image_url: imagem_whatsapp
+            image_url: imagem_whatsapp,
+            projeto_id: apoiador.projeto_id
           )
         rescue StandardError => e
           Rails.logger.error "Erro ao notificar participante #{apoiador.id} do evento #{evento.id}: #{e.message}"

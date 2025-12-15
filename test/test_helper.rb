@@ -18,8 +18,25 @@ module ActiveSupport
 
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     # fixtures :all
-    fixtures :municipios, :regioes, :bairros, :funcoes, :apoiadores, :convites, :visitas, :eventos, :comunicados,
+    fixtures :projetos, :municipios, :regioes, :bairros, :funcoes, :apoiadores, :convites, :visitas, :eventos, :comunicados,
              "gamification/challenges", "gamification/points", "gamification/badges", "gamification/action_weights", "gamification/levels"
+
+    setup do
+      # Ensure Current.projeto is defined for tests and backfill any nil projeto_id in fixtures
+      Current.projeto = Projeto.first || Projeto.create!(name: "Default Project", slug: "default")
+
+      # Backfill basic domain tables so tests don't fail due to missing projeto_id
+      models_to_backfill = [Apoiador, Evento, Convite, Visita, Comunicado, Veiculo]
+      models_to_backfill.each do |model|
+        if model.column_names.include?("projeto_id")
+          model.where(projeto_id: nil).update_all(projeto_id: Current.projeto.id)
+        end
+      end
+    end
+
+    teardown do
+      Current.projeto = nil
+    end
 
     # Add more helper methods to be used by all tests here...
   end

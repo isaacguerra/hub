@@ -25,7 +25,8 @@ module Mensageria
           SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(convite.whatsapp),
             mensagem: texto,
-            image_url: imagem_url
+            image_url: imagem_url,
+            projeto_id: convite.projeto_id
           )
 
           mensagem_lideranca = Mensagens::Convites.notificacao_lideranca_novo_convite(convite, apoiador)
@@ -52,7 +53,8 @@ module Mensageria
           SendWhatsappJob.perform_later(
             whatsapp: Helpers.format_phone_number(apoiador.whatsapp),
             mensagem: texto,
-            image_url: image_url
+            image_url: image_url,
+            projeto_id: apoiador.projeto_id
           )
 
           # Busca a rede para identificar o líder direto
@@ -63,7 +65,8 @@ module Mensageria
             SendWhatsappJob.perform_later(
               whatsapp: Helpers.format_phone_number(rede[:lider][:whatsapp]),
               mensagem: texto_lider,
-              image_url: imagem_whatsapp
+              image_url: imagem_whatsapp,
+              projeto_id: apoiador.projeto_id
             )
           end
 

@@ -99,7 +99,7 @@ module Api
       test "should send default message for unknown option" do
         called = false
         # Since unknown options are delegated to ContatoNumero which uses SendWhatsappJob directly
-        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil) {
+        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil, projeto_id: nil) {
           called = true if whatsapp == @apoiador.whatsapp && mensagem == I18n.t("mensagens.chatbot.mensagem_padrao")
         } do
           Api::Chatbot::Conversation.process(@apoiador, { "text" => "999" })

@@ -1,0 +1,7 @@
+default:
+  id: 1
+  name: Default Project
+  slug: default
+  evolution_instance_id: default
+  created_at: <%= Time.now.utc.strftime("%Y-%m-%d %H:%M:%S") %>
+  updated_at: <%= Time.now.utc.strftime("%Y-%m-%d %H:%M:%S") %>

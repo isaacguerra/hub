@@ -8,9 +8,27 @@ class SendWhatsappJob < ApplicationJob
   # Tenta reenviar até 5 vezes se der erro de conexão ou erro no servidor da Evolution
   retry_on Net::OpenTimeout, Net::ReadTimeout, SocketError, wait: :exponentially_longer, attempts: 5
 
-  # args: hash com { whatsapp:, mensagem:, image_url: (opcional) }
-  def perform(whatsapp:, mensagem:, image_url: nil)
-    Rails.logger.info "SendWhatsappJob: Iniciando envio para #{whatsapp}. Image URL: #{image_url.inspect}"
+  # Compatível com chamadas posicionais e com keywords:
+  # - positional: (whatsapp, mensagem, image_url = nil, projeto_id = nil)
+  # - keywords: whatsapp:, mensagem:, image_url:, projeto_id:
+  def perform(*args, whatsapp: nil, mensagem: nil, image_url: nil, projeto_id: nil)
+    # Compatibilidade com chamadas posicionais antigas
+    whatsapp = args[0] if whatsapp.nil? && args.size >= 1
+    mensagem = args[1] if mensagem.nil? && args.size >= 2
+    image_url = args[2] if image_url.nil? && args.size >= 3
+    projeto_id = args[3] if projeto_id.nil? && args.size >= 4
+
+    Rails.logger.info "SendWhatsappJob: Iniciando envio para #{whatsapp}. Image URL: #{image_url.inspect} Projeto: #{projeto_id.inspect}"
+
+    # Se receber projeto_id, define contexto atual para uso por chamadas downstream
+    projeto_set = false
+    if projeto_id.present?
+      projeto = Projeto.find_by(id: projeto_id)
+      if projeto
+        Current.projeto = projeto
+        projeto_set = true
+      end
+    end
 
     # Normaliza o número usando a lib Utils::NormalizaNumeroWhatsapp
     numero = Utils::NormalizaNumeroWhatsapp.format(whatsapp)
@@ -25,12 +43,18 @@ class SendWhatsappJob < ApplicationJob
     else
       enviar_texto(numero, mensagem)
     end
+  ensure
+    Current.projeto = nil if projeto_set
   end
 
   private
 
   def enviar_texto(numero, texto)
-    instance_name = ENV.fetch("EVOLUTION_INSTANCE_NAME", "ivone")
+    instance_name = if Current.projeto && Current.projeto.evolution_instance_id.present?
+      Current.projeto.evolution_instance_id
+    else
+      ENV.fetch("EVOLUTION_INSTANCE_NAME", "ivone")
+    end
     body = {
       number: numero,
       text: texto
@@ -39,7 +63,11 @@ class SendWhatsappJob < ApplicationJob
   end
 
   def enviar_imagem(numero, caption, image_url)
-    instance_name = ENV.fetch("EVOLUTION_INSTANCE_NAME", "ivone")
+    instance_name = if Current.projeto && Current.projeto.evolution_instance_id.present?
+      Current.projeto.evolution_instance_id
+    else
+      ENV.fetch("EVOLUTION_INSTANCE_NAME", "ivone")
+    end
     mimetype = image_url.to_s.downcase.end_with?(".png") ? "image/png" : "image/jpeg"
     body = {
       number: numero,

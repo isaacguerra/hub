@@ -21,7 +21,7 @@ module Api
 
         # Mock SendWhatsappJob
         called = false
-        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil) {
+        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil, projeto_id: nil) {
           called = true if whatsapp == @apoiador.whatsapp && image_url == "http://example.com/pic.jpg"
         } do
           Utils::BuscaPerfilWhatsapp.stub :buscar, mock_perfil do
@@ -44,7 +44,7 @@ module Api
 
       test "should send default message for invalid number" do
         called = false
-        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil) {
+        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil, projeto_id: nil) {
           called = true if whatsapp == @apoiador.whatsapp && mensagem == I18n.t("mensagens.chatbot.mensagem_padrao")
         } do
           assert_no_difference "Convite.count" do
@@ -60,7 +60,7 @@ module Api
         message = { "conversation" => existing_apoiador.whatsapp }
 
         called = false
-        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil) {
+        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil, projeto_id: nil) {
           called = true if whatsapp == @apoiador.whatsapp && mensagem == I18n.t("mensagens.chatbot.ja_cadastrado")
         } do
           assert_no_difference "Convite.count" do
@@ -75,7 +75,7 @@ module Api
         Convite.create!(nome: "Teste", whatsapp: @valid_number_text, enviado_por: @apoiador, status: "pendente")
 
         called = false
-        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil) {
+        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil, projeto_id: nil) {
           called = true if whatsapp == @apoiador.whatsapp && mensagem == I18n.t("mensagens.chatbot.convite_existente", status: "pendente")
         } do
           assert_no_difference "Convite.count" do
@@ -94,7 +94,7 @@ module Api
         called_msg = false
         called_link = false
 
-        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil) {
+        SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil, projeto_id: nil) {
           if mensagem.include?("Não consegui encontrar o NOME")
             called_msg = true
           end

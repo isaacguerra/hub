@@ -27,7 +27,7 @@ module Api
           # Validações de duplicidade
           return if contact_already_registered?(apoiador, numero_valido)
 
-          mensagem = I18n.t('mensagens.chatbot.identificacao_contato', numero: numero_valido)
+          mensagem = I18n.t("mensagens.chatbot.identificacao_contato", numero: numero_valido)
           enviar_resposta(apoiador, mensagem)
 
           create_invite(apoiador, numero_valido)
@@ -87,7 +87,7 @@ module Api
             end
           else
             # Mantendo a regra de negócio original: se não achar nome, pede para criar manualmente
-            mensagem = I18n.t('mensagens.chatbot.nome_nao_encontrado')
+            mensagem = I18n.t("mensagens.chatbot.nome_nao_encontrado")
             enviar_resposta(apoiador, mensagem)
             apoiador.gerar_codigo_acesso!(enviar_whatsapp: false)
             Mensageria::Notificacoes::Autenticacao.enviar_link_magico(apoiador)
@@ -95,7 +95,7 @@ module Api
         end
 
         def enviar_resposta(apoiador, texto, image_url: nil)
-          SendWhatsappJob.perform_later(whatsapp: apoiador.whatsapp, mensagem: texto, image_url: image_url)
+          SendWhatsappJob.perform_later(whatsapp: apoiador.whatsapp, mensagem: texto, image_url: image_url, projeto_id: apoiador.projeto_id)
         end
       end
     end
