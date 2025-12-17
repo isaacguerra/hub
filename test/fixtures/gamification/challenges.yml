@@ -1,6 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  projeto_id: 1
   title: "Active Challenge"
   description: "This is an active challenge"
   starts_at: <%= 1.day.ago %>
@@ -9,6 +10,7 @@ one:
   reward: 100
 
 two:
+  projeto_id: 1
   title: "Expired Challenge"
   description: "This challenge has expired"
   starts_at: <%= 10.days.ago %>

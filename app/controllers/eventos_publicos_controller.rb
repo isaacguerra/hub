@@ -1,4 +1,4 @@
-class Web::EventosPublicosController < ApplicationController
+class EventosPublicosController < ApplicationController
   skip_before_action :authenticate_apoiador!
   layout "auth"
 

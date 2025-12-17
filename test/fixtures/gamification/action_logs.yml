@@ -1,6 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  projeto_id: 1
   apoiador_id: 1
   action_type: "daily_login"
   resource_id: 1
@@ -9,6 +10,7 @@ one:
   metadata: {}
 
 two:
+  projeto_id: 1
   apoiador_id: 2
   action_type: "invite_accepted"
   resource_id: 3

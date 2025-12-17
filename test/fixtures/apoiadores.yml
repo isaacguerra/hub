@@ -1,6 +1,8 @@
+
 # Fixtures para Apoiadores - 100 apoiadores cobrindo todos os perfis
 joao_candidato:
   id: 1
+  projeto_id: 1
   name: "João Candidato"
   whatsapp: "5596999100001"
   municipio_id: 1
@@ -11,6 +13,7 @@ joao_candidato:
 
 maria_coord_geral:
   id: 2
+  projeto_id: 1
   name: "Maria Coordenadora Geral"
   whatsapp: "5596999100002"
   municipio_id: 1
@@ -21,6 +24,7 @@ maria_coord_geral:
 
 coordenador_geral_2:
   id: 3
+  projeto_id: 1
   name: "Carlos Coordenador Geral"
   whatsapp: "5596999100003"
   municipio_id: 2
@@ -31,6 +35,7 @@ coordenador_geral_2:
 
 coordenador_geral_3:
   id: 4
+  projeto_id: 1
   name: "Ana Coordenadora Geral"
   whatsapp: "5596999100004"
   municipio_id: 3
@@ -42,6 +47,7 @@ coordenador_geral_3:
 # Coordenadores de município
 coordenador_municipio_1:
   id: 5
+  projeto_id: 1
   name: "Pedro Coordenador Município 1"
   whatsapp: "5596999100005"
   municipio_id: 1
@@ -52,6 +58,7 @@ coordenador_municipio_1:
 
 coordenador_municipio_2:
   id: 6
+  projeto_id: 1
   name: "Paula Coordenadora Município 2"
   whatsapp: "5596999100006"
   municipio_id: 2
@@ -62,6 +69,7 @@ coordenador_municipio_2:
 
 coordenador_municipio_3:
   id: 7
+  projeto_id: 1
   name: "Rafael Coordenador Município 3"
   whatsapp: "5596999100007"
   municipio_id: 3
@@ -73,6 +81,7 @@ coordenador_municipio_3:
 # Coordenadores de região
 coordenador_regiao_1:
   id: 8
+  projeto_id: 1
   name: "Julia Coordenadora Região 1"
   whatsapp: "5596999100008"
   municipio_id: 1
@@ -83,6 +92,7 @@ coordenador_regiao_1:
 
 coordenador_regiao_2:
   id: 9
+  projeto_id: 1
   name: "Bruno Coordenador Região 2"
   whatsapp: "5596999100009"
   municipio_id: 1
@@ -93,6 +103,7 @@ coordenador_regiao_2:
 
 coordenador_regiao_3:
   id: 10
+  projeto_id: 1
   name: "Fernanda Coordenadora Região 3"
   whatsapp: "5596999100010"
   municipio_id: 2
@@ -104,6 +115,7 @@ coordenador_regiao_3:
 # Coordenadores de bairro
 coordenador_bairro_1:
   id: 11
+  projeto_id: 1
   name: "Lucas Coordenador Bairro 1"
   whatsapp: "5596999100011"
   municipio_id: 1
@@ -114,6 +126,7 @@ coordenador_bairro_1:
 
 coordenador_bairro_2:
   id: 12
+  projeto_id: 1
   name: "Marina Coordenadora Bairro 2"
   whatsapp: "5596999100012"
   municipio_id: 1
@@ -124,6 +137,7 @@ coordenador_bairro_2:
 
 coordenador_bairro_3:
   id: 13
+  projeto_id: 1
   name: "Gustavo Coordenador Bairro 3"
   whatsapp: "5596999100013"
   municipio_id: 2
@@ -135,6 +149,7 @@ coordenador_bairro_3:
 # Líderes e apoiadores
 pedro_lider:
   id: 14
+  projeto_id: 1
   name: "Pedro Líder"
   whatsapp: "5596999100014"
   municipio_id: 1
@@ -145,6 +160,7 @@ pedro_lider:
 
 lider_2:
   id: 15
+  projeto_id: 1
   name: "Líder 2"
   whatsapp: "5596999100015"
   municipio_id: 1
@@ -155,6 +171,7 @@ lider_2:
 
 lider_3:
   id: 16
+  projeto_id: 1
   name: "Líder 3"
   whatsapp: "5596999100016"
   municipio_id: 1
@@ -165,6 +182,7 @@ lider_3:
 
 lider_4:
   id: 17
+  projeto_id: 1
   name: "Líder 4"
   whatsapp: "5596999100017"
   municipio_id: 2
@@ -175,6 +193,7 @@ lider_4:
 
 lider_5:
   id: 18
+  projeto_id: 1
   name: "Líder 5"
   whatsapp: "5596999100018"
   municipio_id: 2
@@ -186,6 +205,7 @@ lider_5:
 # Apoiadores (amostra)
 ana_apoiadora:
   id: 19
+  projeto_id: 1
   name: "Ana Apoiadora"
   whatsapp: "5596999100019"
   municipio_id: 1
@@ -196,6 +216,7 @@ ana_apoiadora:
 
 apoiador_2:
   id: 20
+  projeto_id: 1
   name: "Apoiador 2"
   whatsapp: "5596999100020"
   municipio_id: 1
@@ -206,6 +227,7 @@ apoiador_2:
 
 apoiador_3:
   id: 21
+  projeto_id: 1
   name: "Apoiador 3"
   whatsapp: "559699100021"
   municipio_id: 1
@@ -216,6 +238,7 @@ apoiador_3:
 
 apoiador_4:
   id: 22
+  projeto_id: 1
   name: "Apoiador 4"
   whatsapp: "559699100022"
   municipio_id: 1
@@ -226,6 +249,7 @@ apoiador_4:
 
 apoiador_5:
   id: 23
+  projeto_id: 1
   name: "Apoiador 5"
   whatsapp: "559699100023"
   municipio_id: 2
@@ -236,6 +260,7 @@ apoiador_5:
 
 apoiador_6:
   id: 24
+  projeto_id: 1
   name: "Apoiador 6"
   whatsapp: "559699100024"
   municipio_id: 2
@@ -247,6 +272,7 @@ apoiador_6:
 # Apoiadores adicionais
 apoiador_7:
   id: 25
+  projeto_id: 1
   name: "Apoiador 7"
   whatsapp: "559699100025"
   municipio_id: 1
@@ -257,6 +283,7 @@ apoiador_7:
 
 apoiador_8:
   id: 26
+  projeto_id: 1
   name: "Apoiador 8"
   whatsapp: "559699100026"
   municipio_id: 1
@@ -267,6 +294,7 @@ apoiador_8:
 
 apoiador_9:
   id: 27
+  projeto_id: 1
   name: "Apoiador 9"
   whatsapp: "559699100027"
   municipio_id: 1
@@ -277,6 +305,7 @@ apoiador_9:
 
 apoiador_10:
   id: 28
+  projeto_id: 1
   name: "Apoiador 10"
   whatsapp: "559699100028"
   municipio_id: 1
@@ -287,6 +316,7 @@ apoiador_10:
 
 apoiador_11:
   id: 29
+  projeto_id: 1
   name: "Apoiador 11"
   whatsapp: "559699100029"
   municipio_id: 1
@@ -297,6 +327,7 @@ apoiador_11:
 
 apoiador_12:
   id: 30
+  projeto_id: 1
   name: "Apoiador 12"
   whatsapp: "559699100030"
   municipio_id: 2
@@ -307,6 +338,7 @@ apoiador_12:
 
 apoiador_13:
   id: 31
+  projeto_id: 1
   name: "Apoiador 13"
   whatsapp: "559699100031"
   municipio_id: 2
@@ -317,6 +349,7 @@ apoiador_13:
 
 apoiador_14:
   id: 32
+  projeto_id: 1
   name: "Apoiador 14"
   whatsapp: "559699100032"
   municipio_id: 3
@@ -327,6 +360,7 @@ apoiador_14:
 
 apoiador_15:
   id: 33
+  projeto_id: 1
   name: "Apoiador 15"
   whatsapp: "559699100033"
   municipio_id: 3
@@ -337,6 +371,7 @@ apoiador_15:
 
 apoiador_16:
   id: 34
+  projeto_id: 1
   name: "Apoiador 16"
   whatsapp: "559699100034"
   municipio_id: 3
@@ -347,6 +382,7 @@ apoiador_16:
 
 apoiador_17:
   id: 35
+  projeto_id: 1
   name: "Apoiador 17"
   whatsapp: "559699100035"
   municipio_id: 3
@@ -357,6 +393,7 @@ apoiador_17:
 
 apoiador_18:
   id: 36
+  projeto_id: 1
   name: "Apoiador 18"
   whatsapp: "559699100036"
   municipio_id: 3
@@ -367,6 +404,7 @@ apoiador_18:
 
 apoiador_19:
   id: 37
+  projeto_id: 1
   name: "Apoiador 19"
   whatsapp: "559699100037"
   municipio_id: 3
@@ -377,6 +415,7 @@ apoiador_19:
 
 apoiador_20:
   id: 38
+  projeto_id: 1
   name: "Apoiador 20"
   whatsapp: "559699100038"
   municipio_id: 3
@@ -387,6 +426,7 @@ apoiador_20:
 
 apoiador_21:
   id: 39
+  projeto_id: 1
   name: "Apoiador 21"
   whatsapp: "559699100039"
   municipio_id: 3
@@ -397,6 +437,7 @@ apoiador_21:
 
 apoiador_22:
   id: 40
+  projeto_id: 1
   name: "Apoiador 22"
   whatsapp: "559699100040"
   municipio_id: 3
@@ -407,6 +448,7 @@ apoiador_22:
 
 apoiador_23:
   id: 41
+  projeto_id: 1
   name: "Apoiador 23"
   whatsapp: "559699100041"
   municipio_id: 3
@@ -417,6 +459,7 @@ apoiador_23:
 
 apoiador_24:
   id: 42
+  projeto_id: 1
   name: "Apoiador 24"
   whatsapp: "559699100042"
   municipio_id: 3
@@ -427,6 +470,7 @@ apoiador_24:
 
 apoiador_25:
   id: 43
+  projeto_id: 1
   name: "Apoiador 25"
   whatsapp: "559699100043"
   municipio_id: 3
@@ -437,6 +481,7 @@ apoiador_25:
 
 apoiador_26:
   id: 44
+  projeto_id: 1
   name: "Apoiador 26"
   whatsapp: "559699100044"
   municipio_id: 3
@@ -447,6 +492,7 @@ apoiador_26:
 
 apoiador_27:
   id: 45
+  projeto_id: 1
   name: "Apoiador 27"
   whatsapp: "559699100045"
   municipio_id: 3
@@ -457,6 +503,7 @@ apoiador_27:
 
 apoiador_28:
   id: 46
+  projeto_id: 1
   name: "Apoiador 28"
   whatsapp: "559699100046"
   municipio_id: 3
@@ -467,6 +514,7 @@ apoiador_28:
 
 apoiador_29:
   id: 47
+  projeto_id: 1
   name: "Apoiador 29"
   whatsapp: "559699100047"
   municipio_id: 3
@@ -477,6 +525,7 @@ apoiador_29:
 
 apoiador_30:
   id: 48
+  projeto_id: 1
   name: "Apoiador 30"
   whatsapp: "559699100048"
   municipio_id: 3
@@ -487,6 +536,7 @@ apoiador_30:
 
 apoiador_31:
   id: 49
+  projeto_id: 1
   name: "Apoiador 31"
   whatsapp: "559699100049"
   municipio_id: 3
@@ -497,6 +547,7 @@ apoiador_31:
 
 apoiador_32:
   id: 50
+  projeto_id: 1
   name: "Apoiador 32"
   whatsapp: "559699100050"
   municipio_id: 3
@@ -507,6 +558,7 @@ apoiador_32:
 
 apoiador_33:
   id: 51
+  projeto_id: 1
   name: "Apoiador 33"
   whatsapp: "559699100051"
   municipio_id: 3
@@ -517,6 +569,7 @@ apoiador_33:
 
 apoiador_34:
   id: 52
+  projeto_id: 1
   name: "Apoiador 34"
   whatsapp: "559699100052"
   municipio_id: 3
@@ -527,6 +580,7 @@ apoiador_34:
 
 apoiador_35:
   id: 53
+  projeto_id: 1
   name: "Apoiador 35"
   whatsapp: "559699100053"
   municipio_id: 3
@@ -537,6 +591,7 @@ apoiador_35:
 
 apoiador_36:
   id: 54
+  projeto_id: 1
   name: "Apoiador 36"
   whatsapp: "559699100054"
   municipio_id: 3
@@ -547,6 +602,7 @@ apoiador_36:
 
 apoiador_37:
   id: 55
+  projeto_id: 1
   name: "Apoiador 37"
   whatsapp: "559699100055"
   municipio_id: 3
@@ -557,6 +613,7 @@ apoiador_37:
 
 apoiador_38:
   id: 56
+  projeto_id: 1
   name: "Apoiador 38"
   whatsapp: "559699100056"
   municipio_id: 3
@@ -567,6 +624,7 @@ apoiador_38:
 
 apoiador_39:
   id: 57
+  projeto_id: 1
   name: "Apoiador 39"
   whatsapp: "559699100057"
   municipio_id: 3
@@ -577,6 +635,7 @@ apoiador_39:
 
 apoiador_40:
   id: 58
+  projeto_id: 1
   name: "Apoiador 40"
   whatsapp: "559699100058"
   municipio_id: 3
@@ -587,6 +646,7 @@ apoiador_40:
 
 apoiador_41:
   id: 59
+  projeto_id: 1
   name: "Apoiador 41"
   whatsapp: "559699100059"
   municipio_id: 3
@@ -597,6 +657,7 @@ apoiador_41:
 
 apoiador_42:
   id: 60
+  projeto_id: 1
   name: "Apoiador 42"
   whatsapp: "559699100060"
   municipio_id: 3
@@ -607,6 +668,7 @@ apoiador_42:
 
 apoiador_43:
   id: 61
+  projeto_id: 1
   name: "Apoiador 43"
   whatsapp: "559699100061"
   municipio_id: 3
@@ -617,6 +679,7 @@ apoiador_43:
 
 apoiador_44:
   id: 62
+  projeto_id: 1
   name: "Apoiador 44"
   whatsapp: "559699100062"
   municipio_id: 3
@@ -627,6 +690,7 @@ apoiador_44:
 
 apoiador_45:
   id: 63
+  projeto_id: 1
   name: "Apoiador 45"
   whatsapp: "559699100063"
   municipio_id: 3
@@ -637,6 +701,7 @@ apoiador_45:
 
 apoiador_46:
   id: 64
+  projeto_id: 1
   name: "Apoiador 46"
   whatsapp: "559699100064"
   municipio_id: 3
@@ -647,6 +712,7 @@ apoiador_46:
 
 apoiador_47:
   id: 65
+  projeto_id: 1
   name: "Apoiador 47"
   whatsapp: "559699100065"
   municipio_id: 3
@@ -657,6 +723,7 @@ apoiador_47:
 
 apoiador_48:
   id: 66
+  projeto_id: 1
   name: "Apoiador 48"
   whatsapp: "559699100066"
   municipio_id: 3
@@ -667,6 +734,7 @@ apoiador_48:
 
 apoiador_49:
   id: 67
+  projeto_id: 1
   name: "Apoiador 49"
   whatsapp: "559699100067"
   municipio_id: 3
@@ -677,6 +745,7 @@ apoiador_49:
 
 apoiador_50:
   id: 68
+  projeto_id: 1
   name: "Apoiador 50"
   whatsapp: "559699100068"
   municipio_id: 3
@@ -687,6 +756,7 @@ apoiador_50:
 
 apoiador_51:
   id: 69
+  projeto_id: 1
   name: "Apoiador 51"
   whatsapp: "559699100069"
   municipio_id: 3
@@ -697,6 +767,7 @@ apoiador_51:
 
 apoiador_52:
   id: 70
+  projeto_id: 1
   name: "Apoiador 52"
   whatsapp: "559699100070"
   municipio_id: 3
@@ -707,6 +778,7 @@ apoiador_52:
 
 apoiador_53:
   id: 71
+  projeto_id: 1
   name: "Apoiador 53"
   whatsapp: "559699100071"
   municipio_id: 3
@@ -717,6 +789,7 @@ apoiador_53:
 
 apoiador_54:
   id: 72
+  projeto_id: 1
   name: "Apoiador 54"
   whatsapp: "559699100072"
   municipio_id: 3
@@ -727,6 +800,7 @@ apoiador_54:
 
 apoiador_55:
   id: 73
+  projeto_id: 1
   name: "Apoiador 55"
   whatsapp: "559699100073"
   municipio_id: 3
@@ -737,6 +811,7 @@ apoiador_55:
 
 apoiador_56:
   id: 74
+  projeto_id: 1
   name: "Apoiador 56"
   whatsapp: "559699100074"
   municipio_id: 3
@@ -747,6 +822,7 @@ apoiador_56:
 
 apoiador_57:
   id: 75
+  projeto_id: 1
   name: "Apoiador 57"
   whatsapp: "559699100075"
   municipio_id: 3
@@ -757,6 +833,7 @@ apoiador_57:
 
 apoiador_58:
   id: 76
+  projeto_id: 1
   name: "Apoiador 58"
   whatsapp: "559699100076"
   municipio_id: 3
@@ -767,6 +844,7 @@ apoiador_58:
 
 apoiador_59:
   id: 77
+  projeto_id: 1
   name: "Apoiador 59"
   whatsapp: "559699100077"
   municipio_id: 3
@@ -777,6 +855,7 @@ apoiador_59:
 
 apoiador_60:
   id: 78
+  projeto_id: 1
   name: "Apoiador 60"
   whatsapp: "559699100078"
   municipio_id: 3
@@ -787,6 +866,7 @@ apoiador_60:
 
 apoiador_61:
   id: 79
+  projeto_id: 1
   name: "Apoiador 61"
   whatsapp: "559699100079"
   municipio_id: 3
@@ -797,6 +877,7 @@ apoiador_61:
 
 apoiador_62:
   id: 80
+  projeto_id: 1
   name: "Apoiador 62"
   whatsapp: "559699100080"
   municipio_id: 3
@@ -807,6 +888,7 @@ apoiador_62:
 
 apoiador_63:
   id: 81
+  projeto_id: 1
   name: "Apoiador 63"
   whatsapp: "559699100081"
   municipio_id: 3
@@ -817,6 +899,7 @@ apoiador_63:
 
 apoiador_64:
   id: 82
+  projeto_id: 1
   name: "Apoiador 64"
   whatsapp: "559699100082"
   municipio_id: 3
@@ -827,6 +910,7 @@ apoiador_64:
 
 apoiador_65:
   id: 83
+  projeto_id: 1
   name: "Apoiador 65"
   whatsapp: "559699100083"
   municipio_id: 3
@@ -837,6 +921,7 @@ apoiador_65:
 
 apoiador_66:
   id: 84
+  projeto_id: 1
   name: "Apoiador 66"
   whatsapp: "559699100084"
   municipio_id: 3
@@ -847,6 +932,7 @@ apoiador_66:
 
 apoiador_67:
   id: 85
+  projeto_id: 1
   name: "Apoiador 67"
   whatsapp: "559699100085"
   municipio_id: 3
@@ -857,6 +943,7 @@ apoiador_67:
 
 apoiador_68:
   id: 86
+  projeto_id: 1
   name: "Apoiador 68"
   whatsapp: "559699100086"
   municipio_id: 3
@@ -867,6 +954,7 @@ apoiador_68:
 
 apoiador_69:
   id: 87
+  projeto_id: 1
   name: "Apoiador 69"
   whatsapp: "559699100087"
   municipio_id: 3
@@ -877,6 +965,7 @@ apoiador_69:
 
 apoiador_70:
   id: 88
+  projeto_id: 1
   name: "Apoiador 70"
   whatsapp: "559699100088"
   municipio_id: 3
@@ -887,6 +976,7 @@ apoiador_70:
 
 apoiador_71:
   id: 89
+  projeto_id: 1
   name: "Apoiador 71"
   whatsapp: "559699100089"
   municipio_id: 3
@@ -897,6 +987,7 @@ apoiador_71:
 
 apoiador_72:
   id: 90
+  projeto_id: 1
   name: "Apoiador 72"
   whatsapp: "559699100090"
   municipio_id: 3
@@ -907,6 +998,7 @@ apoiador_72:
 
 apoiador_73:
   id: 91
+  projeto_id: 1
   name: "Apoiador 73"
   whatsapp: "559699100091"
   municipio_id: 3
@@ -917,6 +1009,7 @@ apoiador_73:
 
 apoiador_74:
   id: 92
+  projeto_id: 1
   name: "Apoiador 74"
   whatsapp: "559699100092"
   municipio_id: 3
@@ -927,6 +1020,7 @@ apoiador_74:
 
 apoiador_75:
   id: 93
+  projeto_id: 1
   name: "Apoiador 75"
   whatsapp: "559699100093"
   municipio_id: 3
@@ -937,6 +1031,7 @@ apoiador_75:
 
 apoiador_76:
   id: 94
+  projeto_id: 1
   name: "Apoiador 76"
   whatsapp: "559699100094"
   municipio_id: 3
@@ -947,6 +1042,7 @@ apoiador_76:
 
 apoiador_77:
   id: 95
+  projeto_id: 1
   name: "Apoiador 77"
   whatsapp: "559699100095"
   municipio_id: 3
@@ -957,6 +1053,7 @@ apoiador_77:
 
 apoiador_78:
   id: 96
+  projeto_id: 1
   name: "Apoiador 78"
   whatsapp: "559699100096"
   municipio_id: 3
@@ -967,6 +1064,7 @@ apoiador_78:
 
 apoiador_79:
   id: 97
+  projeto_id: 1
   name: "Apoiador 79"
   whatsapp: "559699100097"
   municipio_id: 3
@@ -977,6 +1075,7 @@ apoiador_79:
 
 apoiador_80:
   id: 98
+  projeto_id: 1
   name: "Apoiador 80"
   whatsapp: "559699100098"
   municipio_id: 3
@@ -987,6 +1086,7 @@ apoiador_80:
 
 apoiador_81:
   id: 99
+  projeto_id: 1
   name: "Apoiador 81"
   whatsapp: "559699100099"
   municipio_id: 3
@@ -997,6 +1097,7 @@ apoiador_81:
 
 apoiador_82:
   id: 100
+  projeto_id: 1
   name: "Apoiador 82"
   whatsapp: "559699100100"
   municipio_id: 3

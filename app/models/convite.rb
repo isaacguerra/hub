@@ -9,6 +9,7 @@
 # alem de convite aceito podemos ter o convite recusado, nesse caso o status deve ser atualizado para "recusado" e devemos gravar uma mensagem de convite recusado no redis.
 
 class Convite < ApplicationRecord
+  acts_as_tenant :projeto
   belongs_to :enviado_por, class_name: "Apoiador"
 
   validates :nome, :whatsapp, :status, presence: true

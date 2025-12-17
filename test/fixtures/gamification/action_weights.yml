@@ -1,34 +1,41 @@
 convite_sent:
+  projeto_id: 1
   action_type: "convite_sent"
   points: 2
   description: "Envio de convite"
 
 convite_accepted:
+  projeto_id: 1
   action_type: "convite_accepted"
   points: 10
   description: "Convite aceito"
 
 visit_created:
+  projeto_id: 1
   action_type: "visit_created"
   points: 15
   description: "Visita realizada"
 
 comunicado_received:
+  projeto_id: 1
   action_type: "comunicado_received"
   points: 1
   description: "Recebimento de comunicado"
 
 comunicado_engaged:
+  projeto_id: 1
   action_type: "comunicado_engaged"
   points: 5
   description: "Engajamento em comunicado"
 
 event_participation:
+  projeto_id: 1
   action_type: "event_participation"
   points: 8
   description: "Participação em evento"
 
 daily_login:
+  projeto_id: 1
   action_type: "daily_login"
   points: 1
   description: "Login diário"

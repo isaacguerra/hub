@@ -1,6 +1,6 @@
 class Gamification::Challenge < ApplicationRecord
   include ProjectScoped
-
+  acts_as_tenant :projeto
   belongs_to :projeto, optional: true
   belongs_to :winner, class_name: "Apoiador", optional: true
   has_many :participants, class_name: "Gamification::ChallengeParticipant", dependent: :destroy

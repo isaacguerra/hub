@@ -65,7 +65,7 @@ module Api
       end
 
       test "should not create invite if invite exists (pending)" do
-        Convite.create!(nome: "Teste", whatsapp: @new_contact_number, enviado_por: @apoiador, status: "pendente")
+        Convite.create!(nome: "Teste", whatsapp: @new_contact_number, enviado_por: @apoiador, status: "pendente", projeto_id: projetos(:default_project).id)
 
         # Mock SendWhatsappJob
         called = false
@@ -81,7 +81,7 @@ module Api
       end
 
       test "should create invite if previous invite was refused" do
-        Convite.create!(nome: "Teste Recusado", whatsapp: @new_contact_number, enviado_por: @apoiador, status: "recusado")
+        Convite.create!(nome: "Teste Recusado", whatsapp: @new_contact_number, enviado_por: @apoiador, status: "recusado", projeto_id: projetos(:default_project).id)
 
         # Mock Utils::BuscaPerfilWhatsapp
         mock_perfil = Minitest::Mock.new

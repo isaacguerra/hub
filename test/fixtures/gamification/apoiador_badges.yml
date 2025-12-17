@@ -1,11 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  projeto_id: 1
   apoiador_id: 1
   badge: one
   awarded_at: <%= 1.day.ago %>
 
 two:
+  projeto_id: 1
   apoiador_id: 2
   badge: two
   awarded_at: <%= 2.days.ago %>

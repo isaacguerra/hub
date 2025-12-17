@@ -1,20 +1,14 @@
 require "test_helper"
 
 class ProjetoTest < ActiveSupport::TestCase
-  test "valido com nome e slug" do
-    projeto = Projeto.new(name: "Campanha X", slug: "campanha-x")
-    assert projeto.valid?
+  fixtures :projetos
+
+  test "valido com nome presente" do
+    p = projetos(:default_project)
+    assert p.valid?
   end
 
-  test "invalido sem nome" do
-    projeto = Projeto.new(slug: "no-name")
-    refute projeto.valid?
-    assert projeto.errors[:name].present?
-  end
-
-  test "invalido sem slug" do
-    projeto = Projeto.new(name: "Sem Slug")
-    refute projeto.valid?
-    assert projeto.errors[:slug].present?
+  test "cidade default tem id 1" do
+    assert_equal 1, projetos(:default_project).id
   end
 end

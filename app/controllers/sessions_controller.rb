@@ -1,4 +1,4 @@
-class Web::SessionsController < ApplicationController
+class SessionsController < ApplicationController
   skip_before_action :authenticate_apoiador!, only: %i[new create verify verify_view]
   layout "auth", only: %i[new create verify verify_view]
 

@@ -41,7 +41,7 @@ class ConvitesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy convite" do
-    convite_to_destroy = Convite.create!(nome: "To Destroy", whatsapp: "96988888888", status: "pendente", enviado_por: @admin)
+    convite_to_destroy = Convite.create!(nome: "To Destroy", whatsapp: "96988888888", status: "pendente", enviado_por: @admin, projeto_id: projetos(:default_project).id)
 
     assert_difference("Convite.count", -1) do
       delete convite_url(convite_to_destroy)

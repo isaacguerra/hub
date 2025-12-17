@@ -1,4 +1,4 @@
-class Web::BairrosController < ApplicationController
+class BairrosController < ApplicationController
   before_action :authorize_admin!
   before_action :set_context
   before_action :set_bairro, only: %i[ show edit update destroy ]

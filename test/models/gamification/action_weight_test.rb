@@ -18,14 +18,14 @@ module Gamification
     end
 
     test "should enforce uniqueness of action_type" do
-      ActionWeight.create!(action_type: "unique_action", points: 10)
+      ActionWeight.create!(action_type: "unique_action", points: 10, projeto_id: projetos(:default_project).id)
       duplicate = ActionWeight.new(action_type: "unique_action", points: 20)
       assert_not duplicate.valid?
     end
 
     test "should clear cache after commit" do
       Rails.cache.write("gamification_weights", { "test" => 1 })
-      ActionWeight.create!(action_type: "new_action", points: 5)
+      ActionWeight.create!(action_type: "new_action", points: 5, projeto_id: projetos(:default_project).id)
       assert_nil Rails.cache.read("gamification_weights")
     end
   end

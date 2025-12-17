@@ -72,7 +72,7 @@ module Api
       end
 
       test "should not create invite if invite exists (pending)" do
-        Convite.create!(nome: "Teste", whatsapp: @valid_number_text, enviado_por: @apoiador, status: "pendente")
+        Convite.create!(nome: "Teste", whatsapp: @valid_number_text, enviado_por: @apoiador, status: "pendente", projeto_id: projetos(:default_project).id)
 
         called = false
         SendWhatsappJob.stub :perform_later, ->(whatsapp:, mensagem:, image_url: nil, projeto_id: nil) {

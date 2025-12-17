@@ -16,10 +16,10 @@ module Gamification
         premio: reward
       )
 
-      # Envia para todos os apoiadores
-      Apoiador.find_each do |apoiador|
+            # Envia para todos os apoiadores (passando projeto_id para jobs)
+            Apoiador.find_each do |apoiador|
         SendWhatsappJob.perform_later(whatsapp: apoiador.whatsapp, mensagem: message, projeto_id: apoiador.projeto_id)
-      end
+            end
     end
   end
 end

@@ -1,4 +1,5 @@
 class Gamification::ActionWeight < ApplicationRecord
+  acts_as_tenant :projeto
   validates :action_type, presence: true, uniqueness: true
   validates :points, numericality: { only_integer: true }
 

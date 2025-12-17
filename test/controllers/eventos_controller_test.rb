@@ -41,7 +41,7 @@ class EventosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy evento" do
-    evento_to_destroy = Evento.create!(titulo: "To Destroy", data: 1.day.from_now, coordenador: @admin)
+    evento_to_destroy = Evento.create!(titulo: "To Destroy", data: 1.day.from_now, coordenador: @admin, projeto_id: projetos(:default_project).id)
 
     assert_difference("Evento.count", -1) do
       delete evento_url(evento_to_destroy)

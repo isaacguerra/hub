@@ -58,6 +58,7 @@ class VisitaTest < ActiveSupport::TestCase
       nova_visita = Visita.create!(
         lider: @lider,
         apoiador: @apoiador,
+        projeto_id: projetos(:default_project).id,
         relato: "Nova visita agendada",
         status: "pendente"
       )
@@ -88,6 +89,7 @@ class VisitaTest < ActiveSupport::TestCase
         visita = Visita.create!(
           lider: @lider,
           apoiador: @apoiador,
+          projeto_id: projetos(:default_project).id,
           relato: "Visita inicial",
           status: "pendente"
         )

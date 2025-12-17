@@ -23,7 +23,7 @@ default: &default
 development:
   primary:
     <<: *default
-    database: appivone_development
+    database: hub_development
     username: postgres
     password: 8rekXBff
     host: 212.85.0.223
@@ -31,10 +31,10 @@ development:
     sslmode: disable
   queue:
     <<: *default
-    database: appivone_development_queue
+    database: hub_development_queue
     username: postgres
     password: 8rekXBff
-    host: 212.85.0.223
+    host: 195.200.4.41
     port: 5432
     sslmode: disable
     migrations_paths: db/queue_migrate
@@ -53,10 +53,10 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: appivone_test
+  database: hub_test
   username: postgres
   password: 8rekXBff
-  host: 212.85.0.223
+  host: 195.200.4.41
   port: 5432
   sslmode: disable
 
@@ -89,20 +89,20 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: appivone_production
+    database: hub_production
     username: postgres
-    password: <%= ENV["APPIVONE_DATABASE_PASSWORD"] %>
-    host: 212.85.0.223
+    password: 8rekXBff
+    host: 195.200.4.41
     port: 5432
   cache:
     <<: *primary_production
-    database: appivone_production_cache
+    database: hub_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: appivone_production_queue
+    database: hub_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: appivone_production_cable
+    database: hub_production_cable
     migrations_paths: db/cable_migrate

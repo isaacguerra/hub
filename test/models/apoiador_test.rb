@@ -92,7 +92,8 @@ class ApoiadorTest < ActiveSupport::TestCase
         regiao: @apoiador.regiao,
         bairro: @apoiador.bairro,
         funcao: funcoes(:apoiador),
-        lider: @lider
+        lider: @lider,
+        projeto_id: projetos(:default_project).id
       )
       assert novo_apoiador.persisted?
     end
@@ -109,7 +110,8 @@ class ApoiadorTest < ActiveSupport::TestCase
         regiao: @apoiador.regiao,
         bairro: @apoiador.bairro,
         funcao: funcoes(:apoiador),
-        lider: @apoiador
+        lider: @apoiador,
+        projeto_id: projetos(:default_project).id
       )
     end
 

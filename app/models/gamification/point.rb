@@ -1,6 +1,6 @@
 class Gamification::Point < ApplicationRecord
   include ProjectScoped
-
+  acts_as_tenant :projeto
   belongs_to :projeto, optional: true
   belongs_to :apoiador
 

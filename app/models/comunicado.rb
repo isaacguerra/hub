@@ -5,6 +5,7 @@
 # Ao criar um comunicado os Líderes do Apoiador devem receber uma notificação no redis que o comunicado foi criado e para qual grupo foi enviado
 
 class Comunicado < ApplicationRecord
+  acts_as_tenant :projeto
   belongs_to :lider, class_name: "Apoiador"
 
   has_many :comunicado_apoiadores, dependent: :destroy

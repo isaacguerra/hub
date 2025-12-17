@@ -6,7 +6,7 @@ module Gamification
       @challenge = gamification_challenges(:one)
       @apoiador = apoiadores(:joao_candidato)
       # Ensure challenge has a winner
-      Gamification::ChallengeParticipant.create!(challenge: @challenge, apoiador: @apoiador, points: 100)
+      Gamification::ChallengeParticipant.create!(challenge: @challenge, apoiador: @apoiador, points: 100, projeto_id: projetos(:default_project).id)
       @challenge.update!(winner: @apoiador)
     end
 

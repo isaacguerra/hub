@@ -8,6 +8,7 @@
 # Caso o Evento seja atualizado ou cancelado, devemos gravar uma mensagem no channel mensageria no redis com os dados atualizados do Evento.
 
 class Evento < ApplicationRecord
+  acts_as_tenant :projeto
   belongs_to :coordenador, class_name: 'Apoiador'
 
   # Associações de Filtro (Opcionais)

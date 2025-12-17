@@ -1,4 +1,4 @@
-class Web::ComunicadosController < ApplicationController
+class ComunicadosController < ApplicationController
   before_action :set_comunicado, only: %i[ show edit update destroy ]
   before_action :authorize_create, only: %i[ new create ]
   before_action :authorize_manage, only: %i[ edit update destroy ]

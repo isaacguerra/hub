@@ -1,4 +1,3 @@
-module Web
   module Gamification
   class ConfigurationsController < BaseController
     # Acesso restrito a Candidatos e Coordenadores Gerais via BaseController

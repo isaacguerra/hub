@@ -15,15 +15,16 @@ module Gamification
       apoiador = winner_data[:apoiador]
       points = winner_data[:points]
 
-      # 3. Criar registro histórico
+      # 3. Criar registro histórico (atribuir projeto_id explicitamente)
       Gamification::WeeklyWinner.create!(
         apoiador: apoiador,
         week_start_date: last_week_start,
         week_end_date: last_week_end,
-        points_total: points
+        points_total: points,
+        projeto_id: apoiador.projeto_id
       )
 
-      # 4. Enviar notificação solicitando a estratégia
+      # 4. Enviar notificação solicitando a estratégia (passando projeto_id)
       link = Rails.application.routes.url_helpers.edit_mobile_gamification_strategy_url(protocol: "https")
       message = I18n.t("mensagens.gamification.vencedor_semanal",
         nome: apoiador.name,
@@ -31,7 +32,7 @@ module Gamification
         link: link
       )
 
-        SendWhatsappJob.perform_later(whatsapp: apoiador.whatsapp, mensagem: message, projeto_id: apoiador.projeto_id)
+      SendWhatsappJob.perform_later(whatsapp: apoiador.whatsapp, mensagem: message, projeto_id: apoiador.projeto_id)
     end
   end
 end

@@ -1,5 +1,17 @@
 puts "Iniciando o seed..."
 
+# Criar Projeto padrão (antes de criar apoiadores)
+default_name = "Ivone Chagas"
+projeto = Projeto.find_or_create_by!(name: default_name) do |p|
+  p.candidato = "Ivone Chagas"
+  p.candidato_whatsapp = '5596984102020'
+  p.descricao = 'Campanha Ivone Chagas'
+  p.site = 'https://ivonechagas.example'
+  p.slug = 'ivone-chagas'
+  p.active = true
+end
+puts "Projeto padrão criado: #{projeto.name} (id=#{projeto.id})"
+
 # 1. Criar Funções
 funcoes = {
   Funcao::CANDIDATO_ID => 'Candidato',
@@ -85,6 +97,7 @@ if funcao_candidato && municipio_macapa && regiao_centro && bairro_central
     a.regiao = regiao_centro
     a.bairro = bairro_central
     a.email = 'ivone@ivonechagas.com.br'
+    a.projeto = projeto
   end
   puts "Apoiador padrão criado: #{apoiador.name} (#{apoiador.email})"
 else
@@ -105,6 +118,7 @@ if funcao_candidato && municipio_macapa && regiao_centro && bairro_central
     a.regiao = regiao_centro
     a.bairro = bairro_central
     a.email = 'isaac@appivone.com'
+    a.projeto = projeto
   end
   puts "Apoiador Coordenador Geral criado: #{apoiador.name} (#{apoiador.email})"
 else
@@ -133,6 +147,7 @@ weights.each do |action_type, data|
   Gamification::ActionWeight.find_or_create_by!(action_type: action_type) do |w|
     w.points = data[:points]
     w.description = data[:description]
+    w.projeto_id = projeto.id
   end
 end
 
@@ -143,6 +158,7 @@ levels.each_with_index do |threshold, index|
   level_number = index + 1
   Gamification::Level.find_or_create_by!(level: level_number) do |l|
     l.experience_threshold = threshold
+    l.projeto_id = projeto.id
   end
 end
 

@@ -1,4 +1,4 @@
-class Web::FuncoesController < ApplicationController
+class FuncoesController < ApplicationController
   before_action :set_funcao, only: %i[ show edit update destroy ]
 
   # GET /funcoes or /funcoes.json

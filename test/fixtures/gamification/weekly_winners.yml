@@ -3,11 +3,11 @@ one:
   week_start_date: <%= 1.week.ago.beginning_of_week %>
   week_end_date: <%= 1.week.ago.end_of_week %>
   points_total: 500
-  rank: 1
+  projeto_id: 1
 
 two:
   apoiador_id: 2
   week_start_date: <%= 1.week.ago.beginning_of_week %>
   week_end_date: <%= 1.week.ago.end_of_week %>
   points_total: 450
-  rank: 2
+  projeto_id: 1
