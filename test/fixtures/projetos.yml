@@ -1,0 +1,7 @@
+default_project:
+  id: 1
+  name: "Projeto Default"
+  slug: "default"
+  active: true
+  created_at: <%= Time.now.utc.iso8601 %>
+  updated_at: <%= Time.now.utc.iso8601 %>
