@@ -63,7 +63,7 @@ class Gamification::PointsServiceTest < ActiveSupport::TestCase
   test "deve subir de nível ao atingir pontuação necessária" do
     # Level 2 requer 100 pontos
     # Vamos dar 90 pontos primeiro
-    Gamification::Point.create!(apoiador: @apoiador, points: 90, level: 1)
+    Gamification::Point.create!(apoiador: @apoiador, points: 90, level: 1, projeto_id: projetos(:default_project).id)
 
     # Ação que dá 10 pontos (convite_accepted) -> Total 100 -> Level 2
     result = Gamification::PointsService.award_points(

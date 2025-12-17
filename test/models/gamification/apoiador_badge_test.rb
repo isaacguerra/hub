@@ -12,7 +12,7 @@ class Gamification::ApoiadorBadgeTest < ActiveSupport::TestCase
   end
 
   test "should enforce uniqueness" do
-    Gamification::ApoiadorBadge.create!(apoiador: @apoiador, badge: @badge)
+    Gamification::ApoiadorBadge.create!(apoiador: @apoiador, badge: @badge, projeto_id: projetos(:default_project).id)
     duplicate = Gamification::ApoiadorBadge.new(apoiador: @apoiador, badge: @badge)
     assert_not duplicate.valid?
   end

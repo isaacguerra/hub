@@ -1,12 +1,14 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  projeto_id: 1
   challenge: one
   apoiador_id: 1
   progress: {}
   points: 0
 
 two:
+  projeto_id: 1
   challenge: two
   apoiador_id: 2
   progress: {}

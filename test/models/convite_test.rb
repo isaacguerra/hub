@@ -58,7 +58,8 @@ class ConviteTest < ActiveSupport::TestCase
         nome: "Teste Notificação",
         whatsapp: "96998765432",
         status: "pendente",
-        enviado_por: @lider
+          enviado_por: @lider,
+          projeto_id: projetos(:default_project).id
       )
       assert novo_convite.persisted?
     end
@@ -83,7 +84,8 @@ class ConviteTest < ActiveSupport::TestCase
           nome: "Fluxo Completo",
           whatsapp: "96997654321",
           status: "pendente",
-          enviado_por: @lider
+          enviado_por: @lider,
+          projeto_id: projetos(:default_project).id
         )
 
         # 2. Aceitar convite
@@ -98,7 +100,8 @@ class ConviteTest < ActiveSupport::TestCase
           regiao: @lider.regiao,
           bairro: @lider.bairro,
           funcao: funcoes(:apoiador),
-          lider: @lider
+          lider: @lider,
+          projeto_id: projetos(:default_project).id
         )
 
         assert apoiador.persisted?

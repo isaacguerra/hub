@@ -15,14 +15,14 @@ class RedeApoiadoresTest < ActiveSupport::TestCase
     @f_lider = Funcao.find_by(name: "Líder")
     @f_apoiador = Funcao.find_by(name: "Apoiador")
 
-    @candidato = Apoiador.create!(name: "Candidato", whatsapp: "5511999990001", funcao: @f_candidato, municipio: @municipio, regiao: @regiao, bairro: @bairro)
-    @geral = Apoiador.create!(name: "Geral", whatsapp: "5511999990002", funcao: @f_geral, municipio: @municipio, regiao: @regiao, bairro: @bairro)
-    @municipal = Apoiador.create!(name: "Municipal", whatsapp: "5511999990003", funcao: @f_municipal, municipio: @municipio, regiao: @regiao, bairro: @bairro)
-    @regional = Apoiador.create!(name: "Regional", whatsapp: "5511999990004", funcao: @f_regional, municipio: @municipio, regiao: @regiao, bairro: @bairro)
-    @coord_bairro = Apoiador.create!(name: "Coord Bairro", whatsapp: "5511999990005", funcao: @f_bairro, municipio: @municipio, regiao: @regiao, bairro: @bairro)
+    @candidato = Apoiador.create!(name: "Candidato", whatsapp: "5511999990001", funcao: @f_candidato, municipio: @municipio, regiao: @regiao, bairro: @bairro, projeto_id: projetos(:default_project).id)
+    @geral = Apoiador.create!(name: "Geral", whatsapp: "5511999990002", funcao: @f_geral, municipio: @municipio, regiao: @regiao, bairro: @bairro, projeto_id: projetos(:default_project).id)
+    @municipal = Apoiador.create!(name: "Municipal", whatsapp: "5511999990003", funcao: @f_municipal, municipio: @municipio, regiao: @regiao, bairro: @bairro, projeto_id: projetos(:default_project).id)
+    @regional = Apoiador.create!(name: "Regional", whatsapp: "5511999990004", funcao: @f_regional, municipio: @municipio, regiao: @regiao, bairro: @bairro, projeto_id: projetos(:default_project).id)
+    @coord_bairro = Apoiador.create!(name: "Coord Bairro", whatsapp: "5511999990005", funcao: @f_bairro, municipio: @municipio, regiao: @regiao, bairro: @bairro, projeto_id: projetos(:default_project).id)
 
-    @lider = Apoiador.create!(name: "Lider", whatsapp: "5511999990006", funcao: @f_lider, municipio: @municipio, regiao: @regiao, bairro: @bairro, lider: @coord_bairro)
-    @apoiador = Apoiador.create!(name: "Apoiador", whatsapp: "5511999990007", funcao: @f_apoiador, municipio: @municipio, regiao: @regiao, bairro: @bairro, lider: @lider)
+    @lider = Apoiador.create!(name: "Lider", whatsapp: "5511999990006", funcao: @f_lider, municipio: @municipio, regiao: @regiao, bairro: @bairro, lider: @coord_bairro, projeto_id: projetos(:default_project).id)
+    @apoiador = Apoiador.create!(name: "Apoiador", whatsapp: "5511999990007", funcao: @f_apoiador, municipio: @municipio, regiao: @regiao, bairro: @bairro, lider: @lider, projeto_id: projetos(:default_project).id)
   end
 
   test "coordenadores retorna toda a hierarquia acima" do

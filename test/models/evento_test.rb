@@ -8,7 +8,8 @@ class EventoTest < ActiveSupport::TestCase
       data: 1.day.from_now,
       local: "Local Teste",
       descricao: "Descricao Teste",
-      coordenador: coordenador
+      coordenador: coordenador,
+      projeto_id: projetos(:default_project).id
     )
 
     mock = Minitest::Mock.new

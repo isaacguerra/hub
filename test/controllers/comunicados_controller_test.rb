@@ -41,7 +41,7 @@ class ComunicadosControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy comunicado" do
-    comunicado_to_destroy = Comunicado.create!(titulo: "To Destroy", mensagem: "Msg", data: Time.current, lider: @admin)
+    comunicado_to_destroy = Comunicado.create!(titulo: "To Destroy", mensagem: "Msg", data: Time.current, lider: @admin, projeto_id: projetos(:default_project).id)
 
     assert_difference("Comunicado.count", -1) do
       delete comunicado_url(comunicado_to_destroy)

@@ -9,6 +9,7 @@ module Gamification
         apoiador: @apoiador,
         action_type: "test_action",
         points_awarded: 100,
+        projeto_id: projetos(:default_project).id,
         created_at: 1.week.ago
       )
     end

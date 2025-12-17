@@ -18,14 +18,14 @@ module Gamification
     end
 
     test "should enforce uniqueness of level" do
-      Level.create!(level: 101, experience_threshold: 100)
+      Level.create!(level: 101, experience_threshold: 100, projeto_id: projetos(:default_project).id)
       duplicate = Level.new(level: 101, experience_threshold: 200)
       assert_not duplicate.valid?
     end
 
     test "should clear cache after commit" do
       Rails.cache.write("gamification_levels", { 1 => 100 })
-      Level.create!(level: 102, experience_threshold: 200)
+      Level.create!(level: 102, experience_threshold: 200, projeto_id: projetos(:default_project).id)
       assert_nil Rails.cache.read("gamification_levels")
     end
   end

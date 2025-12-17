@@ -13,6 +13,7 @@ class Gamification::RankingServiceTest < ActiveSupport::TestCase
       apoiador: @apoiador1,
       action_type: "test",
       points_awarded: 20,
+      projeto_id: projetos(:default_project).id,
       created_at: Time.current
     )
 
@@ -21,6 +22,7 @@ class Gamification::RankingServiceTest < ActiveSupport::TestCase
       apoiador: @apoiador2,
       action_type: "test",
       points_awarded: 50,
+      projeto_id: projetos(:default_project).id,
       created_at: Time.current
     )
 
@@ -39,6 +41,7 @@ class Gamification::RankingServiceTest < ActiveSupport::TestCase
       apoiador: @apoiador1,
       action_type: "test",
       points_awarded: 100,
+      projeto_id: projetos(:default_project).id,
       created_at: 1.day.ago
     )
 

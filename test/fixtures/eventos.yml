@@ -1,6 +1,7 @@
 # Fixtures para Eventos
 reuniao_geral:
   id: 1
+  projeto_id: 1
   titulo: "Reunião Geral"
   data: <%= 1.day.from_now %>
   local: "Sede do Partido"
@@ -9,6 +10,7 @@ reuniao_geral:
 
 caminhada:
   id: 2
+  projeto_id: 1
   titulo: "Caminhada no Centro"
   data: <%= 2.days.from_now %>
   local: "Praça Central"

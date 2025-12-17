@@ -20,7 +20,8 @@ class Gamification::BadgeServiceTest < ActiveSupport::TestCase
       Gamification::ActionLog.create!(
         apoiador: @apoiador,
         action_type: "test_action",
-        points_awarded: 10
+        points_awarded: 10,
+        projeto_id: projetos(:default_project).id
       )
     end
 
@@ -36,7 +37,8 @@ class Gamification::BadgeServiceTest < ActiveSupport::TestCase
       Gamification::ActionLog.create!(
         apoiador: @apoiador,
         action_type: "test_action",
-        points_awarded: 10
+        points_awarded: 10,
+        projeto_id: projetos(:default_project).id
       )
     end
 
@@ -48,14 +50,15 @@ class Gamification::BadgeServiceTest < ActiveSupport::TestCase
 
   test "não deve conceder badge repetida" do
     # Já possui a badge
-    Gamification::ApoiadorBadge.create!(apoiador: @apoiador, badge: @badge, awarded_at: 1.day.ago)
+    Gamification::ApoiadorBadge.create!(apoiador: @apoiador, badge: @badge, awarded_at: 1.day.ago, projeto_id: projetos(:default_project).id)
 
     # Tem ações suficientes
     3.times do
       Gamification::ActionLog.create!(
         apoiador: @apoiador,
         action_type: "test_action",
-        points_awarded: 10
+        points_awarded: 10,
+        projeto_id: projetos(:default_project).id
       )
     end
 

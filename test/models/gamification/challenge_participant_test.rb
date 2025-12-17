@@ -8,7 +8,8 @@ class Gamification::ChallengeParticipantTest < ActiveSupport::TestCase
       description: "Test Description",
       reward: "Test Reward",
       starts_at: Time.current,
-      ends_at: 1.week.from_now
+      ends_at: 1.week.from_now,
+      projeto_id: projetos(:default_project).id
     )
   end
 
@@ -21,7 +22,7 @@ class Gamification::ChallengeParticipantTest < ActiveSupport::TestCase
   end
 
   test "should enforce uniqueness" do
-    Gamification::ChallengeParticipant.create!(challenge: @challenge, apoiador: @apoiador)
+    Gamification::ChallengeParticipant.create!(challenge: @challenge, apoiador: @apoiador, projeto_id: projetos(:default_project).id)
     duplicate = Gamification::ChallengeParticipant.new(challenge: @challenge, apoiador: @apoiador)
     assert_not duplicate.valid?
   end

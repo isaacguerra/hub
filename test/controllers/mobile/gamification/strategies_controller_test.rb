@@ -6,11 +6,12 @@ class Mobile::Gamification::StrategiesControllerTest < ActionDispatch::Integrati
     sign_in_as(@apoiador)
     
     # Create a weekly winner record for this apoiador
-    @weekly_winner = Gamification::WeeklyWinner.create!(
+      @weekly_winner = Gamification::WeeklyWinner.create!(
       apoiador: @apoiador,
       week_start_date: 1.week.ago.beginning_of_week.to_date,
       week_end_date: 1.week.ago.end_of_week.to_date,
-      points_total: 100
+      points_total: 100,
+      projeto_id: projetos(:default_project).id
     )
   end
 

@@ -1,6 +1,7 @@
 # Fixtures para Visitas
 visita_pendente:
   id: 1
+  projeto_id: 1
   lider_id: 14
   apoiador_id: 19
   relato: "Visita agendada"
@@ -10,6 +11,7 @@ visita_pendente:
 
 visita_concluida:
   id: 2
+  projeto_id: 1
   lider_id: 14
   apoiador_id: 19
   relato: "Visita realizada com sucesso"
