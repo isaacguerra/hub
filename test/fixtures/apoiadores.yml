@@ -1,6 +1,8 @@
+
 # Fixtures para Apoiadores - 100 apoiadores cobrindo todos os perfis
 joao_candidato:
   id: 1
+  projeto_id: 1
   name: "João Candidato"
   whatsapp: "5596999100001"
   municipio_id: 1
@@ -11,6 +13,7 @@ joao_candidato:
 
 maria_coord_geral:
   id: 2
+  projeto_id: 1
   name: "Maria Coordenadora Geral"
   whatsapp: "5596999100002"
   municipio_id: 1
