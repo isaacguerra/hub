@@ -14,7 +14,7 @@ class Gamification::RankingServiceTest < ActiveSupport::TestCase
       action_type: "test",
       points_awarded: 20,
       projeto_id: projetos(:default_project).id,
-      created_at: 1.day.ago
+      created_at: Time.current
     )
 
     # Apoiador 2: 50 pontos hoje
@@ -37,18 +37,13 @@ class Gamification::RankingServiceTest < ActiveSupport::TestCase
 
   test "deve respeitar o período de tempo" do
     # Ação ontem (não deve contar para daily)
-    Gamification::ActionLog.create!(
+        Gamification::ActionLog.create!(
       apoiador: @apoiador1,
       action_type: "test",
       points_awarded: 100,
-<<<<<<< HEAD
-      created_at: 1.day.ago,
-      projeto: Projeto.first
-=======
       projeto_id: projetos(:default_project).id,
       created_at: 1.day.ago
->>>>>>> feature/acts-as-tenant
-    )
+        )
 
     ranking = Gamification::RankingService.top_apoiadores(period: :daily)
     assert_empty ranking

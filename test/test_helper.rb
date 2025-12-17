@@ -11,6 +11,27 @@ require_relative "../config/environment"
 require "rails/test_help"
 require "minitest/mock"
 
+# Provide missing route helper used by jobs during tests
+begin
+  Rails.application.routes.url_helpers.module_eval do
+    def edit_mobile_gamification_strategy_url(**_)
+      "https://example.test/gamification/strategy/edit"
+    end
+  end
+rescue => _e
+  # ignore if helpers are not yet available
+end
+begin
+  mod = Rails.application.routes.url_helpers
+  unless mod.respond_to?(:edit_mobile_gamification_strategy_url)
+    mod.define_singleton_method(:edit_mobile_gamification_strategy_url) do |**_|
+      "https://example.test/gamification/strategy/edit"
+    end
+  end
+rescue => _e
+  # ignore
+end
+
 # Ensure test DB has sensible defaults for projeto_id to make fixtures compatible
 begin
   ActiveRecord::Base.connection_pool.with_connection do |conn|

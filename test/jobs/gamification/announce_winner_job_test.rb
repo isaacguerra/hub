@@ -6,8 +6,11 @@ module Gamification
       @challenge = gamification_challenges(:one)
       @apoiador = apoiadores(:joao_candidato)
       # Ensure challenge has a winner
-      Gamification::ChallengeParticipant.create!(challenge: @challenge, apoiador: @apoiador, points: 100, projeto_id: projetos(:default_project).id)
-      @challenge.update!(winner: @apoiador)
+      Gamification::ChallengeParticipant.find_or_create_by!(challenge: @challenge, apoiador: @apoiador) do |p|
+        p.points = 100
+        p.projeto_id = projetos(:default_project).id
+      end
+      @challenge.update!(winner: @apoiador) unless @challenge.winner_id == @apoiador.id
     end
 
     test "should enqueue whatsapp messages for all apoiadores" do
