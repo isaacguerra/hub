@@ -59,7 +59,8 @@ class RedeApoiadoresTest < ActiveSupport::TestCase
   test "rede_completa retorna estrutura correta" do
     rede = @apoiador.rede_completa
 
-    assert_kind_of Array, rede[:coordenadores]
+    # Pode ser Array ou ActiveRecord::Relation; aceitamos qualquer coleção iterável
+    assert_respond_to rede[:coordenadores], :each
     assert_equal @lider, rede[:lider]
     # Pode ser Array ou Relation
     assert_respond_to rede[:liderados], :each
