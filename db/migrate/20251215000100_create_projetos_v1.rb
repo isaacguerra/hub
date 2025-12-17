@@ -1,6 +1,8 @@
 class CreateProjetosV1 < ActiveRecord::Migration[8.1]
   def change
-    create_table :projetos do |t|
+    unless table_exists?(:projetos)
+      create_table :projetos do |t|
+        # created conditionally because table may already exist on merged DB
       t.string :name, null: false
       t.string :slug, null: false
       t.string :candidate_name
@@ -17,9 +19,10 @@ class CreateProjetosV1 < ActiveRecord::Migration[8.1]
       t.bigint :created_by_id
 
       t.timestamps
-    end
+      end
 
-    add_index :projetos, :slug, unique: true
-    add_index :projetos, :evolution_instance_id
+      add_index :projetos, :slug, unique: true
+      add_index :projetos, :evolution_instance_id
+    end
   end
 end
