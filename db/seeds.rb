@@ -97,6 +97,7 @@ if funcao_candidato && municipio_macapa && regiao_centro && bairro_central
     a.regiao = regiao_centro
     a.bairro = bairro_central
     a.email = 'ivone@ivonechagas.com.br'
+    a.projeto = projeto
   end
   puts "Apoiador padrão criado: #{apoiador.name} (#{apoiador.email})"
 else
@@ -117,6 +118,7 @@ if funcao_candidato && municipio_macapa && regiao_centro && bairro_central
     a.regiao = regiao_centro
     a.bairro = bairro_central
     a.email = 'isaac@appivone.com'
+    a.projeto = projeto
   end
   puts "Apoiador Coordenador Geral criado: #{apoiador.name} (#{apoiador.email})"
 else
