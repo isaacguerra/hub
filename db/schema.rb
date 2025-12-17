@@ -311,9 +311,11 @@ ActiveRecord::Schema[8.1].define(version: 2025_12_17_000200) do
     t.boolean "disponivel", default: true, null: false
     t.string "modelo", null: false
     t.string "placa", null: false
+    t.bigint "projeto_id"
     t.string "tipo", null: false
     t.datetime "updated_at", null: false
     t.index ["apoiador_id"], name: "index_veiculos_on_apoiador_id"
+    t.index ["projeto_id"], name: "index_veiculos_on_projeto_id"
   end
 
   create_table "visitas", force: :cascade do |t|

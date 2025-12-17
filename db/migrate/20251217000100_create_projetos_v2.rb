@@ -1,6 +1,7 @@
 class CreateProjetosV2 < ActiveRecord::Migration[8.1]
   def change
-    create_table :projetos do |t|
+    unless table_exists?(:projetos)
+      create_table :projetos do |t|
       t.string :name, null: false
       t.string :candidato
       t.string :candidato_whatsapp
@@ -12,7 +13,7 @@ class CreateProjetosV2 < ActiveRecord::Migration[8.1]
 
       t.timestamps
     end
-
-    add_index :projetos, :slug, unique: true
+      add_index :projetos, :slug, unique: true
+    end
   end
 end
