@@ -1,5 +1,17 @@
 puts "Iniciando o seed..."
 
+# Criar Projeto padrão (antes de criar apoiadores)
+default_name = "Ivone Chagas"
+projeto = Projeto.find_or_create_by!(name: default_name) do |p|
+  p.candidato = "Ivone Chagas"
+  p.candidato_whatsapp = '5596984102020'
+  p.descricao = 'Campanha Ivone Chagas'
+  p.site = 'https://ivonechagas.example'
+  p.slug = 'ivone-chagas'
+  p.active = true
+end
+puts "Projeto padrão criado: #{projeto.name} (id=#{projeto.id})"
+
 # 1. Criar Funções
 funcoes = {
   Funcao::CANDIDATO_ID => 'Candidato',
@@ -149,15 +161,3 @@ end
 puts "Dados de Gamificação populados com sucesso!"
 
 puts "Seed concluído!"
-
-# Cria Projeto padrão e candidato (Ivone Chagas)
-default_name = "Ivone Chagas"
-projeto = Projeto.find_or_create_by!(name: default_name) do |p|
-  p.candidato = "Ivone Chagas"
-  p.candidato_whatsapp = '5596984102020'
-  p.descricao = 'Campanha Ivone Chagas'
-  p.site = 'https://ivonechagas.example'
-  p.slug = 'ivone-chagas'
-  p.active = true
-end
-puts "Projeto padrão criado: #{projeto.name} (id=#{projeto.id})"
