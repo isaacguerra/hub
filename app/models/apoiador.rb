@@ -22,6 +22,7 @@ class Apoiador < ApplicationRecord
   belongs_to :municipio
   belongs_to :regiao
   belongs_to :bairro
+  belongs_to :projeto
   belongs_to :funcao
   belongs_to :lider, class_name: "Apoiador", optional: true, counter_cache: :subordinados_count
 
