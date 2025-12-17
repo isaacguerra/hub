@@ -1,4 +1,4 @@
-class Web::MunicipiosController < ApplicationController
+class MunicipiosController < ApplicationController
   before_action :authorize_admin!
   before_action :set_municipio, only: %i[ show edit update destroy ]
 

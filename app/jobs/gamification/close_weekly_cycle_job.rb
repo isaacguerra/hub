@@ -31,7 +31,7 @@ module Gamification
         link: link
       )
 
-      SendWhatsappJob.perform_later(apoiador.whatsapp, message)
+      SendWhatsappJob.perform_later(whatsapp: apoiador.whatsapp, mensagem: message)
     end
   end
 end

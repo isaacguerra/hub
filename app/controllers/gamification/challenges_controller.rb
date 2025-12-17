@@ -1,4 +1,3 @@
-module Web
   module Gamification
   class ChallengesController < BaseController
     before_action :set_challenge, only: %i[edit update destroy]
@@ -58,5 +57,4 @@ module Web
       permitted
     end
   end
-end
 end

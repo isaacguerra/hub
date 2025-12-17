@@ -1,33 +1,22 @@
 module Mobile
   class SessionsController < ApplicationController
-    skip_before_action :authenticate_apoiador!, only: [ :create ]
+    skip_before_action :authenticate_apoiador!
 
+    # GET /m/:codigo  (magic link)
     def create
       codigo = params[:codigo]
       apoiador = Apoiador.find_by(verification_code: codigo)
 
       if apoiador && apoiador.codigo_valido?(codigo)
+        apoiador.limpar_codigo_acesso!
         session[:apoiador_id] = apoiador.id
-        
-        # Pontuar login diário
-        ::Gamification::PointsService.award_points(
-          apoiador: apoiador,
-          action_type: "daily_login"
-        )
+        session.delete(:auth_apoiador_id)
+        Gamification::PointsService.award_points(apoiador: apoiador, action_type: "daily_login")
 
-        # Não limpamos o código imediatamente para evitar problemas com previewers de link
-        # O código irá expirar naturalmente pelo tempo (5 minutos)
-        # apoiador.limpar_codigo_acesso!
-
-        redirect_to mobile_dashboard_path, notice: "Bem-vindo, #{apoiador.nome}!"
+        redirect_to root_path, notice: "Bem-vindo, #{apoiador.name}!"
       else
         redirect_to login_path, alert: "Link inválido ou expirado."
       end
-    end
-
-    def destroy
-      session[:apoiador_id] = nil
-      redirect_to login_path, notice: "Saiu com sucesso."
     end
   end
 end

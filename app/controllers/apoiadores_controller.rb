@@ -1,4 +1,4 @@
-class Web::ApoiadoresController < ApplicationController
+class ApoiadoresController < ApplicationController
   before_action :set_apoiador, only: %i[ show edit update destroy ]
 
   # GET /apoiadores or /apoiadores.json

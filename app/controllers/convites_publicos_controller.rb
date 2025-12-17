@@ -1,4 +1,4 @@
-class Web::ConvitesPublicosController < ApplicationController
+class ConvitesPublicosController < ApplicationController
   skip_before_action :authenticate_apoiador!
   layout "auth"
 
