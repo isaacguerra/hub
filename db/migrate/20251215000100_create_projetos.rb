@@ -1,4 +1,4 @@
-class CreateProjetos < ActiveRecord::Migration[8.1]
+class CreateProjetosV1 < ActiveRecord::Migration[8.1]
   def change
     create_table :projetos do |t|
       t.string :name, null: false
