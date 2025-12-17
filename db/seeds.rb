@@ -147,7 +147,7 @@ weights.each do |action_type, data|
   Gamification::ActionWeight.find_or_create_by!(action_type: action_type) do |w|
     w.points = data[:points]
     w.description = data[:description]
-    w.projeto = projeto
+    w.projeto_id = projeto.id
   end
 end
 
@@ -158,7 +158,7 @@ levels.each_with_index do |threshold, index|
   level_number = index + 1
   Gamification::Level.find_or_create_by!(level: level_number) do |l|
     l.experience_threshold = threshold
-    l.projeto = projeto
+    l.projeto_id = projeto.id
   end
 end
 
