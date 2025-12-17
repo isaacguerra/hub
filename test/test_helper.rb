@@ -55,6 +55,12 @@ module ActiveSupport
          "gamification/challenges", "gamification/points", "gamification/badges", "gamification/action_weights", "gamification/levels", "gamification/action_logs", "gamification/apoiador_badges", "gamification/challenge_participants", "gamification/weekly_winners"
 
     # Add more helper methods to be used by all tests here...
+    setup do
+      # Ensure acts_as_tenant has a current tenant during tests
+      if defined?(projetos) && projetos(:default_project)
+        ActsAsTenant.current_tenant = projetos(:default_project)
+      end
+    end
   end
 
   class ActionDispatch::IntegrationTest

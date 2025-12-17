@@ -3,6 +3,7 @@
 # o Apoiador apos receber o Comunicado pode marcar como recebido e engajado.
 
 class ComunicadoApoiador < ApplicationRecord
+  acts_as_tenant :projeto
   belongs_to :comunicado
   belongs_to :apoiador
 

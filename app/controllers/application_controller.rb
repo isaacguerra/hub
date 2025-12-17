@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   stale_when_importmap_changes
 
   before_action :set_current_apoiador
+  before_action :set_current_tenant
   before_action :authenticate_apoiador!
 
   helper_method :mobile_device?
@@ -16,6 +17,18 @@ class ApplicationController < ActionController::Base
     if session[:apoiador_id]
       Current.apoiador = Apoiador.find_by(id: session[:apoiador_id])
     end
+  end
+
+  def set_current_tenant
+    if Current.apoiador && Current.apoiador.projeto
+      ActsAsTenant.current_tenant = Current.apoiador.projeto
+    else
+      ActsAsTenant.current_tenant = nil
+    end
+  end
+
+  after_action do
+    ActsAsTenant.current_tenant = nil
   end
 
   def authenticate_apoiador!

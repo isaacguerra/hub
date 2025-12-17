@@ -1,4 +1,5 @@
 class Gamification::Challenge < ApplicationRecord
+  acts_as_tenant :projeto
   belongs_to :winner, class_name: "Apoiador", optional: true
   has_many :participants, class_name: "Gamification::ChallengeParticipant", dependent: :destroy
   has_many :apoiadores, through: :participants

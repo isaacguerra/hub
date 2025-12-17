@@ -18,6 +18,7 @@ Ao Mudar a funcao de um Apoiador devemos gravar uma mensagem no channel mensager
 class Apoiador < ApplicationRecord
   include RedeApoiadores
   include Autorizavel
+  acts_as_tenant :projeto
 
   belongs_to :municipio
   belongs_to :regiao

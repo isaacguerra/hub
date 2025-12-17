@@ -24,6 +24,7 @@
 
 
 class Visita < ApplicationRecord
+  acts_as_tenant :projeto
   belongs_to :lider, class_name: "Apoiador"
   belongs_to :apoiador
 

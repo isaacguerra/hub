@@ -1,5 +1,6 @@
 module Gamification
   class WeeklyWinner < ApplicationRecord
+    acts_as_tenant :projeto
     belongs_to :apoiador
 
     validates :week_start_date, presence: true

@@ -2,6 +2,7 @@
 # Um Apoiador quando participar de um evento terá seu registro nesta tabela
 
 class ApoiadoresEvento < ApplicationRecord
+  acts_as_tenant :projeto
   belongs_to :apoiador
   belongs_to :evento
 
